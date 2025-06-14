@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import HeroManager from '@/components/admin/HeroManager';
@@ -13,9 +12,9 @@ import FooterManager from '@/components/admin/FooterManager';
 import CrmManager from '@/components/admin/CrmManager';
 import WhatsappManager from '@/components/admin/WhatsappManager';
 import AIAdminAssistant from '@/components/admin/AIAdminAssistant';
-// New managers
 import PerformanceManager from '@/components/admin/PerformanceManager';
 import SecurityManager from '@/components/admin/SecurityManager';
+import { adminModulesByKey } from '@/components/admin/adminModules';
 
 const AdminPage = () => {
   const [activeView, setActiveView] = useState('hero');
@@ -36,28 +35,14 @@ const AdminPage = () => {
   }, []);
 
   const renderContent = () => {
-    const components = {
-      hero: <HeroManager />,
-      about: <AboutManager />,
-      services: <ServicesManager />,
-      header: <HeaderManager />,
-      footer: <FooterManager />,
-      cta: <CtaManager />,
-      pages: <PageManager />,
-      media: <MediaManager />,
-      quote: <QuoteManager />,
-      crm: <CrmManager />,
-      whatsapp: <WhatsappManager />,
-      // New:
-      performance: <PerformanceManager />,
-      security: <SecurityManager />
-    };
+    // Use the config as the single source of truth
+    const mod = adminModulesByKey[activeView];
 
-    const activeComponent = components[activeView as keyof typeof components] || <HeroManager />;
+    const ActiveComponent = mod?.component || adminModulesByKey["hero"].component;
 
     return (
       <div>
-        {activeComponent}
+        <ActiveComponent />
         <AIAdminAssistant context={activeView} />
       </div>
     );
@@ -71,4 +56,3 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
-

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LayoutDashboard, Globe, FileText, Image as ImageIcon, Quote, Building, Wrench, PanelTop, PanelBottom, Users, MessageSquare, Shield, Gauge } from 'lucide-react';
@@ -9,23 +8,15 @@ type AdminLayoutProps = {
   setActiveView: (view: string) => void;
 };
 
+import { adminModules } from "./adminModules";
+
 const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) => {
-  const navItems = [
-    { key: 'hero', label: 'Hero Section', Icon: LayoutDashboard },
-    { key: 'about', label: 'About Section', Icon: Building },
-    { key: 'services', label: 'Services Section', Icon: Wrench },
-    { key: 'header', label: 'Header', Icon: PanelTop },
-    { key: 'footer', label: 'Footer', Icon: PanelBottom },
-    { key: 'cta', label: 'Global CTA', Icon: Globe },
-    { key: 'pages', label: 'Page Management', Icon: FileText },
-    { key: 'media', label: 'Media Library', Icon: ImageIcon },
-    { key: 'quote', label: 'Quote Configurator', Icon: Quote },
-    { key: 'crm', label: 'CRM', Icon: Users },
-    { key: 'whatsapp', label: 'WhatsApp Marketing', Icon: MessageSquare },
-    // NEW: Performance and Security
-    { key: 'performance', label: 'Performance Tools', Icon: Gauge },
-    { key: 'security', label: 'Security Tools', Icon: Shield },
-  ];
+  // Use config instead of hardcoded navItems
+  const navItems = adminModules.map(({ key, label, icon: Icon }) => ({
+    key,
+    label,
+    Icon,
+  }));
 
   return (
     <div className="flex min-h-screen bg-gray-200 font-sans">
@@ -67,4 +58,3 @@ const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) 
 };
 
 export default AdminLayout;
-
