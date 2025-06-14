@@ -35,12 +35,16 @@ import DocumentScannerPage from "./pages/tools/DocumentScannerPage";
 
 const queryClient = new QueryClient();
 
+import BottomNav from "@/components/BottomNav";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        {/* Always render nav+header at top level for page transitions */}
+        <Header />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/admin" element={<AdminPage />} />
@@ -74,6 +78,8 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        {/* Show BottomNav only on mobile */}
+        <BottomNav />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -101,3 +101,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Responsive fixes */
+@media (max-width: 1023px) {
+  header {
+    /* Prevent bottomnav from covering content. */
+    margin-bottom: 60px;
+  }
+  main, .main-content, .page-main, .tools-main {
+    /* ensure min height for body on mobile, so bottom nav doesn't overlap */
+    min-height: calc(100vh - 60px);
+    padding-bottom: 70px;
+  }
+}
+
+/* Hide BottomNav on desktop, ensure z-index well above any footer. */
+@media (min-width: 1024px) {
+  .bottom-nav {
+    display: none !important;
+  }
+}
