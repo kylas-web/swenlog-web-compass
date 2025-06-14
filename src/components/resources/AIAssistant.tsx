@@ -7,7 +7,7 @@ declare global {
   interface Window {
     puter: {
       ai: {
-        chat: (message: string, options?: { model?: string; stream?: boolean }) => Promise<any>;
+        chat: (message: string) => Promise<any>;
       };
     };
   }
@@ -27,7 +27,7 @@ const AIAssistant = () => {
     try {
       // Wait for Puter.js to be fully loaded and initialized
       let attempts = 0;
-      const maxAttempts = 100; // 10 seconds max wait
+      const maxAttempts = 100;
       
       while ((!window.puter || !window.puter.ai) && attempts < maxAttempts) {
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -37,14 +37,12 @@ const AIAssistant = () => {
       if (window.puter && window.puter.ai) {
         console.log('Puter.js loaded, making AI request...');
         
-        // Use the exact pattern from the documentation
         const response = await window.puter.ai.chat(
           `You are SwenAI, a logistics and supply chain expert. Please provide helpful advice about: ${aiQuestion}`
         );
         
         console.log('AI Response received:', response);
         
-        // Extract the actual text content from the response object
         const responseText = response?.message?.content || response?.toString?.() || 'No response received';
         setAiResponse(responseText);
       } else {
