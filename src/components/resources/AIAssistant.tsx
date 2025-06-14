@@ -25,9 +25,9 @@ const AIAssistant = () => {
     setAiResponse('');
     
     try {
-      // Check if Puter.js is loaded, if not wait for it
+      // Wait for Puter.js to be fully loaded and initialized
       let attempts = 0;
-      const maxAttempts = 50; // 5 seconds max wait
+      const maxAttempts = 100; // 10 seconds max wait
       
       while ((!window.puter || !window.puter.ai) && attempts < maxAttempts) {
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -35,16 +35,17 @@ const AIAssistant = () => {
       }
       
       if (window.puter && window.puter.ai) {
-        // Use real Puter.js AI chat endpoint
+        console.log('Puter.js loaded, making AI request...');
+        
+        // Use the exact pattern from the documentation
         const response = await window.puter.ai.chat(
-          `You are SwenAI, a logistics and supply chain expert. Please provide helpful advice about: ${aiQuestion}`,
-          {
-            model: 'gpt-4o-mini',
-            stream: false
-          }
+          `You are SwenAI, a logistics and supply chain expert. Please provide helpful advice about: ${aiQuestion}`
         );
+        
+        console.log('AI Response received:', response);
         setAiResponse(response);
       } else {
+        console.error('Puter.js failed to load after maximum attempts');
         setAiResponse('AI service could not be loaded. Please refresh the page and try again.');
       }
     } catch (error) {

@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AIAssistant from '../components/resources/AIAssistant';
@@ -7,6 +8,22 @@ import FeaturedResources from '../components/resources/FeaturedResources';
 import { resourceCategories } from '../data/resourceCategories';
 
 const ResourcesPage = () => {
+  useEffect(() => {
+    // Load Puter.js script
+    const script = document.createElement('script');
+    script.src = 'https://js.puter.com/v2/';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup script on unmount
+      const existingScript = document.head.querySelector('script[src="https://js.puter.com/v2/"]');
+      if (existingScript) {
+        document.head.removeChild(existingScript);
+      }
+    };
+  }, []);
+
   return (
     <>
       <Header />
@@ -45,9 +62,6 @@ const ResourcesPage = () => {
         </div>
       </main>
       <Footer />
-
-      {/* Puter.js Script */}
-      <script src="https://js.puter.com/v2/"></script>
     </>
   );
 };
