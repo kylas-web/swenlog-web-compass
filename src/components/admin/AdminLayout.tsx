@@ -25,22 +25,23 @@ const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) 
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-100 font-sans">
-      <aside className="w-64 bg-gray-800 text-white flex flex-col">
-        <div className="p-4 border-b border-gray-700">
-          <h1 className="text-2xl font-bold">SWENLOG Admin</h1>
+    <div className="flex min-h-screen bg-gray-200 font-sans">
+      <aside className="w-64 bg-gray-200 flex flex-col transition-all duration-300">
+        <div className="p-4 border-b border-gray-300/80">
+          <h1 className="text-2xl font-bold text-gray-800">SWENLOG Admin</h1>
         </div>
         <nav className="flex-1 p-4">
-          <ul className="space-y-2">
+          <ul className="space-y-4">
             {navItems.map((item) => (
               <li key={item.key}>
                 <button
                   onClick={() => setActiveView(item.key)}
-                  className={`flex w-full items-center p-2 rounded-lg text-left transition-colors ${
-                    activeView === item.key
-                      ? 'bg-gray-700 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
+                  className={`flex w-full items-center p-3 rounded-xl text-left transition-all duration-200 transform
+                    ${
+                      activeView === item.key
+                        ? 'text-primary shadow-neumorphic-inset'
+                        : 'text-gray-600 hover:text-primary shadow-neumorphic active:shadow-neumorphic-inset active:scale-95'
+                    }`}
                 >
                   <item.Icon className="mr-3 h-5 w-5 shrink-0" />
                   {item.label}
@@ -49,8 +50,8 @@ const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) 
             ))}
           </ul>
         </nav>
-        <div className="p-4 border-t border-gray-700">
-          <Link to="/" className="text-sm text-gray-400 hover:text-white">
+        <div className="p-4 border-t border-gray-300/80">
+          <Link to="/" className="text-sm text-gray-500 hover:text-primary">
             ← Back to Site
           </Link>
         </div>

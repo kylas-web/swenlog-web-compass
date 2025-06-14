@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			boxShadow: {
+				'neumorphic': '9px 9px 16px #d1d5db, -9px -9px 16px #f9fafb',
+        'neumorphic-inset': 'inset 9px 9px 16px #d1d5db, inset -9px -9px 16px #f9fafb',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
