@@ -1,10 +1,9 @@
-
 import { useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import AIAssistant from '../components/resources/AIAssistant';
-import ResourceCategory from '../components/resources/ResourceCategory';
-import FeaturedResources from '../components/resources/FeaturedResources';
+import ResourcesAIAssistantSection from '../components/resources/ResourcesAIAssistantSection';
+import ResourcesCategoryList from '../components/resources/ResourcesCategoryList';
+import ResourcesFeaturedSection from '../components/resources/ResourcesFeaturedSection';
 import { resourceCategories } from '../data/resourceCategories';
 
 const ResourcesPage = () => {
@@ -39,25 +38,9 @@ const ResourcesPage = () => {
                 Explore our comprehensive collection of tools, guides, and AI-powered solutions to optimize your logistics operations.
               </p>
             </div>
-
-            {/* AI Assistant Tool */}
-            <AIAssistant />
-
-            {/* Resource Categories */}
-            <div className="mx-auto mt-16 max-w-7xl">
-              {resourceCategories.map((category) => (
-                <ResourceCategory
-                  key={category.title}
-                  title={category.title}
-                  icon={category.icon}
-                  color={category.color}
-                  resources={category.resources}
-                />
-              ))}
-            </div>
-
-            {/* Featured Resources Section */}
-            <FeaturedResources />
+            <ResourcesAIAssistantSection />
+            <ResourcesCategoryList />
+            <ResourcesFeaturedSection />
           </div>
         </div>
       </main>
