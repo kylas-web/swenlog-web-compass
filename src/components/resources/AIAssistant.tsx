@@ -7,7 +7,7 @@ declare global {
   interface Window {
     puter: {
       ai: {
-        chat: (message: string, options?: { model?: string; stream?: boolean }) => Promise<string>;
+        chat: (message: string, options?: { model?: string; stream?: boolean }) => Promise<any>;
       };
     };
   }
@@ -43,7 +43,10 @@ const AIAssistant = () => {
         );
         
         console.log('AI Response received:', response);
-        setAiResponse(response);
+        
+        // Extract the actual text content from the response object
+        const responseText = response?.message?.content || response?.toString?.() || 'No response received';
+        setAiResponse(responseText);
       } else {
         console.error('Puter.js failed to load after maximum attempts');
         setAiResponse('AI service could not be loaded. Please refresh the page and try again.');
