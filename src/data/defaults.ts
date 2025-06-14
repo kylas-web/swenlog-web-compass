@@ -1,4 +1,3 @@
-
 export const defaultHeroData = {
   mainHeading: "Global Logistics",
   subHeading: "Made Simple",
@@ -44,6 +43,94 @@ export const defaultAboutData = {
         { id: 'v3', icon: 'Award', title: 'Excellence', description: 'Committed to delivering superior service that exceeds customer expectations.' },
         { id: 'v4', icon: 'Zap', title: 'Innovation', description: 'Leveraging cutting-edge technology to optimize logistics operations.' }
     ]
+};
+
+export const defaultHeaderData = {
+  logoText: "SWENLOG",
+  logoSubtext: "Global Logistics Solutions",
+  ctaButtonText: "Get Quote",
+  navigationItems: [
+    {
+      name: 'Services',
+      url: '#',
+      dropdown: [
+        { name: 'Ocean Freight', url: '#' },
+        { name: 'Air Freight', url: '#' },
+        { name: 'Ground Transportation', url: '#' },
+        { name: 'Customs Brokerage', url: '#' },
+        { name: 'Warehousing & Distribution', url: '#' },
+        { name: 'Supply Chain Solutions', url: '#' }
+      ]
+    },
+    {
+      name: 'Industries',
+      url: '#',
+      dropdown: [
+        { name: 'Automotive', url: '#' },
+        { name: 'Technology', url: '#' },
+        { name: 'Retail & Fashion', url: '#' },
+        { name: 'Healthcare', url: '#' },
+        { name: 'Manufacturing', url: '#' },
+        { name: 'Energy', url: '#' }
+      ]
+    },
+    { name: 'About Us', url: '#' },
+    { name: 'Resources', url: '#' },
+    { name: 'Careers', url: '#' },
+    { name: 'Contact', url: '#' }
+  ]
+};
+
+export const defaultFooterData = {
+  logoText: "SWENLOG",
+  description: "Your trusted partner for comprehensive global logistics solutions. Connecting businesses worldwide with reliable, efficient shipping services.",
+  socials: [
+    { name: 'Facebook', url: '#', icon: 'Facebook' },
+    { name: 'Twitter', url: '#', icon: 'Twitter' },
+    { name: 'Linkedin', url: '#', icon: 'Linkedin' },
+    { name: 'Instagram', url: '#', icon: 'Instagram' }
+  ],
+  columns: [
+    {
+      title: 'Services',
+      links: [
+        { name: 'Ocean Freight', url: '#' },
+        { name: 'Air Freight', url: '#' },
+        { name: 'Ground Transportation', url: '#' },
+        { name: 'Customs Brokerage', url: '#' },
+        { name: 'Warehousing', url: '#' },
+        { name: 'Supply Chain Solutions', url: '#' }
+      ]
+    },
+    {
+      title: 'Company',
+      links: [
+        { name: 'About Us', url: '#' },
+        { name: 'Careers', url: '#' },
+        { name: 'News & Updates', url: '#' },
+        { name: 'Investor Relations', url: '#' },
+        { name: 'Sustainability', url: '#' },
+        { name: 'Partner Network', url: '#' }
+      ]
+    },
+    {
+      title: 'Resources',
+      links: [
+        { name: 'Track Shipment', url: '#' },
+        { name: 'Customer Portal', url: '#' },
+        { name: 'Documentation', url: '#' },
+        { name: 'Industry Insights', url: '#' },
+        { name: 'Support Center', url: '#' },
+        { name: 'Contact Us', url: '#' }
+      ]
+    }
+  ],
+  bottomText: "© 2024 SWENLOG. All rights reserved.",
+  bottomLinks: [
+    { name: 'Privacy Policy', url: '#' },
+    { name: 'Terms of Service', url: '#' },
+    { name: 'Cookie Policy', url: '#' }
+  ]
 };
 
 export const defaultServicesData = {

@@ -8,6 +8,8 @@ import QuoteManager from '@/components/admin/QuoteManager';
 import PageManager from '@/components/admin/PageManager';
 import AboutManager from '@/components/admin/AboutManager';
 import ServicesManager from '@/components/admin/ServicesManager';
+import HeaderManager from '@/components/admin/HeaderManager';
+import FooterManager from '@/components/admin/FooterManager';
 
 const AdminPage = () => {
   const [activeView, setActiveView] = useState('hero');
@@ -20,6 +22,10 @@ const AdminPage = () => {
         return <AboutManager />;
       case 'services':
         return <ServicesManager />;
+      case 'header':
+        return <HeaderManager />;
+      case 'footer':
+        return <FooterManager />;
       case 'cta':
         return <CtaManager />;
       case 'pages':

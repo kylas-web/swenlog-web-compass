@@ -1,79 +1,53 @@
 
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { defaultFooterData } from '@/data/defaults';
+import { ICONS } from './icons';
 
 const Footer = () => {
+  const [footerData] = useLocalStorage('footerData', defaultFooterData);
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
           <div>
-            <h3 className="text-2xl font-bold text-blue-400 mb-4">SWENLOG</h3>
+            <h3 className="text-2xl font-bold text-blue-400 mb-4">{footerData.logoText}</h3>
             <p className="text-gray-300 mb-6">
-              Your trusted partner for comprehensive global logistics solutions. 
-              Connecting businesses worldwide with reliable, efficient shipping services.
+              {footerData.description}
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
+              {footerData.socials.map(social => {
+                const Icon = ICONS[social.icon];
+                return (
+                  <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
+                    {Icon ? <Icon className="h-5 w-5" /> : <span>{social.name}</span>}
+                  </a>
+                )
+              })}
             </div>
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold mb-6">Services</h4>
-            <ul className="space-y-3 text-gray-300">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Ocean Freight</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Air Freight</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Ground Transportation</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Customs Brokerage</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Warehousing</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Supply Chain Solutions</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold mb-6">Company</h4>
-            <ul className="space-y-3 text-gray-300">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">News & Updates</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Investor Relations</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Sustainability</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Partner Network</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold mb-6">Resources</h4>
-            <ul className="space-y-3 text-gray-300">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Track Shipment</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Customer Portal</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Documentation</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Industry Insights</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Support Center</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">Contact Us</a></li>
-            </ul>
-          </div>
+          {footerData.columns.map(column => (
+            <div key={column.title}>
+              <h4 className="text-lg font-semibold mb-6">{column.title}</h4>
+              <ul className="space-y-3 text-gray-300">
+                {column.links.map(link => (
+                   <li key={link.name}><a href={link.url} className="hover:text-blue-400 transition-colors">{link.name}</a></li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div className="border-t border-gray-700 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2024 SWENLOG. All rights reserved.
+              {footerData.bottomText}
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-blue-400 text-sm transition-colors">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 text-sm transition-colors">Terms of Service</a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 text-sm transition-colors">Cookie Policy</a>
+              {footerData.bottomLinks.map(link => (
+                 <a key={link.name} href={link.url} className="text-gray-400 hover:text-blue-400 text-sm transition-colors">{link.name}</a>
+              ))}
             </div>
           </div>
         </div>

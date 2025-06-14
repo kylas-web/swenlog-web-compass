@@ -1,39 +1,13 @@
 
 import { useState } from 'react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { defaultHeaderData } from '@/data/defaults';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 const Header = () => {
+  const [headerData] = useLocalStorage('headerData', defaultHeaderData);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
-  const navigationItems = [
-    {
-      name: 'Services',
-      dropdown: [
-        'Ocean Freight',
-        'Air Freight',
-        'Ground Transportation',
-        'Customs Brokerage',
-        'Warehousing & Distribution',
-        'Supply Chain Solutions'
-      ]
-    },
-    {
-      name: 'Industries',
-      dropdown: [
-        'Automotive',
-        'Technology',
-        'Retail & Fashion',
-        'Healthcare',
-        'Manufacturing',
-        'Energy'
-      ]
-    },
-    { name: 'About Us' },
-    { name: 'Resources' },
-    { name: 'Careers' },
-    { name: 'Contact' }
-  ];
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
@@ -41,34 +15,34 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-blue-800">SWENLOG</h1>
-            <p className="text-xs text-gray-600">Global Logistics Solutions</p>
+            <h1 className="text-2xl font-bold text-blue-800">{headerData.logoText}</h1>
+            <p className="text-xs text-gray-600">{headerData.logoSubtext}</p>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-8">
-            {navigationItems.map((item) => (
+            {headerData.navigationItems.map((item) => (
               <div
                 key={item.name}
                 className="relative"
                 onMouseEnter={() => item.dropdown && setActiveDropdown(item.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center text-gray-700 hover:text-blue-800 font-medium transition-colors">
+                <a href={item.url} className="flex items-center text-gray-700 hover:text-blue-800 font-medium transition-colors">
                   {item.name}
                   {item.dropdown && <ChevronDown className="ml-1 h-4 w-4" />}
-                </button>
+                </a>
                 
                 {/* Dropdown Menu */}
                 {item.dropdown && activeDropdown === item.name && (
                   <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                     {item.dropdown.map((subItem) => (
                       <a
-                        key={subItem}
-                        href="#"
+                        key={subItem.name}
+                        href={subItem.url}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-800 transition-colors"
                       >
-                        {subItem}
+                        {subItem.name}
                       </a>
                     ))}
                   </div>
@@ -80,7 +54,7 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
             <button className="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors font-medium">
-              Get Quote
+              {headerData.ctaButtonText}
             </button>
           </div>
 
@@ -99,10 +73,11 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4">
             <nav className="space-y-2">
-              {navigationItems.map((item) => (
+              {headerData.navigationItems.map((item) => (
                 <div key={item.name}>
+                  {/* Note: Mobile nav doesn't show dropdowns for simplicity. Could be an enhancement. */}
                   <a
-                    href="#"
+                    href={item.url || '#'}
                     className="block px-3 py-2 text-gray-700 hover:text-blue-800 font-medium"
                   >
                     {item.name}
@@ -110,7 +85,7 @@ const Header = () => {
                 </div>
               ))}
               <button className="w-full mt-4 bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition-colors font-medium">
-                Get Quote
+                {headerData.ctaButtonText}
               </button>
             </nav>
           </div>
