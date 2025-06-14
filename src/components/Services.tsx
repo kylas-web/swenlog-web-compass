@@ -23,7 +23,7 @@ const Services = () => {
           {servicesData.services.map((service) => {
             const Icon = ICONS[service.icon];
             return (
-              <Link to={`/services/${service.slug}`} key={service.slug} className="block bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+              <Link to={`/services/${service.slug}`} key={service.id} className="block bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
                 <div className="flex items-center mb-6">
                   <div className="bg-blue-100 p-3 rounded-lg">
                     {Icon && <Icon className="h-8 w-8 text-blue-800" />}
