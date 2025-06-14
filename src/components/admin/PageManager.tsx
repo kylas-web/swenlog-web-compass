@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Button } from '@/components/ui/button';
@@ -25,6 +24,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { Plus, Edit, Trash, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import { defaultPages } from '@/data/defaults';
 
 type Page = {
   id: string;
@@ -33,11 +33,6 @@ type Page = {
   content: string;
   published: boolean;
 };
-
-const defaultPages: Page[] = [
-  { id: 'p1', title: 'About Our Company', slug: 'about-us', content: '## About Us\n\nWe are a leading logistics company...', published: true },
-  { id: 'p2', title: 'Terms of Service', slug: 'terms', content: '## Terms of Service\n\nPlease read these terms carefully.', published: false },
-];
 
 const PageManager = () => {
   const [pages, setPages] = useLocalStorage<Page[]>('pagesData', defaultPages);

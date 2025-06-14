@@ -1,17 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-
-const defaultHeroData = {
-  mainHeading: "Global Logistics",
-  subHeading: "Made Simple",
-  description: "SWENLOG delivers comprehensive supply chain solutions that connect your business to the world. From freight forwarding to customs brokerage, we handle the complexity so you can focus on growth.",
-  imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-};
+import { defaultHeroData } from '@/data/defaults';
 
 const HeroManager = () => {
   const [storedHeroData, setStoredHeroData] = useLocalStorage('heroData', defaultHeroData);

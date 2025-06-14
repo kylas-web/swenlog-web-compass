@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Button } from '@/components/ui/button';
@@ -22,6 +21,7 @@ import {
 } from '@/components/ui/dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Edit, Trash } from 'lucide-react';
+import { defaultMediaData } from '@/data/defaults';
 
 type MediaItem = {
   id: string;
@@ -29,13 +29,6 @@ type MediaItem = {
   url: string;
   alt: string;
 };
-
-const defaultMediaData: MediaItem[] = [
-  { id: '1', name: 'Woman on laptop', url: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', alt: 'A woman sitting on a bed using a laptop' },
-  { id: '2', name: 'Laptop on desk', url: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', alt: 'Turned on gray laptop computer' },
-  { id: '3', name: 'Circuit board', url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', alt: 'Macro photography of black circuit board' },
-  { id: '4', name: 'Code on monitor', url: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', alt: 'Monitor showing Java programming' },
-];
 
 const MediaManager = () => {
   const [mediaItems, setMediaItems] = useLocalStorage<MediaItem[]>('mediaData', defaultMediaData);

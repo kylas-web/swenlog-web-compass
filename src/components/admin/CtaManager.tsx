@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Input } from '@/components/ui/input';
@@ -6,12 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { Switch } from '@/components/ui/switch';
-
-const defaultCtaData = {
-  text: 'Get Your Free Quote Today!',
-  link: '/contact',
-  enabled: true,
-};
+import { defaultCtaData } from '@/data/defaults';
 
 const CtaManager = () => {
   const [storedCtaData, setStoredCtaData] = useLocalStorage('ctaData', defaultCtaData);

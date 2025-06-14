@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, Globe, FileText, Image as ImageIcon, Quote } from 'lucide-react';
+import { LayoutDashboard, Globe, FileText, Image as ImageIcon, Quote, Building, Wrench } from 'lucide-react';
 
 type AdminLayoutProps = {
   children: React.ReactNode;
@@ -12,6 +12,8 @@ type AdminLayoutProps = {
 const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) => {
   const navItems = [
     { key: 'hero', label: 'Hero Section', Icon: LayoutDashboard },
+    { key: 'about', label: 'About Section', Icon: Building },
+    { key: 'services', label: 'Services Section', Icon: Wrench },
     { key: 'cta', label: 'Global CTA', Icon: Globe },
     { key: 'pages', label: 'Page Management', Icon: FileText },
     { key: 'media', label: 'Media Library', Icon: ImageIcon },

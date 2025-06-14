@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Button } from '@/components/ui/button';
@@ -24,6 +23,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { Plus, Edit, Trash } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { defaultSubmissions } from '@/data/defaults';
 
 type QuoteSubmission = {
   id: string;
@@ -34,11 +34,6 @@ type QuoteSubmission = {
   status: 'new' | 'contacted' | 'closed';
   createdAt: string;
 };
-
-const defaultSubmissions: QuoteSubmission[] = [
-    { id: 'q1', name: 'John Doe', email: 'john@example.com', service: 'Air Freight', message: 'Looking to ship 2 tons of coffee beans from Colombia to USA.', status: 'new', createdAt: new Date().toISOString() },
-    { id: 'q2', name: 'Jane Smith', email: 'jane@example.com', service: 'Ocean Freight', message: 'Need a quote for a full container load from Shanghai to Los Angeles.', status: 'contacted', createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
-];
 
 const QuoteManager = () => {
   const [submissions, setSubmissions] = useLocalStorage<QuoteSubmission[]>('quoteSubmissions', defaultSubmissions);
