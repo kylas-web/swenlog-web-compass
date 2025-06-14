@@ -53,6 +53,8 @@ const RouteOptimizerInputPanel: React.FC<RouteOptimizerInputPanelProps> = ({
   addRoute,
   addViaStop,
   removeViaStop,
+  setRoutes,
+  setViaStops,
   aiSuggest,
   setRouteType,
   setRouteSubType,
