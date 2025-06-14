@@ -54,30 +54,30 @@ export const defaultHeaderData = {
       name: 'Services',
       url: '#',
       dropdown: [
-        { name: 'Ocean Freight', url: '#' },
-        { name: 'Air Freight', url: '#' },
-        { name: 'Ground Transportation', url: '#' },
-        { name: 'Customs Brokerage', url: '#' },
-        { name: 'Warehousing & Distribution', url: '#' },
-        { name: 'Supply Chain Solutions', url: '#' }
+        { name: 'Ocean Freight', url: '/services/ocean-freight' },
+        { name: 'Air Freight', url: '/services/air-freight' },
+        { name: 'Ground Transportation', url: '/services/ground-transportation' },
+        { name: 'Customs Brokerage', url: '/services/customs-brokerage' },
+        { name: 'Warehousing & Distribution', url: '/services/warehousing-distribution' },
+        { name: 'Supply Chain Solutions', url: '/services/supply-chain-solutions' }
       ]
     },
     {
       name: 'Industries',
       url: '#',
       dropdown: [
-        { name: 'Automotive', url: '#' },
-        { name: 'Technology', url: '#' },
-        { name: 'Retail & Fashion', url: '#' },
-        { name: 'Healthcare', url: '#' },
-        { name: 'Manufacturing', url: '#' },
-        { name: 'Energy', url: '#' }
+        { name: 'Automotive', url: '/industries/automotive' },
+        { name: 'Technology', url: '/industries/technology' },
+        { name: 'Retail & Fashion', url: '/industries/retail-fashion' },
+        { name: 'Healthcare', url: '/industries/healthcare' },
+        { name: 'Manufacturing', url: '/industries/manufacturing' },
+        { name: 'Energy', url: '/industries/energy' }
       ]
     },
-    { name: 'About Us', url: '#' },
-    { name: 'Resources', url: '#' },
-    { name: 'Careers', url: '#' },
-    { name: 'Contact', url: '#' }
+    { name: 'About Us', url: '/about-us' },
+    { name: 'Resources', url: '/resources' },
+    { name: 'Careers', url: '/careers' },
+    { name: 'Contact', url: '/contact' }
   ]
 };
 
@@ -94,19 +94,19 @@ export const defaultFooterData = {
     {
       title: 'Services',
       links: [
-        { name: 'Ocean Freight', url: '#' },
-        { name: 'Air Freight', url: '#' },
-        { name: 'Ground Transportation', url: '#' },
-        { name: 'Customs Brokerage', url: '#' },
-        { name: 'Warehousing', url: '#' },
-        { name: 'Supply Chain Solutions', url: '#' }
+        { name: 'Ocean Freight', url: '/services/ocean-freight' },
+        { name: 'Air Freight', url: '/services/air-freight' },
+        { name: 'Ground Transportation', url: '/services/ground-transportation' },
+        { name: 'Customs Brokerage', url: '/services/customs-brokerage' },
+        { name: 'Warehousing', url: '/services/warehousing-distribution' },
+        { name: 'Supply Chain Solutions', url: '/services/supply-chain-solutions' }
       ]
     },
     {
       title: 'Company',
       links: [
-        { name: 'About Us', url: '#' },
-        { name: 'Careers', url: '#' },
+        { name: 'About Us', url: '/about-us' },
+        { name: 'Careers', url: '/careers' },
         { name: 'News & Updates', url: '#' },
         { name: 'Investor Relations', url: '#' },
         { name: 'Sustainability', url: '#' },
@@ -121,7 +121,7 @@ export const defaultFooterData = {
         { name: 'Documentation', url: '#' },
         { name: 'Industry Insights', url: '#' },
         { name: 'Support Center', url: '#' },
-        { name: 'Contact Us', url: '#' }
+        { name: 'Contact Us', url: '/contact' }
       ]
     }
   ],
@@ -137,13 +137,26 @@ export const defaultServicesData = {
     title: "Comprehensive Logistics Services",
     subtitle: "From single shipments to complex supply chain management, SWENLOG provides tailored solutions that drive your business forward.",
     services: [
-        { id: 's1', icon: 'Ship', title: 'Ocean Freight', description: 'Cost-effective shipping solutions for full container loads (FCL) and less-than-container loads (LCL) worldwide.', features: 'Port-to-port delivery\nDoor-to-door service\nCargo consolidation\nReal-time tracking' },
-        { id: 's2', icon: 'Plane', title: 'Air Freight', description: 'Fast, reliable air cargo services for time-sensitive shipments with global network coverage.', features: 'Express delivery\nTemperature controlled\nDangerous goods handling\nCharter services' },
-        { id: 's3', icon: 'Truck', title: 'Ground Transportation', description: 'Comprehensive trucking and rail services for domestic and cross-border transportation needs.', features: 'LTL & FTL services\nCross-docking\nLast-mile delivery\nSpecialized equipment' },
-        { id: 's4', icon: 'FileText', title: 'Customs Brokerage', description: 'Expert customs clearance and trade compliance services to navigate complex regulations.', features: 'Documentation prep\nDuty optimization\nTrade compliance\nRegulatory updates' },
-        { id: 's5', icon: 'Warehouse', title: 'Warehousing & Distribution', description: 'Strategic distribution centers and fulfillment services to optimize your supply chain.', features: 'Inventory management\nPick & pack\nCross-docking\nValue-added services' },
-        { id: 's6', icon: 'BarChart3', title: 'Supply Chain Solutions', description: 'End-to-end supply chain optimization and consulting to improve efficiency and reduce costs.', features: 'Supply chain design\nVendor management\nAnalytics & reporting\nProcess optimization' }
+        { id: 's1', slug: 'ocean-freight', icon: 'Ship', title: 'Ocean Freight', description: 'Cost-effective shipping solutions for full container loads (FCL) and less-than-container loads (LCL) worldwide.', features: 'Port-to-port delivery\nDoor-to-door service\nCargo consolidation\nReal-time tracking' },
+        { id: 's2', slug: 'air-freight', icon: 'Plane', title: 'Air Freight', description: 'Fast, reliable air cargo services for time-sensitive shipments with global network coverage.', features: 'Express delivery\nTemperature controlled\nDangerous goods handling\nCharter services' },
+        { id: 's3', slug: 'ground-transportation', icon: 'Truck', title: 'Ground Transportation', description: 'Comprehensive trucking and rail services for domestic and cross-border transportation needs.', features: 'LTL & FTL services\nCross-docking\nLast-mile delivery\nSpecialized equipment' },
+        { id: 's4', slug: 'customs-brokerage', icon: 'FileText', title: 'Customs Brokerage', description: 'Expert customs clearance and trade compliance services to navigate complex regulations.', features: 'Documentation prep\nDuty optimization\nTrade compliance\nRegulatory updates' },
+        { id: 's5', slug: 'warehousing-distribution', icon: 'Warehouse', title: 'Warehousing & Distribution', description: 'Strategic distribution centers and fulfillment services to optimize your supply chain.', features: 'Inventory management\nPick & pack\nCross-docking\nValue-added services' },
+        { id: 's6', slug: 'supply-chain-solutions', icon: 'BarChart3', title: 'Supply Chain Solutions', description: 'End-to-end supply chain optimization and consulting to improve efficiency and reduce costs.', features: 'Supply chain design\nVendor management\nAnalytics & reporting\nProcess optimization' }
     ]
+};
+
+export const defaultIndustriesData = {
+  title: "Tailored Solutions for Your Industry",
+  subtitle: "We have deep expertise in a wide range of industries, providing specialized logistics solutions to meet unique challenges.",
+  industries: [
+    { id: 'i1', slug: 'automotive', icon: 'Truck', title: 'Automotive', description: 'Just-in-time delivery and specialized handling for the automotive supply chain.', content: 'Our automotive logistics solutions are designed to meet the high-pressure demands of the automotive industry. We provide reliable and efficient transportation for parts and finished vehicles, ensuring your supply chain runs smoothly.'},
+    { id: 'i2', slug: 'technology', icon: 'Zap', title: 'Technology', description: 'Secure and efficient transport for high-value electronics and components.', content: 'We offer secure, climate-controlled shipping and warehousing for sensitive and high-value technology products. Our robust security measures and real-time tracking give you peace of mind.'},
+    { id: 'i3', slug: 'retail-fashion', icon: 'Archive', title: 'Retail & Fashion', description: 'Fast-paced logistics solutions to keep up with consumer demand and seasonal trends.', content: 'In the fast-moving world of retail and fashion, speed and accuracy are key. We provide agile logistics solutions, including e-commerce fulfillment and store distribution, to help you stay ahead of trends.'},
+    { id: 'i4', slug: 'healthcare', icon: 'Heart', title: 'Healthcare', description: 'Temperature-controlled and compliant shipping for pharmaceuticals and medical devices.', content: 'Our healthcare logistics services are fully compliant with industry regulations. We offer temperature-controlled shipping, secure warehousing, and specialized handling for pharmaceuticals, medical devices, and other healthcare products.'},
+    { id: 'i5', slug: 'manufacturing', icon: 'Wrench', title: 'Manufacturing', description: 'Streamlined logistics for raw materials and finished goods to keep production lines moving.', content: 'We support your manufacturing operations with end-to-end logistics for raw materials and finished products. Our solutions are designed to optimize your supply chain, reduce costs, and minimize downtime.'},
+    { id: 'i6', slug: 'energy', icon: 'Power', title: 'Energy', description: 'Specialized logistics for the energy sector, including oversized and hazardous materials.', content: 'We have the expertise and equipment to handle the unique logistics challenges of the energy sector. We can transport oversized equipment, hazardous materials, and provide support for remote project sites.'},
+  ]
 };
 
 export const defaultCrmContacts = [
