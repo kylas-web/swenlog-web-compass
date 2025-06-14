@@ -152,11 +152,23 @@ export const defaultCrmContacts = [
   { id: 'c3', name: 'Carlos Rodriguez', phone: '+34911234567', status: 'Qualified', tags: ['Lead', 'Spain'], lastContacted: new Date().toISOString() },
 ];
 
+export const defaultLeads = [
+  { id: 'l1', name: 'Global Imports Inc.', source: 'Website Form', status: 'New', assignedTo: 'John Doe', email: 'contact@globalimports.com' },
+  { id: 'l2', name: 'Tech Gadgets Co.', source: 'Referral', status: 'Working', assignedTo: 'Jane Smith', email: 'purchasing@techgadgets.com' },
+];
+
+export const defaultOpportunities = [
+  { id: 'o1', name: 'Q4 Shipping Contract', stage: 'Proposal', value: 50000, closeDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), contactId: 'c1' },
+  { id: 'o2', name: 'Urgent Air Freight', stage: 'Negotiation', value: 15000, closeDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), contactId: 'c2' },
+];
+
 export const defaultWhatsappData = {
   isConnected: false,
   templates: [
-    { id: 't1', name: 'Welcome Message', content: 'Hello {{name}}! Welcome to SWENLOG. How can we help you today?' },
-    { id: 't2', name: 'Quote Follow-up', content: 'Hi {{name}}, just following up on your recent quote request. Do you have any questions?' }
+    { id: 't1', name: 'Welcome Message', content: 'Hello {{name}}! Welcome to SWENLOG. How can we help you today with your logistics needs?' },
+    { id: 't2', name: 'Quote Follow-up', content: 'Hi {{name}}, just following up on your recent quote request for {{service}}. Do you have any questions we can help with?' },
+    { id: 't3', name: 'Shipment Update', content: 'Hi {{name}}, your shipment with tracking number {{trackingNumber}} is now {{status}}. You can view details here: {{link}}' },
+    { id: 't4', name: 'Service Inquiry Response', content: 'Hello {{name}}, thank you for your interest in our {{service_name}} services. A specialist will be in touch with you shortly to discuss your requirements.' }
   ],
   flows: [
       { id: 'f1', name: 'New Lead Welcome Flow', trigger: 'New Contact', steps: [

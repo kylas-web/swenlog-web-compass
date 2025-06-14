@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { defaultWhatsappData, defaultCrmContacts } from '@/data/defaults';
@@ -106,7 +105,7 @@ const WhatsappManager = () => {
                 {whatsappData.templates.map(template => (
                   <div key={template.id} className="p-4 border rounded-lg bg-gray-50">
                     <p className="font-semibold">{template.name}</p>
-                    <p className="text-sm text-gray-600 font-mono mt-2">{template.content}</p>
+                    <p className="text-sm text-gray-600 font-mono mt-2 bg-gray-200 p-2 rounded">{template.content}</p>
                   </div>
                 ))}
               </div>
