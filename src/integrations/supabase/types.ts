@@ -9,6 +9,146 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      crm_contacts: {
+        Row: {
+          created_at: string | null
+          id: string
+          last_contacted: string | null
+          name: string
+          phone: string | null
+          status: string | null
+          tags: string[] | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          last_contacted?: string | null
+          name: string
+          phone?: string | null
+          status?: string | null
+          tags?: string[] | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          last_contacted?: string | null
+          name?: string
+          phone?: string | null
+          status?: string | null
+          tags?: string[] | null
+        }
+        Relationships: []
+      }
+      crm_leads: {
+        Row: {
+          assigned_to: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string
+          source: string | null
+          status: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          source?: string | null
+          status?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          source?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
+      crm_opportunities: {
+        Row: {
+          close_date: string | null
+          contact_id: string | null
+          created_at: string | null
+          id: string
+          name: string
+          stage: string | null
+          value: number | null
+        }
+        Insert: {
+          close_date?: string | null
+          contact_id?: string | null
+          created_at?: string | null
+          id?: string
+          name: string
+          stage?: string | null
+          value?: number | null
+        }
+        Update: {
+          close_date?: string | null
+          contact_id?: string | null
+          created_at?: string | null
+          id?: string
+          name?: string
+          stage?: string | null
+          value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_opportunities_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "crm_contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      media_items: {
+        Row: {
+          alt: string | null
+          created_at: string | null
+          id: string
+          name: string
+          url: string
+        }
+        Insert: {
+          alt?: string | null
+          created_at?: string | null
+          id?: string
+          name: string
+          url: string
+        }
+        Update: {
+          alt?: string | null
+          created_at?: string | null
+          id?: string
+          name?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      page_content: {
+        Row: {
+          content: Json | null
+          key: string
+          updated_at: string | null
+        }
+        Insert: {
+          content?: Json | null
+          key: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: Json | null
+          key?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -48,6 +188,66 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      whatsapp_flows: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          steps: Json | null
+          trigger: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          steps?: Json | null
+          trigger?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          steps?: Json | null
+          trigger?: string | null
+        }
+        Relationships: []
+      }
+      whatsapp_settings: {
+        Row: {
+          id: number
+          is_connected: boolean
+        }
+        Insert: {
+          id: number
+          is_connected?: boolean
+        }
+        Update: {
+          id?: number
+          is_connected?: boolean
+        }
+        Relationships: []
+      }
+      whatsapp_templates: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          name?: string
         }
         Relationships: []
       }
