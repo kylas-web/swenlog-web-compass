@@ -5,6 +5,11 @@ import { Map, Navigation, Clock, DollarSign, Fuel, Leaf, MapPin, Plus, Trash2 } 
 import RouteStopInput from "../../components/tools/RouteStopInput";
 
 const RouteOptimizerPage = () => {
+  const [isOptimizing, setIsOptimizing] = useState(false);
+  const [optimizedRoute, setOptimizedRoute] = useState<any>(null);
+  const [optimizationGoal, setOptimizationGoal] = useState('time');
+  const [vehicleType, setVehicleType] = useState('truck');
+
   const [routes, setRoutes] = useState([
     { id: 1, name: '', location: '', latitude: '', longitude: '', priority: 'medium' },
     { id: 2, name: '', location: '', latitude: '', longitude: '', priority: 'medium' }
