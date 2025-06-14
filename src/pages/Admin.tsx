@@ -13,6 +13,9 @@ import FooterManager from '@/components/admin/FooterManager';
 import CrmManager from '@/components/admin/CrmManager';
 import WhatsappManager from '@/components/admin/WhatsappManager';
 import AIAdminAssistant from '@/components/admin/AIAdminAssistant';
+// New managers
+import PerformanceManager from '@/components/admin/PerformanceManager';
+import SecurityManager from '@/components/admin/SecurityManager';
 
 const AdminPage = () => {
   const [activeView, setActiveView] = useState('hero');
@@ -44,7 +47,10 @@ const AdminPage = () => {
       media: <MediaManager />,
       quote: <QuoteManager />,
       crm: <CrmManager />,
-      whatsapp: <WhatsappManager />
+      whatsapp: <WhatsappManager />,
+      // New:
+      performance: <PerformanceManager />,
+      security: <SecurityManager />
     };
 
     const activeComponent = components[activeView as keyof typeof components] || <HeroManager />;
@@ -65,3 +71,4 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
