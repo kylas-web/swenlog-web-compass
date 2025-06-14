@@ -13,15 +13,23 @@ import { Plus, Edit, Trash } from 'lucide-react';
 import { defaultServicesData } from '@/data/defaults';
 import { ICON_NAMES } from '../icons';
 
-type Service = { id: string; icon: string; title: string; description: string; features: string; };
+type Service = { id: string; slug: string; icon: string; title: string; description: string; features: string; };
 type ServicesData = { title: string; subtitle: string; services: Service[]; };
+
+const createSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/ & /g, ' and ')
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .trim();
 
 const ServicesManager = () => {
   const [storedData, setStoredData] = useLocalStorage<ServicesData>('servicesData', defaultServicesData);
   const [formData, setFormData] = useState(storedData);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<Service | null>(null);
-  const [serviceForm, setServiceForm] = useState<Omit<Service, 'id'>>({ icon: '', title: '', description: '', features: '' });
+  const [serviceForm, setServiceForm] = useState<Omit<Service, 'id' | 'slug'>>({ icon: '', title: '', description: '', features: '' });
   const { toast } = useToast();
 
   useEffect(() => { setFormData(storedData); }, [storedData]);
@@ -32,7 +40,7 @@ const ServicesManager = () => {
 
   const openDialog = (item: Service | null = null) => {
     setCurrentItem(item);
-    setServiceForm(item ? { ...item } : { icon: ICON_NAMES[0], title: '', description: '', features: '' });
+    setServiceForm(item ? { icon: item.icon, title: item.title, description: item.description, features: item.features } : { icon: ICON_NAMES[0], title: '', description: '', features: '' });
     setIsDialogOpen(true);
   };
 
@@ -53,10 +61,15 @@ const ServicesManager = () => {
     e.preventDefault();
     let newServices;
     if (currentItem) {
-      newServices = formData.services.map(s => s.id === currentItem.id ? { ...currentItem, ...serviceForm } : s);
+      newServices = formData.services.map(s => s.id === currentItem.id ? { ...s, ...serviceForm } : s);
       toast({ title: "Success!", description: "Service updated." });
     } else {
-      newServices = [...formData.services, { id: crypto.randomUUID(), ...serviceForm }];
+      const newService = { 
+        id: crypto.randomUUID(), 
+        ...serviceForm,
+        slug: createSlug(serviceForm.title) 
+      };
+      newServices = [...formData.services, newService];
       toast({ title: "Success!", description: "New service added." });
     }
     setFormData(prev => ({ ...prev, services: newServices }));

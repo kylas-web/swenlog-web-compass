@@ -2,6 +2,7 @@
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { defaultServicesData } from '@/data/defaults';
 import { ICONS } from './icons';
+import { Link } from 'react-router-dom';
 
 const Services = () => {
   const [servicesData] = useLocalStorage('servicesData', defaultServicesData);
@@ -22,7 +23,7 @@ const Services = () => {
           {servicesData.services.map((service) => {
             const Icon = ICONS[service.icon];
             return (
-              <div key={service.title} className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
+              <Link to={`/services/${service.slug}`} key={service.slug} className="block bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow">
                 <div className="flex items-center mb-6">
                   <div className="bg-blue-100 p-3 rounded-lg">
                     {Icon && <Icon className="h-8 w-8 text-blue-800" />}
@@ -43,10 +44,10 @@ const Services = () => {
                   ))}
                 </ul>
                 
-                <button className="mt-6 text-blue-800 font-semibold hover:text-blue-900 transition-colors">
+                <p className="mt-6 text-blue-800 font-semibold hover:text-blue-900 transition-colors">
                   Learn More →
-                </button>
-              </div>
+                </p>
+              </Link>
             );
           })}
         </div>
