@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Button } from '@/components/ui/button';
@@ -32,7 +31,23 @@ const ServicesManager = () => {
   const [serviceForm, setServiceForm] = useState<Omit<Service, 'id' | 'slug'>>({ icon: '', title: '', description: '', features: '' });
   const { toast } = useToast();
 
-  useEffect(() => { setFormData(storedData); }, [storedData]);
+  useEffect(() => {
+    let dataToSet = storedData;
+    const needsMigration = storedData.services.some(s => !s.slug);
+
+    if (needsMigration) {
+      dataToSet = {
+        ...storedData,
+        services: storedData.services.map(s => ({
+          ...s,
+          slug: s.slug || createSlug(s.title),
+        })),
+      };
+      setStoredData(dataToSet);
+    }
+    
+    setFormData(dataToSet);
+  }, [storedData, setStoredData]);
 
   const handleMainChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -61,7 +76,11 @@ const ServicesManager = () => {
     e.preventDefault();
     let newServices;
     if (currentItem) {
-      newServices = formData.services.map(s => s.id === currentItem.id ? { ...s, ...serviceForm } : s);
+      newServices = formData.services.map(s => 
+        s.id === currentItem.id 
+        ? { ...s, ...serviceForm, slug: createSlug(serviceForm.title) } 
+        : s
+      );
       toast({ title: "Success!", description: "Service updated." });
     } else {
       const newService = { 
