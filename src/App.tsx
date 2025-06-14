@@ -37,7 +37,6 @@ import DocumentScannerPage from "./pages/tools/DocumentScannerPage";
 const queryClient = new QueryClient();
 
 import BottomNav from "@/components/BottomNav";
-import Header from "@/components/Header"; // <-- Added import
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -45,8 +44,6 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        {/* Always render nav+header at top level for page transitions */}
-        <Header />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/admin" element={<AdminPage />} />
