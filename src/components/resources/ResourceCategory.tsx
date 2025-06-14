@@ -1,9 +1,11 @@
 
 import { LucideIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface Resource {
   title: string;
   description: string;
+  link?: string;
 }
 
 interface ResourceCategoryProps {
@@ -14,6 +16,19 @@ interface ResourceCategoryProps {
 }
 
 const ResourceCategory = ({ title, icon: Icon, color, resources }: ResourceCategoryProps) => {
+  const getResourceLink = (resourceTitle: string) => {
+    switch (resourceTitle) {
+      case 'Freight Rate Calculator':
+        return '/tools/freight-calculator';
+      case 'Smart Route Optimizer':
+        return '/tools/route-optimizer';
+      case 'Document Scanner & Processor':
+        return '/tools/document-scanner';
+      default:
+        return '#';
+    }
+  };
+
   return (
     <div className="mb-16">
       <div className="flex items-center mb-8">
@@ -28,9 +43,18 @@ const ResourceCategory = ({ title, icon: Icon, color, resources }: ResourceCateg
           <div key={resource.title} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
             <h4 className="text-lg font-semibold text-gray-900 mb-2">{resource.title}</h4>
             <p className="text-gray-600 mb-4">{resource.description}</p>
-            <button className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
-              Access Tool →
-            </button>
+            {getResourceLink(resource.title) !== '#' ? (
+              <Link 
+                to={getResourceLink(resource.title)}
+                className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+              >
+                Access Tool →
+              </Link>
+            ) : (
+              <button className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
+                Access Tool →
+              </button>
+            )}
           </div>
         ))}
       </div>

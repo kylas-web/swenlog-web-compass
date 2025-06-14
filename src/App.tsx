@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -29,6 +28,11 @@ import HealthcarePage from "./pages/HealthcarePage";
 import ManufacturingPage from "./pages/ManufacturingPage";
 import EnergyPage from "./pages/EnergyPage";
 
+// Tool Pages
+import FreightCalculatorPage from "./pages/tools/FreightCalculatorPage";
+import RouteOptimizerPage from "./pages/tools/RouteOptimizerPage";
+import DocumentScannerPage from "./pages/tools/DocumentScannerPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -44,6 +48,11 @@ const App = () => (
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
+          
+          {/* Tool Routes */}
+          <Route path="/tools/freight-calculator" element={<FreightCalculatorPage />} />
+          <Route path="/tools/route-optimizer" element={<RouteOptimizerPage />} />
+          <Route path="/tools/document-scanner" element={<DocumentScannerPage />} />
           
           {/* Service Routes */}
           <Route path="/services/ocean-freight" element={<OceanFreightPage />} />
