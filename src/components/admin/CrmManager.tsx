@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -16,11 +17,24 @@ import { Skeleton } from '../ui/skeleton';
 type Contact = Tables<'crm_contacts'>;
 type Lead = Tables<'crm_leads'>;
 type Opportunity = Tables<'crm_opportunities'>;
+type CrmTableName = 'crm_contacts' | 'crm_leads' | 'crm_opportunities';
 
 type Item = Contact | Lead | Opportunity;
 
-const fetchFromTable = async (tableName: string) => {
-    const { data, error } = await supabase.from(tableName).select('*').order('created_at', { ascending: false });
+const fetchContacts = async (): Promise<Contact[]> => {
+    const { data, error } = await supabase.from('crm_contacts').select('*').order('created_at', { ascending: false });
+    if (error) throw new Error(error.message);
+    return data || [];
+}
+
+const fetchLeads = async (): Promise<Lead[]> => {
+    const { data, error } = await supabase.from('crm_leads').select('*').order('created_at', { ascending: false });
+    if (error) throw new Error(error.message);
+    return data || [];
+}
+
+const fetchOpportunities = async (): Promise<Opportunity[]> => {
+    const { data, error } = await supabase.from('crm_opportunities').select('*').order('created_at', { ascending: false });
     if (error) throw new Error(error.message);
     return data || [];
 }
@@ -33,9 +47,9 @@ const CrmManager = () => {
     const [editingItem, setEditingItem] = useState<Item | null>(null);
     const [formState, setFormState] = useState<any>({});
     
-    const { data: contacts = [], isLoading: isLoadingContacts } = useQuery<Contact[]>({ queryKey: ['contacts'], queryFn: () => fetchFromTable('crm_contacts') });
-    const { data: leads = [], isLoading: isLoadingLeads } = useQuery<Lead[]>({ queryKey: ['leads'], queryFn: () => fetchFromTable('crm_leads') });
-    const { data: opportunities = [], isLoading: isLoadingOpportunities } = useQuery<Opportunity[]>({ queryKey: ['opportunities'], queryFn: () => fetchFromTable('crm_opportunities') });
+    const { data: contacts = [], isLoading: isLoadingContacts } = useQuery<Contact[]>({ queryKey: ['contacts'], queryFn: fetchContacts });
+    const { data: leads = [], isLoading: isLoadingLeads } = useQuery<Lead[]>({ queryKey: ['leads'], queryFn: fetchLeads });
+    const { data: opportunities = [], isLoading: isLoadingOpportunities } = useQuery<Opportunity[]>({ queryKey: ['opportunities'], queryFn: fetchOpportunities });
 
     const mutationOptions = (queryKey: string) => ({
         onSuccess: () => {
@@ -48,7 +62,7 @@ const CrmManager = () => {
     });
 
     const addMutation = useMutation({
-        mutationFn: async ({ table, item }: { table: string, item: any }) => {
+        mutationFn: async ({ table, item }: { table: CrmTableName, item: any }) => {
             const { error } = await supabase.from(table).insert(item);
             if (error) throw error;
         },
@@ -56,7 +70,7 @@ const CrmManager = () => {
     });
 
     const updateMutation = useMutation({
-        mutationFn: async ({ table, id, item }: { table: string, id: string, item: any }) => {
+        mutationFn: async ({ table, id, item }: { table: CrmTableName, id: string, item: any }) => {
             const { error } = await supabase.from(table).update(item).eq('id', id);
             if (error) throw error;
         },
@@ -64,7 +78,7 @@ const CrmManager = () => {
     });
     
     const deleteMutation = useMutation({
-        mutationFn: async ({ table, id }: { table: string, id: string }) => {
+        mutationFn: async ({ table, id }: { table: CrmTableName, id: string }) => {
             const { error } = await supabase.from(table).delete().eq('id', id);
             if (error) throw error;
         },
@@ -97,8 +111,8 @@ const CrmManager = () => {
     };
 
     const handleSubmit = () => {
-        const tableMap = { contacts: 'crm_contacts', leads: 'crm_leads', opportunities: 'crm_opportunities' };
-        const table = tableMap[activeTab as keyof typeof tableMap];
+        const tableMap: { [key: string]: CrmTableName } = { contacts: 'crm_contacts', leads: 'crm_leads', opportunities: 'crm_opportunities' };
+        const table = tableMap[activeTab];
         const { id, created_at, ...restOfForm } = formState;
 
         if (editingItem) {
@@ -113,8 +127,8 @@ const CrmManager = () => {
 
     const handleDelete = (id: string) => {
         if (window.confirm('Are you sure you want to delete this item?')) {
-            const tableMap = { contacts: 'crm_contacts', leads: 'crm_leads', opportunities: 'crm_opportunities' };
-            const table = tableMap[activeTab as keyof typeof tableMap];
+            const tableMap: { [key: string]: CrmTableName } = { contacts: 'crm_contacts', leads: 'crm_leads', opportunities: 'crm_opportunities' };
+            const table = tableMap[activeTab];
             deleteMutation.mutate({ table, id });
             toast({ title: 'Deleted', description: 'Item has been removed.', variant: 'destructive'});
         }
