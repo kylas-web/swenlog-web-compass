@@ -4,6 +4,12 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Auth
+import { AuthProvider } from "./contexts/AuthProvider";
+import AuthPage from "./pages/AuthPage";
+import AdminRoute from "./components/AdminRoute";
+
 import Index from "./pages/Index";
 import AdminPage from "./pages/Admin";
 import DynamicPage from "./pages/DynamicPage";
@@ -40,47 +46,54 @@ import BottomNav from "@/components/BottomNav";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/about-us" element={<AboutPage />} />
-          <Route path="/careers" element={<CareersPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/resources" element={<ResourcesPage />} />
-          
-          {/* Tool Routes */}
-          <Route path="/tools/freight-calculator" element={<FreightCalculatorPage />} />
-          <Route path="/tools/route-optimizer" element={<RouteOptimizerPage />} />
-          <Route path="/tools/document-scanner" element={<DocumentScannerPage />} />
-          
-          {/* Service Routes */}
-          <Route path="/services/ocean-freight" element={<OceanFreightPage />} />
-          <Route path="/services/air-freight" element={<AirFreightPage />} />
-          <Route path="/services/ground-transportation" element={<GroundTransportationPage />} />
-          <Route path="/services/customs-brokerage" element={<CustomsBrokeragePage />} />
-          <Route path="/services/warehousing-distribution" element={<WarehousingDistributionPage />} />
-          <Route path="/services/supply-chain-solutions" element={<SupplyChainSolutionsPage />} />
-          
-          {/* Industry Routes */}
-          <Route path="/industries/automotive" element={<AutomotivePage />} />
-          <Route path="/industries/technology" element={<TechnologyPage />} />
-          <Route path="/industries/retail-fashion" element={<RetailFashionPage />} />
-          <Route path="/industries/healthcare" element={<HealthcarePage />} />
-          <Route path="/industries/manufacturing" element={<ManufacturingPage />} />
-          <Route path="/industries/energy" element={<EnergyPage />} />
-          
-          <Route path="/page/:slug" element={<DynamicPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        {/* Show BottomNav only on mobile */}
-        <BottomNav />
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/admin" element={
+              <AdminRoute>
+                <AdminPage />
+              </AdminRoute>
+            } />
+            <Route path="/about-us" element={<AboutPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/resources" element={<ResourcesPage />} />
+            
+            {/* Tool Routes */}
+            <Route path="/tools/freight-calculator" element={<FreightCalculatorPage />} />
+            <Route path="/tools/route-optimizer" element={<RouteOptimizerPage />} />
+            <Route path="/tools/document-scanner" element={<DocumentScannerPage />} />
+            
+            {/* Service Routes */}
+            <Route path="/services/ocean-freight" element={<OceanFreightPage />} />
+            <Route path="/services/air-freight" element={<AirFreightPage />} />
+            <Route path="/services/ground-transportation" element={<GroundTransportationPage />} />
+            <Route path="/services/customs-brokerage" element={<CustomsBrokeragePage />} />
+            <Route path="/services/warehousing-distribution" element={<WarehousingDistributionPage />} />
+            <Route path="/services/supply-chain-solutions" element={<SupplyChainSolutionsPage />} />
+            
+            {/* Industry Routes */}
+            <Route path="/industries/automotive" element={<AutomotivePage />} />
+            <Route path="/industries/technology" element={<TechnologyPage />} />
+            <Route path="/industries/retail-fashion" element={<RetailFashionPage />} />
+            <Route path="/industries/healthcare" element={<HealthcarePage />} />
+            <Route path="/industries/manufacturing" element={<ManufacturingPage />} />
+            <Route path="/industries/energy" element={<EnergyPage />} />
+            
+            <Route path="/page/:slug" element={<DynamicPage />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          {/* Show BottomNav only on mobile */}
+          <BottomNav />
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

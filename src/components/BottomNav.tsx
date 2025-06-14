@@ -1,29 +1,31 @@
 
 import React from 'react';
-import { Home, Map, User, Menu } from 'lucide-react';
+import { Home, Map, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-const NAV_LINKS = [
-  {
-    title: "Home",
-    path: "/",
-    icon: Home
-  },
-  {
-    title: "Optimizer",
-    path: "/tools/route-optimizer",
-    icon: Map
-  },
-  {
-    title: "Account",
-    path: "/admin",
-    icon: User
-  },
-];
+import { useAuth } from '@/contexts/AuthProvider';
 
 export default function BottomNav() {
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const NAV_LINKS = [
+    {
+      title: "Home",
+      path: "/",
+      icon: Home
+    },
+    {
+      title: "Optimizer",
+      path: "/tools/route-optimizer",
+      icon: Map
+    },
+    {
+      title: "Account",
+      path: user ? "/admin" : "/auth",
+      icon: User
+    },
+  ];
 
   return (
     <nav className="fixed bottom-0 inset-x-0 z-[60] bg-white border-t border-gray-200 shadow-md flex justify-around items-center h-[60px] lg:hidden">
