@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, Globe, FileText, Image as ImageIcon, Quote, Building, Wrench, PanelTop, PanelBottom } from 'lucide-react';
+import { LayoutDashboard, Globe, FileText, Image as ImageIcon, Quote, Building, Wrench, PanelTop, PanelBottom, Users, MessageSquare } from 'lucide-react';
 
 type AdminLayoutProps = {
   children: React.ReactNode;
@@ -20,6 +20,8 @@ const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) 
     { key: 'pages', label: 'Page Management', Icon: FileText },
     { key: 'media', label: 'Media Library', Icon: ImageIcon },
     { key: 'quote', label: 'Quote Configurator', Icon: Quote },
+    { key: 'crm', label: 'CRM', Icon: Users },
+    { key: 'whatsapp', label: 'WhatsApp Marketing', Icon: MessageSquare },
   ];
 
   return (

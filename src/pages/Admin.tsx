@@ -10,6 +10,8 @@ import AboutManager from '@/components/admin/AboutManager';
 import ServicesManager from '@/components/admin/ServicesManager';
 import HeaderManager from '@/components/admin/HeaderManager';
 import FooterManager from '@/components/admin/FooterManager';
+import CrmManager from '@/components/admin/CrmManager';
+import WhatsappManager from '@/components/admin/WhatsappManager';
 
 const AdminPage = () => {
   const [activeView, setActiveView] = useState('hero');
@@ -34,6 +36,10 @@ const AdminPage = () => {
         return <MediaManager />;
       case 'quote':
         return <QuoteManager />;
+      case 'crm':
+        return <CrmManager />;
+      case 'whatsapp':
+        return <WhatsappManager />;
       default:
         return <HeroManager />;
     }

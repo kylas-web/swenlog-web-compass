@@ -145,3 +145,24 @@ export const defaultServicesData = {
         { id: 's6', icon: 'BarChart3', title: 'Supply Chain Solutions', description: 'End-to-end supply chain optimization and consulting to improve efficiency and reduce costs.', features: 'Supply chain design\nVendor management\nAnalytics & reporting\nProcess optimization' }
     ]
 };
+
+export const defaultCrmContacts = [
+  { id: 'c1', name: 'Alice Johnson', phone: '+12025550186', status: 'New', tags: ['Lead', 'USA'], lastContacted: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() },
+  { id: 'c2', name: 'Bob Williams', phone: '+442079460019', status: 'Contacted', tags: ['Customer', 'UK'], lastContacted: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
+  { id: 'c3', name: 'Carlos Rodriguez', phone: '+34911234567', status: 'Qualified', tags: ['Lead', 'Spain'], lastContacted: new Date().toISOString() },
+];
+
+export const defaultWhatsappData = {
+  isConnected: false,
+  templates: [
+    { id: 't1', name: 'Welcome Message', content: 'Hello {{name}}! Welcome to SWENLOG. How can we help you today?' },
+    { id: 't2', name: 'Quote Follow-up', content: 'Hi {{name}}, just following up on your recent quote request. Do you have any questions?' }
+  ],
+  flows: [
+      { id: 'f1', name: 'New Lead Welcome Flow', trigger: 'New Contact', steps: [
+          { type: 'send_message' as const, templateId: 't1', delay: '1 minute' },
+          { type: 'wait' as const, duration: '24 hours' },
+          { type: 'send_message' as const, templateId: 't2', delay: '0 minutes' },
+      ]}
+  ]
+};
