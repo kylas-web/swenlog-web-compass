@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { LayoutDashboard, Globe, FileText, Image as ImageIcon, Quote } from 'lucide-react';
 
 type AdminLayoutProps = {
   children: React.ReactNode;
@@ -10,11 +11,11 @@ type AdminLayoutProps = {
 
 const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) => {
   const navItems = [
-    { key: 'hero', label: 'Hero Section' },
-    { key: 'cta', label: 'Global CTA' },
-    { key: 'pages', label: 'Page Management' },
-    { key: 'media', label: 'Media Library' },
-    { key: 'quote', label: 'Quote Configurator' },
+    { key: 'hero', label: 'Hero Section', Icon: LayoutDashboard },
+    { key: 'cta', label: 'Global CTA', Icon: Globe },
+    { key: 'pages', label: 'Page Management', Icon: FileText },
+    { key: 'media', label: 'Media Library', Icon: ImageIcon },
+    { key: 'quote', label: 'Quote Configurator', Icon: Quote },
   ];
 
   return (
@@ -35,6 +36,7 @@ const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) 
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                   }`}
                 >
+                  <item.Icon className="mr-3 h-5 w-5 shrink-0" />
                   {item.label}
                 </button>
               </li>
