@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -63,7 +62,7 @@ const AuthForm = () => {
       toast.error(error.message);
     } else {
       toast.success('Signed in successfully!');
-      navigate('/');
+      // We no longer navigate here. AuthPage will handle redirection.
     }
     setLoading(false);
   };

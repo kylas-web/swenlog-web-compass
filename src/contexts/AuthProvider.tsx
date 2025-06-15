@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -52,7 +51,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        setTimeout(() => fetchUserRole(session.user.id), 0);
+        setLoading(true);
+        setTimeout(() => {
+          fetchUserRole(session.user.id).finally(() => setLoading(false));
+        }, 0);
       } else {
         setUserRole(null);
       }
