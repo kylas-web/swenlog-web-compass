@@ -1,6 +1,6 @@
 export const defaultHeroData = {
   mainHeading: "Global Logistics",
-  subHeading: "Made Simple",
+  subHeading: "Made Simple", 
   description: "SWENLOG delivers comprehensive supply chain solutions that connect your business to the world. From freight forwarding to customs brokerage, we handle the complexity so you can focus on growth.",
   imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
 };
@@ -21,6 +21,17 @@ export const defaultMediaData = [
 export const defaultPages = [
   { id: 'p1', title: 'About Our Company', slug: 'about-us', content: '## About Us\n\nWe are a leading logistics company...', published: true },
   { id: 'p2', title: 'Terms of Service', slug: 'terms', content: '## Terms of Service\n\nPlease read these terms carefully.', published: false },
+  { id: 'p3', title: 'Privacy Policy', slug: 'privacy-policy', content: '## Privacy Policy\n\nYour privacy is important to us. This policy describes how we collect, use, and protect your information.', published: true },
+  { id: 'p4', title: 'Cookie Policy', slug: 'cookie-policy', content: '## Cookie Policy\n\nWe use cookies to improve your experience on our website. Learn more about our cookie usage.', published: true },
+  { id: 'p5', title: 'Track Shipment', slug: 'track-shipment', content: '## Track Your Shipment\n\nEnter your tracking number to get real-time updates on your shipment status.', published: true },
+  { id: 'p6', title: 'Customer Portal', slug: 'customer-portal', content: '## Customer Portal\n\nAccess your account, view shipment history, and manage your logistics needs.', published: true },
+  { id: 'p7', title: 'Documentation', slug: 'documentation', content: '## Documentation\n\nFind all the necessary forms, guides, and documentation for your shipping needs.', published: true },
+  { id: 'p8', title: 'Industry Insights', slug: 'industry-insights', content: '## Industry Insights\n\nStay updated with the latest trends and insights in the logistics industry.', published: true },
+  { id: 'p9', title: 'Support Center', slug: 'support-center', content: '## Support Center\n\nGet help with your questions and find solutions to common issues.', published: true },
+  { id: 'p10', title: 'News & Updates', slug: 'news-updates', content: '## News & Updates\n\nStay informed about the latest company news and industry updates.', published: true },
+  { id: 'p11', title: 'Investor Relations', slug: 'investor-relations', content: '## Investor Relations\n\nInformation for investors and stakeholders about our company performance.', published: true },
+  { id: 'p12', title: 'Sustainability', slug: 'sustainability', content: '## Sustainability\n\nLearn about our commitment to sustainable logistics and environmental responsibility.', published: true },
+  { id: 'p13', title: 'Partner Network', slug: 'partner-network', content: '## Partner Network\n\nExplore opportunities to join our global network of logistics partners.', published: true },
 ];
 
 export const defaultSubmissions = [
@@ -29,12 +40,12 @@ export const defaultSubmissions = [
 ];
 
 export const defaultAboutData = {
-    title: "Your Trusted Logistics Partner Since 1998",
+    title: "Your Trusted Logistics Partner Since 2020",
     paragraph1: "SWENLOG has been at the forefront of global logistics, helping businesses of all sizes navigate the complexities of international trade. Our comprehensive suite of services and deep industry expertise make us the preferred choice for companies seeking reliable, efficient logistics solutions.",
     paragraph2: "With offices across major trade routes and a network of trusted partners worldwide, we provide seamless connectivity between markets, ensuring your cargo reaches its destination safely, on time, and cost-effectively.",
-    stat1_value: "2M+",
+    stat1_value: "50K+",
     stat1_label: "Shipments Handled",
-    stat2_value: "5000+",
+    stat2_value: "1000+",
     stat2_label: "Global Clients",
     values_title: "Our Core Values",
     values: [
@@ -85,10 +96,10 @@ export const defaultFooterData = {
   logoText: "SWENLOG",
   description: "Your trusted partner for comprehensive global logistics solutions. Connecting businesses worldwide with reliable, efficient shipping services.",
   socials: [
-    { name: 'Facebook', url: '#', icon: 'Facebook' },
-    { name: 'Twitter', url: '#', icon: 'Twitter' },
-    { name: 'Linkedin', url: '#', icon: 'Linkedin' },
-    { name: 'Instagram', url: '#', icon: 'Instagram' }
+    { name: 'LinkedIn', url: 'https://in.linkedin.com/company/swenlog-supply-chain-solutions-pvt-ltd', icon: 'Linkedin' },
+    { name: 'Instagram', url: 'https://www.instagram.com/swenlog_scs/', icon: 'Instagram' },
+    { name: 'Ambition Box', url: 'https://www.ambitionbox.com/overview/swenlog-supply-chain-solutions-overview', icon: 'Globe' },
+    { name: 'ZuabaCorp', url: 'https://www.zaubacorp.com/SWENLOG-SUPPLY-CHAIN-SOLUTIONS-PRIVATE-LIMITED-U63030TN2020PTC138697', icon: 'Building' }
   ],
   columns: [
     {
@@ -107,29 +118,29 @@ export const defaultFooterData = {
       links: [
         { name: 'About Us', url: '/about-us' },
         { name: 'Careers', url: '/careers' },
-        { name: 'News & Updates', url: '#' },
-        { name: 'Investor Relations', url: '#' },
-        { name: 'Sustainability', url: '#' },
-        { name: 'Partner Network', url: '#' }
+        { name: 'News & Updates', url: '/page/news-updates' },
+        { name: 'Investor Relations', url: '/page/investor-relations' },
+        { name: 'Sustainability', url: '/page/sustainability' },
+        { name: 'Partner Network', url: '/page/partner-network' }
       ]
     },
     {
       title: 'Resources',
       links: [
-        { name: 'Track Shipment', url: '#' },
-        { name: 'Customer Portal', url: '#' },
-        { name: 'Documentation', url: '#' },
-        { name: 'Industry Insights', url: '#' },
-        { name: 'Support Center', url: '#' },
+        { name: 'Track Shipment', url: '/page/track-shipment' },
+        { name: 'Customer Portal', url: '/page/customer-portal' },
+        { name: 'Documentation', url: '/page/documentation' },
+        { name: 'Industry Insights', url: '/page/industry-insights' },
+        { name: 'Support Center', url: '/page/support-center' },
         { name: 'Contact Us', url: '/contact' }
       ]
     }
   ],
   bottomText: "© 2024 SWENLOG. All rights reserved.",
   bottomLinks: [
-    { name: 'Privacy Policy', url: '#' },
-    { name: 'Terms of Service', url: '#' },
-    { name: 'Cookie Policy', url: '#' }
+    { name: 'Privacy Policy', url: '/page/privacy-policy' },
+    { name: 'Terms of Service', url: '/page/terms' },
+    { name: 'Cookie Policy', url: '/page/cookie-policy' }
   ]
 };
 

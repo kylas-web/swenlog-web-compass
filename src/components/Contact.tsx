@@ -41,8 +41,8 @@ const Contact = () => {
                   <MapPin className="h-6 w-6" />
                 </div>
                 <div>
-                  <div className="font-semibold">Headquarters</div>
-                  <div className="text-gray-300">1234 Logistics Way<br />Global Trade Center, NY 10001</div>
+                  <div className="font-semibold">Address</div>
+                  <div className="text-gray-300">First Floor, 630, 4th C Main Rd<br />Bhuvanagiri, OMBR Layout<br />Kasturi Nagar, Bengaluru<br />Karnataka 560043</div>
                 </div>
               </div>
               
@@ -52,7 +52,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="font-semibold">Business Hours</div>
-                  <div className="text-gray-300">24/7 Customer Support<br />Mon-Fri: 8AM-6PM EST</div>
+                  <div className="text-gray-300">Opens 9:30 AM To 5 PM<br />Monday - Friday</div>
                 </div>
               </div>
             </div>
@@ -60,45 +60,149 @@ const Contact = () => {
 
           <div>
             <form className="bg-gray-800 p-8 rounded-xl">
-              <h3 className="text-2xl font-bold mb-6">Request a Quote</h3>
+              <h3 className="text-2xl font-bold mb-6">Request a Detailed Quote</h3>
+              
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <input
                   type="text"
-                  placeholder="First Name"
+                  placeholder="First Name*"
                   className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  required
                 />
                 <input
                   type="text"
-                  placeholder="Last Name"
+                  placeholder="Last Name*"
                   className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  required
                 />
               </div>
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none mb-4"
-              />
+              
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <input
+                  type="email"
+                  placeholder="Email Address*"
+                  className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  required
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone Number*"
+                  className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  required
+                />
+              </div>
+              
               <input
                 type="text"
-                placeholder="Company Name"
+                placeholder="Company Name*"
                 className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none mb-4"
+                required
               />
-              <select className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none mb-4">
-                <option>Select Service</option>
+              
+              <select className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none mb-4" required>
+                <option value="">Select Service*</option>
                 <option>Ocean Freight</option>
                 <option>Air Freight</option>
                 <option>Ground Transportation</option>
                 <option>Customs Brokerage</option>
-                <option>Warehousing</option>
+                <option>Warehousing & Distribution</option>
                 <option>Supply Chain Solutions</option>
               </select>
+              
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <input
+                  type="text"
+                  placeholder="Origin Location*"
+                  className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Destination Location*"
+                  className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                  required
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <input
+                  type="text"
+                  placeholder="Cargo Weight (kg)"
+                  className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder="Cargo Dimensions (LxWxH)"
+                  className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                />
+              </div>
+              
+              <select className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none mb-4">
+                <option value="">Cargo Type</option>
+                <option>General Cargo</option>
+                <option>Hazardous Materials</option>
+                <option>Temperature Controlled</option>
+                <option>Oversized/Heavy Lift</option>
+                <option>Perishable Goods</option>
+                <option>Electronics</option>
+                <option>Automotive Parts</option>
+                <option>Textiles</option>
+                <option>Other</option>
+              </select>
+              
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <input
+                  type="date"
+                  placeholder="Preferred Ship Date"
+                  className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none"
+                />
+                <select className="bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none">
+                  <option value="">Urgency Level</option>
+                  <option>Standard</option>
+                  <option>Express</option>
+                  <option>Urgent (24-48 hours)</option>
+                  <option>Emergency</option>
+                </select>
+              </div>
+              
+              <div className="mb-4">
+                <label className="block text-gray-300 text-sm mb-2">Additional Services Needed:</label>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <label className="flex items-center text-gray-300">
+                    <input type="checkbox" className="mr-2 text-blue-500" />
+                    Insurance
+                  </label>
+                  <label className="flex items-center text-gray-300">
+                    <input type="checkbox" className="mr-2 text-blue-500" />
+                    Customs Clearance
+                  </label>
+                  <label className="flex items-center text-gray-300">
+                    <input type="checkbox" className="mr-2 text-blue-500" />
+                    Door-to-Door Delivery
+                  </label>
+                  <label className="flex items-center text-gray-300">
+                    <input type="checkbox" className="mr-2 text-blue-500" />
+                    Packaging Services
+                  </label>
+                  <label className="flex items-center text-gray-300">
+                    <input type="checkbox" className="mr-2 text-blue-500" />
+                    Warehousing
+                  </label>
+                  <label className="flex items-center text-gray-300">
+                    <input type="checkbox" className="mr-2 text-blue-500" />
+                    Real-time Tracking
+                  </label>
+                </div>
+              </div>
+              
               <textarea
-                placeholder="Tell us about your shipping needs..."
+                placeholder="Detailed Description of Your Shipping Requirements..."
                 rows={4}
                 className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none mb-6"
               ></textarea>
+              
               <button className="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-900 transition-colors font-semibold">
-                Get My Quote
+                Get Detailed Quote
               </button>
             </form>
           </div>

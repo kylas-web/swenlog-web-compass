@@ -1,3 +1,4 @@
+
 import { ArrowRight, Globe, Clock, Shield } from 'lucide-react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { defaultHeroData } from '@/data/defaults';
@@ -55,7 +56,7 @@ const Hero = () => {
               className="rounded-lg shadow-2xl"
             />
             <div className="absolute -bottom-6 -left-6 bg-white text-blue-800 p-6 rounded-lg shadow-lg">
-              <div className="text-2xl font-bold">25+ Years</div>
+              <div className="text-2xl font-bold">10+ Years</div>
               <div className="text-sm">Industry Experience</div>
             </div>
           </div>
