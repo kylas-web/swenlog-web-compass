@@ -70,8 +70,17 @@ const LiveChat = () => {
     }
     
     if (response && typeof response === 'object') {
-      // Try different possible text properties
-      if (response.message?.content) {
+      // Handle the specific Puter.js format with message.content array
+      if (response.message?.content && Array.isArray(response.message.content)) {
+        const textContent = response.message.content
+          .filter((item: any) => item.type === 'text')
+          .map((item: any) => item.text)
+          .join(' ');
+        if (textContent) return textContent;
+      }
+      
+      // Try other possible text properties
+      if (response.message?.content && typeof response.message.content === 'string') {
         return String(response.message.content);
       }
       if (response.content) {
@@ -83,13 +92,18 @@ const LiveChat = () => {
       if (response.response) {
         return String(response.response);
       }
+      
       // If it's an array, try to get the first item
       if (Array.isArray(response) && response.length > 0) {
         return extractTextFromResponse(response[0]);
       }
-      // If object has toString method, use it
+      
+      // Use the toString method if available (Puter.js provides this)
       if (response.toString && typeof response.toString === 'function') {
-        return response.toString();
+        const toStringResult = response.toString();
+        if (toStringResult && toStringResult !== '[object Object]') {
+          return toStringResult;
+        }
       }
     }
     
