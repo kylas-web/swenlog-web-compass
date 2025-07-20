@@ -61,6 +61,42 @@ const LiveChat = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const extractTextFromResponse = (response: any): string => {
+    console.log('Raw AI Response:', response);
+    
+    // Handle different response formats
+    if (typeof response === 'string') {
+      return response;
+    }
+    
+    if (response && typeof response === 'object') {
+      // Try different possible text properties
+      if (response.message?.content) {
+        return String(response.message.content);
+      }
+      if (response.content) {
+        return String(response.content);
+      }
+      if (response.text) {
+        return String(response.text);
+      }
+      if (response.response) {
+        return String(response.response);
+      }
+      // If it's an array, try to get the first item
+      if (Array.isArray(response) && response.length > 0) {
+        return extractTextFromResponse(response[0]);
+      }
+      // If object has toString method, use it
+      if (response.toString && typeof response.toString === 'function') {
+        return response.toString();
+      }
+    }
+    
+    // Fallback
+    return 'I apologize, but I encountered an issue processing the response. Please try again.';
+  };
+
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isTyping) return;
 
@@ -94,9 +130,11 @@ const LiveChat = () => {
 
         const response = await window.puter.ai.chat(logisticsContext, true); // testMode = true
         
+        const responseText = extractTextFromResponse(response);
+        
         const agentMessage: Message = {
           id: (Date.now() + 1).toString(),
-          content: response?.message?.content || response?.toString() || 'I apologize, but I encountered an issue. Please try again.',
+          content: responseText,
           sender: 'agent',
           timestamp: new Date()
         };
@@ -165,7 +203,7 @@ const LiveChat = () => {
                   <div className="flex items-start space-x-2">
                     {message.sender === 'agent' && <Bot className="h-4 w-4 mt-0.5 flex-shrink-0" />}
                     {message.sender === 'user' && <User className="h-4 w-4 mt-0.5 flex-shrink-0" />}
-                    <p className="text-sm">{message.content}</p>
+                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                   </div>
                   <p className="text-xs opacity-70 mt-1">
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
