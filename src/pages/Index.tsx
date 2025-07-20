@@ -5,6 +5,7 @@ import Services from '../components/Services';
 import About from '../components/About';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import LiveChat from '../components/LiveChat';
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
       <About />
       <Contact />
       <Footer />
+      <LiveChat />
     </div>
   );
 };

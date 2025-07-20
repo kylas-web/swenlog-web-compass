@@ -7,7 +7,7 @@ declare global {
   interface Window {
     puter: {
       ai: {
-        chat: (message: string) => Promise<any>;
+        chat: (message: string, testMode?: boolean) => Promise<any>;
       };
     };
   }
@@ -17,13 +17,29 @@ interface AIAdminAssistantProps {
   context: string;
 }
 
+interface TrainingData {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+  keywords: string[];
+  createdAt: Date;
+}
+
 const AIAdminAssistant = ({ context }: AIAdminAssistantProps) => {
   const [aiResponse, setAiResponse] = useState<string>('');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiQuestion, setAiQuestion] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [trainingData, setTrainingData] = useState<TrainingData[]>([]);
 
   useEffect(() => {
+    // Load training data from localStorage
+    const savedData = localStorage.getItem('chatbot-training-data');
+    if (savedData) {
+      setTrainingData(JSON.parse(savedData));
+    }
+
     // Load context-specific suggestions
     switch (context) {
       case 'hero':
@@ -45,6 +61,13 @@ const AIAdminAssistant = ({ context }: AIAdminAssistantProps) => {
           'How to improve quote conversion rates?',
           'What information is essential for shipping quotes?',
           'Best practices for lead qualification'
+        ]);
+        break;
+      case 'chatbot':
+        setSuggestions([
+          'How to improve chatbot training data?',
+          'What are common logistics questions customers ask?',
+          'Best practices for AI assistant responses'
         ]);
         break;
       default:
@@ -76,9 +99,18 @@ const AIAdminAssistant = ({ context }: AIAdminAssistantProps) => {
       if (window.puter && window.puter.ai) {
         console.log('Admin AI request:', queryText);
         
-        const response = await window.puter.ai.chat(
-          `You are an AI assistant for a logistics company admin dashboard. Context: ${context}. Please provide expert advice about: ${queryText}`
-        );
+        // Create context from training data
+        const trainingContext = trainingData.length > 0 
+          ? trainingData.map(entry => 
+              `Q: ${entry.question}\nA: ${entry.answer}\nCategory: ${entry.category}\nKeywords: ${entry.keywords.join(', ')}`
+            ).join('\n\n')
+          : '';
+
+        const contextualPrompt = `You are an AI assistant for a logistics company admin dashboard. Context: ${context}. ${
+          trainingContext ? `Here is our current training data for reference:\n\n${trainingContext}\n\n` : ''
+        }Please provide expert advice about: ${queryText}`;
+        
+        const response = await window.puter.ai.chat(contextualPrompt, true); // testMode = true
         
         console.log('Admin AI Response:', response);
         
@@ -105,7 +137,10 @@ const AIAdminAssistant = ({ context }: AIAdminAssistantProps) => {
       </div>
       
       <p className="text-sm text-gray-600 mb-4">
-        Get AI-powered insights and suggestions for your {context} management.
+        Get AI-powered insights and suggestions for your {context} management. 
+        {trainingData.length > 0 && (
+          <span className="text-green-600"> Using {trainingData.length} trained responses.</span>
+        )}
       </p>
 
       {/* Quick Suggestions */}

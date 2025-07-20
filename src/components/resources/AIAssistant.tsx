@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bot } from 'lucide-react';
 
 // Declare puter as global to avoid TypeScript errors
@@ -7,16 +7,34 @@ declare global {
   interface Window {
     puter: {
       ai: {
-        chat: (message: string) => Promise<any>;
+        chat: (message: string, testMode?: boolean) => Promise<any>;
       };
     };
   }
+}
+
+interface TrainingData {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+  keywords: string[];
+  createdAt: Date;
 }
 
 const AIAssistant = () => {
   const [aiResponse, setAiResponse] = useState<string>('');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiQuestion, setAiQuestion] = useState('');
+  const [trainingData, setTrainingData] = useState<TrainingData[]>([]);
+
+  useEffect(() => {
+    // Load training data from localStorage
+    const savedData = localStorage.getItem('chatbot-training-data');
+    if (savedData) {
+      setTrainingData(JSON.parse(savedData));
+    }
+  }, []);
 
   const handleAiQuery = async () => {
     if (!aiQuestion.trim()) return;
@@ -37,9 +55,18 @@ const AIAssistant = () => {
       if (window.puter && window.puter.ai) {
         console.log('Puter.js loaded, making AI request...');
         
-        const response = await window.puter.ai.chat(
-          `You are SwenAI, a logistics and supply chain expert. Please provide helpful advice about: ${aiQuestion}`
-        );
+        // Create context from training data
+        const trainingContext = trainingData.length > 0 
+          ? trainingData.map(entry => 
+              `Q: ${entry.question}\nA: ${entry.answer}\nCategory: ${entry.category}\nKeywords: ${entry.keywords.join(', ')}`
+            ).join('\n\n')
+          : '';
+
+        const contextualPrompt = `You are SwenAI, a logistics and supply chain expert for SWENLOG Supply Chain Solutions. ${
+          trainingContext ? `Use the following training data to provide accurate answers when relevant:\n\n${trainingContext}\n\n` : ''
+        }Please provide helpful advice about: ${aiQuestion}`;
+
+        const response = await window.puter.ai.chat(contextualPrompt, true); // testMode = true
         
         console.log('AI Response received:', response);
         
@@ -65,7 +92,7 @@ const AIAssistant = () => {
           <h3 className="text-2xl font-bold">SwenAI Logistics Assistant</h3>
         </div>
         <p className="mb-4 text-purple-100">
-          Ask SwenAI any logistics-related question and get instant expert advice powered by advanced AI.
+          Ask SwenAI any logistics-related question and get instant expert advice powered by advanced AI and our trained knowledge base.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-3">

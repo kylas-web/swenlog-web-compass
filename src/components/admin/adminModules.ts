@@ -1,7 +1,7 @@
 
 import { 
   LayoutDashboard, Building, Wrench, PanelTop, PanelBottom, Globe, FileText, 
-  Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge 
+  Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot 
 } from "lucide-react";
 import HeroManager from "./HeroManager";
 import AboutManager from "./AboutManager";
@@ -16,6 +16,7 @@ import CrmManager from "./CrmManager";
 import WhatsappManager from "./WhatsappManager";
 import PerformanceManager from "./PerformanceManager";
 import SecurityManager from "./SecurityManager";
+import ChatbotManager from "./ChatbotManager";
 
 export const adminModules = [
   {
@@ -84,7 +85,12 @@ export const adminModules = [
     icon: MessageSquare,
     component: WhatsappManager,
   },
-  // New sections: Performance and Security Modules
+  {
+    key: 'chatbot',
+    label: 'Chatbot Training',
+    icon: Bot,
+    component: ChatbotManager,
+  },
   {
     key: 'performance',
     label: 'Performance Tools',
