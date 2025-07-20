@@ -142,7 +142,7 @@ const LiveChat = () => {
         
         User question: ${inputMessage}`;
 
-        const response = await window.puter.ai.chat(logisticsContext, true); // testMode = true
+        const response = await window.puter.ai.chat(logisticsContext); // Removed testMode to get real AI responses
         
         const responseText = extractTextFromResponse(response);
         
