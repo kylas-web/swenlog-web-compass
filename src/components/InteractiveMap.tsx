@@ -3,6 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Card, CardContent } from './ui/card';
 import { MapPin, Phone, Mail } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface BranchLocation {
   id: string;
@@ -87,6 +88,28 @@ const InteractiveMap = () => {
   const [mapboxToken, setMapboxToken] = useState('');
 
   useEffect(() => {
+    // Fetch Mapbox token from our secure edge function
+    const fetchMapboxToken = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke('get-mapbox-token');
+        
+        if (error) {
+          console.error('Error fetching Mapbox token:', error);
+          return;
+        }
+
+        if (data?.token) {
+          setMapboxToken(data.token);
+        }
+      } catch (error) {
+        console.error('Failed to fetch Mapbox token:', error);
+      }
+    };
+
+    fetchMapboxToken();
+  }, []);
+
+  useEffect(() => {
     if (!mapContainer.current || !mapboxToken) return;
 
     mapboxgl.accessToken = mapboxToken;
@@ -131,16 +154,10 @@ const InteractiveMap = () => {
     return (
       <div className="bg-gray-100 rounded-lg p-8 text-center">
         <h3 className="text-lg font-semibold mb-4">Interactive Branch Locations Map</h3>
-        <p className="text-gray-600 mb-4">Please enter your Mapbox public token to view the interactive map:</p>
-        <input
-          type="text"
-          placeholder="Enter Mapbox Public Token"
-          className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          onChange={(e) => setMapboxToken(e.target.value)}
-        />
-        <p className="text-sm text-gray-500 mt-2">
-          Get your token from <a href="https://mapbox.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">mapbox.com</a>
-        </p>
+        <p className="text-gray-600 mb-4">Loading interactive map...</p>
+        <div className="animate-pulse">
+          <div className="bg-gray-300 h-64 rounded-lg"></div>
+        </div>
       </div>
     );
   }
