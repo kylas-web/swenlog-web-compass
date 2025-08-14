@@ -51,14 +51,14 @@ const HeaderManager = () => {
   };
 
   const handleNavItemChange = (itemIndex: number, field: string, value: string) => {
-    const newNavItems = [...formData.navigationItems];
+    const newNavItems = [...(formData.navigationItems || [])];
     const navItem = { ...newNavItems[itemIndex], [field]: value };
     newNavItems[itemIndex] = navItem as any; // Quick fix for TS issue with dropdown
     setFormData(prev => ({ ...prev, navigationItems: newNavItems }));
   };
   
   const handleDropdownItemChange = (itemIndex: number, subItemIndex: number, field: string, value: string) => {
-    const newNavItems = [...formData.navigationItems];
+    const newNavItems = [...(formData.navigationItems || [])];
     const newDropdown = [...(newNavItems[itemIndex].dropdown || [])];
     newDropdown[subItemIndex] = { ...newDropdown[subItemIndex], [field]: value };
     (newNavItems[itemIndex] as any).dropdown = newDropdown;
@@ -134,7 +134,7 @@ const HeaderManager = () => {
   };
 
   const handleEditNavItem = (index: number) => {
-    const item = formData.navigationItems[index];
+    const item = (formData.navigationItems || [])[index];
     setNavFormData({ 
       name: item.name, 
       url: item.url || '', 
@@ -145,7 +145,7 @@ const HeaderManager = () => {
   };
 
   const handleSaveNavItem = () => {
-    const newNavItems = [...formData.navigationItems];
+    const newNavItems = [...(formData.navigationItems || [])];
     if (editingNavIndex !== null) {
       newNavItems[editingNavIndex] = navFormData;
     } else {
@@ -156,7 +156,7 @@ const HeaderManager = () => {
   };
 
   const handleDeleteNavItem = (index: number) => {
-    const newNavItems = formData.navigationItems.filter((_, i) => i !== index);
+    const newNavItems = (formData.navigationItems || []).filter((_, i) => i !== index);
     setFormData(prev => ({ ...prev, navigationItems: newNavItems }));
   };
 
@@ -274,7 +274,7 @@ const HeaderManager = () => {
           </div>
 
           <div className="space-y-4">
-            {formData.navigationItems.map((item, index) => (
+            {(formData.navigationItems || []).map((item, index) => (
               <div key={index} className="border rounded-lg p-4 bg-muted/50">
                 <div className="flex justify-between items-center">
                   <div>

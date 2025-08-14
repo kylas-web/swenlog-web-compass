@@ -30,7 +30,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex space-x-8">
-            {headerData.navigationItems.map((item) => (
+            {(headerData.navigationItems || []).map((item) => (
               <div
                 key={item.name}
                 className="relative"
@@ -44,7 +44,7 @@ const Header = () => {
                 
                 {item.dropdown && activeDropdown === item.name && (
                   <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                    {item.dropdown.map((subItem) => (
+                    {(item.dropdown || []).map((subItem) => (
                       <Link
                         key={subItem.name}
                         to={subItem.url}
@@ -61,6 +61,14 @@ const Header = () => {
 
           {/* CTA / Auth Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
+            {!user && (
+              <Link
+                to={headerData.ctaButtonLink || "/contact"}
+                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                {headerData.ctaButtonText}
+              </Link>
+            )}
             {user ? (
               <>
                 {userRole === 'admin' && (
@@ -97,7 +105,7 @@ const Header = () => {
         {isMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4">
             <nav className="space-y-2">
-              {headerData.navigationItems.map((item) => (
+              {(headerData.navigationItems || []).map((item) => (
                 <div key={item.name}>
                   <Link
                     to={item.url || '#'}
@@ -108,6 +116,17 @@ const Header = () => {
                   </Link>
                 </div>
               ))}
+              
+              {!user && (
+                <Link
+                  to={headerData.ctaButtonLink || "/contact"}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors text-center"
+                >
+                  {headerData.ctaButtonText}
+                </Link>
+              )}
+              
                {user ? (
                 <>
                   {userRole === 'admin' && (
