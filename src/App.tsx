@@ -15,6 +15,9 @@ import AdminPage from "./pages/Admin";
 import DynamicPage from "./pages/DynamicPage";
 import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/AboutPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import CookiePolicyPage from "./pages/CookiePolicyPage";
 import CareersPage from "./pages/CareersPage";
 import ContactPage from "./pages/ContactPage";
 import ResourcesPage from "./pages/ResourcesPage";
@@ -86,6 +89,9 @@ const App = () => (
             <Route path="/industries/energy" element={<EnergyPage />} />
             
             <Route path="/page/:slug" element={<DynamicPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+            <Route path="/cookie-policy" element={<CookiePolicyPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

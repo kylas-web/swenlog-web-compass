@@ -1,7 +1,7 @@
 
 import { 
   LayoutDashboard, Building, Wrench, PanelTop, PanelBottom, Globe, FileText, 
-  Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot 
+  Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot, Settings 
 } from "lucide-react";
 import HeroManager from "./HeroManager";
 import AboutManager from "./AboutManager";
@@ -10,13 +10,14 @@ import HeaderManager from "./HeaderManager";
 import FooterManager from "./FooterManager";
 import CtaManager from "./CtaManager";
 import PageManager from "./PageManager";
-import MediaManager from "./MediaManager";
+import AdvancedMediaManager from "./AdvancedMediaManager";
 import QuoteManager from "./QuoteManager";
 import CrmManager from "./CrmManager";
 import WhatsappManager from "./WhatsappManager";
 import PerformanceManager from "./PerformanceManager";
 import SecurityManager from "./SecurityManager";
 import ChatbotManager from "./ChatbotManager";
+import GeneralSettingsManager from "./GeneralSettingsManager";
 
 export const adminModules = [
   {
@@ -63,9 +64,9 @@ export const adminModules = [
   },
   {
     key: 'media',
-    label: 'Media Library',
+    label: 'Advanced Media Library',
     icon: ImageIcon,
-    component: MediaManager,
+    component: AdvancedMediaManager,
   },
   {
     key: 'quote',
@@ -102,6 +103,12 @@ export const adminModules = [
     label: 'Security Tools',
     icon: Shield,
     component: SecurityManager,
+  },
+  {
+    key: 'settings',
+    label: 'General Settings',
+    icon: Settings,
+    component: GeneralSettingsManager,
   },
 ];
 
