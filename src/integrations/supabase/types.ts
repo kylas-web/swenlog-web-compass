@@ -7,13 +7,49 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
   }
   public: {
     Tables: {
+      client_shipments: {
+        Row: {
+          description: string | null
+          destination: string
+          eta: string | null
+          id: string
+          last_update: string | null
+          origin: string
+          status: string
+          tracking_number: string
+          user_id: string
+        }
+        Insert: {
+          description?: string | null
+          destination: string
+          eta?: string | null
+          id?: string
+          last_update?: string | null
+          origin: string
+          status?: string
+          tracking_number: string
+          user_id: string
+        }
+        Update: {
+          description?: string | null
+          destination?: string
+          eta?: string | null
+          id?: string
+          last_update?: string | null
+          origin?: string
+          status?: string
+          tracking_number?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       crm_contacts: {
         Row: {
           created_at: string | null
@@ -112,6 +148,71 @@ export type Database = {
           },
         ]
       }
+      departments: {
+        Row: {
+          budget: number | null
+          created_at: string
+          description: string | null
+          id: string
+          manager_id: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          budget?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          manager_id?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          budget?: number | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          manager_id?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_departments_manager"
+            columns: ["manager_id"]
+            isOneToOne: false
+            referencedRelation: "team_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feature_toggles: {
+        Row: {
+          created_at: string
+          description: string | null
+          feature_key: string
+          id: string
+          is_enabled: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          feature_key: string
+          id?: string
+          is_enabled?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          feature_key?: string
+          id?: string
+          is_enabled?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       media_items: {
         Row: {
           alt: string | null
@@ -178,6 +279,164 @@ export type Database = {
         }
         Relationships: []
       }
+      resource_configurations: {
+        Row: {
+          configuration: Json | null
+          created_at: string
+          id: string
+          is_enabled: boolean
+          resource_key: string
+          updated_at: string
+        }
+        Insert: {
+          configuration?: Json | null
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          resource_key: string
+          updated_at?: string
+        }
+        Update: {
+          configuration?: Json | null
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          resource_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sidebars: {
+        Row: {
+          auto_hide_breakpoint: string | null
+          content: string | null
+          created_at: string | null
+          id: string
+          is_floating: boolean | null
+          name: string
+          position: string
+        }
+        Insert: {
+          auto_hide_breakpoint?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          is_floating?: boolean | null
+          name: string
+          position?: string
+        }
+        Update: {
+          auto_hide_breakpoint?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          is_floating?: boolean | null
+          name?: string
+          position?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          id: string
+          setting_key: string
+          setting_value: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          setting_key: string
+          setting_value?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          setting_key?: string
+          setting_value?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      team_chat_messages: {
+        Row: {
+          attachments: Json | null
+          channel_id: string
+          created_at: string
+          id: string
+          message: string
+          message_type: string | null
+          sender_id: string
+        }
+        Insert: {
+          attachments?: Json | null
+          channel_id?: string
+          created_at?: string
+          id?: string
+          message: string
+          message_type?: string | null
+          sender_id: string
+        }
+        Update: {
+          attachments?: Json | null
+          channel_id?: string
+          created_at?: string
+          id?: string
+          message?: string
+          message_type?: string | null
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      team_members: {
+        Row: {
+          created_at: string
+          department: string | null
+          hire_date: string | null
+          id: string
+          is_active: boolean
+          manager_id: string | null
+          permissions: string[] | null
+          role: string
+          salary: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          hire_date?: string | null
+          id?: string
+          is_active?: boolean
+          manager_id?: string | null
+          permissions?: string[] | null
+          role: string
+          salary?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          hire_date?: string | null
+          id?: string
+          is_active?: boolean
+          manager_id?: string | null
+          permissions?: string[] | null
+          role?: string
+          salary?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_team_members_manager"
+            columns: ["manager_id"]
+            isOneToOne: false
+            referencedRelation: "team_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -193,6 +452,45 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      whatsapp_contacts: {
+        Row: {
+          created_at: string
+          id: string
+          is_blocked: boolean | null
+          last_seen: string | null
+          name: string
+          notes: string | null
+          phone_number: string
+          profile_picture_url: string | null
+          tags: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_blocked?: boolean | null
+          last_seen?: string | null
+          name: string
+          notes?: string | null
+          phone_number: string
+          profile_picture_url?: string | null
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_blocked?: boolean | null
+          last_seen?: string | null
+          name?: string
+          notes?: string | null
+          phone_number?: string
+          profile_picture_url?: string | null
+          tags?: string[] | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -219,6 +517,50 @@ export type Database = {
           trigger?: string | null
         }
         Relationships: []
+      }
+      whatsapp_messages: {
+        Row: {
+          contact_id: string
+          created_at: string
+          id: string
+          is_outgoing: boolean
+          is_read: boolean | null
+          media_url: string | null
+          message_text: string | null
+          message_type: string | null
+          timestamp: string
+        }
+        Insert: {
+          contact_id: string
+          created_at?: string
+          id?: string
+          is_outgoing: boolean
+          is_read?: boolean | null
+          media_url?: string | null
+          message_text?: string | null
+          message_type?: string | null
+          timestamp?: string
+        }
+        Update: {
+          contact_id?: string
+          created_at?: string
+          id?: string
+          is_outgoing?: boolean
+          is_read?: boolean | null
+          media_url?: string | null
+          message_text?: string | null
+          message_type?: string | null
+          timestamp?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_messages_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_contacts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       whatsapp_settings: {
         Row: {
