@@ -1,390 +1,251 @@
-
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Scan, Upload, FileText, Download, Eye, Check, AlertCircle, Camera } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Upload, FileText, Download, Scan, CheckCircle, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const DocumentScannerPage = () => {
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [scanResults, setScanResults] = useState<any[]>([]);
-  const [isScanning, setIsScanning] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<any>(null);
+  const [scannedText, setScannedText] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [extractedData, setExtractedData] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files || []);
-    setUploadedFiles(prev => [...prev, ...files]);
-  };
-
-  const removeFile = (index: number) => {
-    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
-    setScanResults(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const scanDocuments = async () => {
-    if (uploadedFiles.length === 0) return;
-    
-    setIsScanning(true);
-    
-    // Simulate AI scanning with progressive results
-    for (let i = 0; i < uploadedFiles.length; i++) {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const mockResult = {
-        fileName: uploadedFiles[i].name,
-        documentType: getDocumentType(uploadedFiles[i].name),
-        confidence: 85 + Math.random() * 10,
-        extractedData: generateMockExtractedData(uploadedFiles[i].name),
-        issues: generateMockIssues(),
-        status: Math.random() > 0.8 ? 'warning' : 'success',
-        processedAt: new Date().toLocaleString()
-      };
-      
-      setScanResults(prev => [...prev, mockResult]);
-    }
-    
-    setIsScanning(false);
-  };
-
-  const getDocumentType = (fileName: string) => {
-    const name = fileName.toLowerCase();
-    if (name.includes('invoice')) return 'Commercial Invoice';
-    if (name.includes('packing')) return 'Packing List';
-    if (name.includes('bill') || name.includes('bl')) return 'Bill of Lading';
-    if (name.includes('certificate')) return 'Certificate of Origin';
-    if (name.includes('customs')) return 'Customs Declaration';
-    return 'Shipping Document';
-  };
-
-  const generateMockExtractedData = (fileName: string) => {
-    const baseData = {
-      documentNumber: `DOC-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
-      date: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-      shipper: 'Global Trading Co.',
-      consignee: 'International Imports Ltd.',
-      totalValue: `$${(Math.random() * 50000 + 5000).toFixed(2)}`,
-      currency: 'USD'
-    };
-
-    const docType = getDocumentType(fileName);
-    
-    switch (docType) {
-      case 'Commercial Invoice':
-        return {
-          ...baseData,
-          items: [
-            { description: 'Electronic Components', quantity: '500 PCS', unitPrice: '$12.50', total: '$6,250.00' },
-            { description: 'Packaging Materials', quantity: '100 KG', unitPrice: '$8.75', total: '$875.00' }
-          ],
-          paymentTerms: 'Net 30 Days',
-          incoterms: 'FOB Shanghai'
-        };
-      case 'Bill of Lading':
-        return {
-          ...baseData,
-          vesselName: 'EVER GLORY',
-          voyageNumber: 'EG-2024-15',
-          portOfLoading: 'Shanghai, China',
-          portOfDischarge: 'Los Angeles, USA',
-          containerNumber: 'MSKU-7439871',
-          sealNumber: 'SL-896547'
-        };
-      case 'Packing List':
-        return {
-          ...baseData,
-          totalPackages: '45 CTNS',
-          grossWeight: '2,850 KG',
-          netWeight: '2,340 KG',
-          dimensions: '120x80x90 CM',
-          packages: [
-            { cartonNo: '1-15', description: 'Electronic Components', weight: '950 KG' },
-            { cartonNo: '16-30', description: 'Accessories', weight: '750 KG' },
-            { cartonNo: '31-45', description: 'Manuals & Documentation', weight: '640 KG' }
-          ]
-        };
-      default:
-        return baseData;
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.type.startsWith('image/') || file.type === 'application/pdf') {
+        setUploadedFile(file);
+        toast.success('File uploaded successfully');
+      } else {
+        toast.error('Please upload an image or PDF file');
+      }
     }
   };
 
-  const generateMockIssues = () => {
-    const possibleIssues = [
-      { type: 'warning', message: 'Date format may need verification' },
-      { type: 'info', message: 'Currency conversion rate applied' },
-      { type: 'warning', message: 'Signature area appears blurred' },
-      { type: 'error', message: 'Required field appears to be missing' }
-    ];
+  const handleScan = async () => {
+    if (!uploadedFile) {
+      toast.error('Please upload a document first');
+      return;
+    }
+
+    setIsProcessing(true);
     
-    return Math.random() > 0.6 ? [possibleIssues[Math.floor(Math.random() * possibleIssues.length)]] : [];
+    // Simulate OCR processing
+    setTimeout(() => {
+      const mockExtractedText = `COMMERCIAL INVOICE
+
+Bill of Lading No: BL123456789
+Invoice No: INV-2024-001
+Date: ${new Date().toLocaleDateString()}
+
+SHIPPER:
+Acme Corporation
+123 Export Street
+New York, NY 10001
+USA
+
+CONSIGNEE:
+Global Imports Ltd
+456 Import Avenue
+London, UK SW1A 1AA
+
+DESCRIPTION OF GOODS:
+- Electronic Components (HS Code: 8542.39)
+- Quantity: 1000 pieces
+- Unit Price: $25.00
+- Total Value: $25,000.00
+
+SHIPPING TERMS: FOB
+PAYMENT TERMS: Letter of Credit
+INCOTERMS: CIF London
+
+Total Invoice Value: USD $25,000.00`;
+
+      setScannedText(mockExtractedText);
+      
+      setExtractedData({
+        documentType: 'Commercial Invoice',
+        bolNumber: 'BL123456789',
+        invoiceNumber: 'INV-2024-001',
+        totalValue: '$25,000.00',
+        shipper: 'Acme Corporation',
+        consignee: 'Global Imports Ltd',
+        goods: 'Electronic Components',
+        confidence: 96
+      });
+      
+      setIsProcessing(false);
+      toast.success('Document scanned successfully');
+    }, 3000);
   };
 
-  const downloadData = (result: any) => {
-    const dataStr = JSON.stringify(result.extractedData, null, 2);
-    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+  const exportData = () => {
+    if (!extractedData) return;
     
-    const exportFileDefaultName = `extracted_data_${result.fileName.split('.')[0]}.json`;
+    const dataStr = JSON.stringify(extractedData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
     
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
-    linkElement.click();
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `document-data-${Date.now()}.json`;
+    link.click();
+    
+    URL.revokeObjectURL(url);
+    toast.success('Data exported successfully');
   };
 
   return (
     <>
       <Header />
       <main className="pt-16">
-        <div className="bg-white py-24 sm:py-32">
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <Scan className="h-12 w-12 text-purple-600 mx-auto mb-4" />
-              <h1 className="text-3xl font-bold text-gray-900">AI Document Scanner & Processor</h1>
-              <p className="mt-4 text-lg text-gray-600">
-                Advanced AI-powered extraction of data from shipping and logistics documents
+        <div className="bg-gradient-to-br from-green-50 to-blue-50 py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center mb-12">
+              <Scan className="h-16 w-16 text-green-600 mx-auto mb-6" />
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-4">
+                Document Scanner
+              </h1>
+              <p className="text-lg leading-8 text-gray-600">
+                AI-powered OCR to extract data from shipping documents
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8">
-              {/* Upload Panel */}
-              <div className="lg:col-span-1">
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Document Upload</h3>
-                  
-                  <div 
-                    className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-purple-400 transition-colors cursor-pointer"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-600 mb-2">Click to upload documents</p>
-                    <p className="text-sm text-gray-500">Supports PDF, JPG, PNG files</p>
-                    <p className="text-xs text-gray-400 mt-2">Max file size: 10MB</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Upload className="h-5 w-5" />
+                    Upload Document
+                  </CardTitle>
+                  <CardDescription>
+                    Upload invoices, bills of lading, or customs documents
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*,.pdf"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                    <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-600 mb-4">
+                      Drag and drop your document here, or click to browse
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      Choose File
+                    </Button>
                   </div>
-                  
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    multiple
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
 
-                  {/* Camera Capture Option */}
-                  <button className="w-full mt-4 flex items-center justify-center px-4 py-2 bg-purple-100 text-purple-700 rounded-md hover:bg-purple-200 transition-colors">
-                    <Camera className="h-4 w-4 mr-2" />
-                    Capture with Camera
-                  </button>
-
-                  {/* Uploaded Files List */}
-                  {uploadedFiles.length > 0 && (
-                    <div className="mt-6">
-                      <h4 className="font-medium text-gray-800 mb-3">Uploaded Files</h4>
-                      <div className="space-y-2">
-                        {uploadedFiles.map((file, index) => (
-                          <div key={index} className="flex items-center justify-between p-3 bg-white rounded-md border">
-                            <div className="flex items-center">
-                              <FileText className="h-4 w-4 text-gray-500 mr-2" />
-                              <span className="text-sm text-gray-700 truncate max-w-32">{file.name}</span>
-                            </div>
-                            <button
-                              onClick={() => removeFile(index)}
-                              className="text-red-500 hover:text-red-700 text-sm"
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ))}
+                  {uploadedFile && (
+                    <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                          <span className="font-medium">{uploadedFile.name}</span>
+                        </div>
+                        <Badge variant="secondary">
+                          {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
+                        </Badge>
                       </div>
                     </div>
                   )}
 
-                  {/* Scan Button */}
-                  <button
-                    onClick={scanDocuments}
-                    disabled={isScanning || uploadedFiles.length === 0}
-                    className="w-full mt-6 px-6 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  <Button 
+                    onClick={handleScan} 
+                    className="w-full" 
+                    disabled={!uploadedFile || isProcessing}
                   >
-                    {isScanning ? (
-                      <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                        AI Scanning...
-                      </>
-                    ) : (
-                      <>
-                        <Scan className="h-5 w-5 mr-2" />
-                        Scan with AI
-                      </>
-                    )}
-                  </button>
+                    {isProcessing ? 'Processing...' : 'Scan Document'}
+                  </Button>
 
-                  {/* Document Types Info */}
-                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-medium text-blue-800 mb-2">Supported Documents</h4>
-                    <ul className="text-sm text-blue-700 space-y-1">
-                      <li>• Commercial Invoices</li>
-                      <li>• Bills of Lading</li>
-                      <li>• Packing Lists</li>
-                      <li>• Certificates of Origin</li>
-                      <li>• Customs Declarations</li>
-                      <li>• Insurance Certificates</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Results Panel */}
-              <div className="lg:col-span-2">
-                {scanResults.length > 0 && (
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-gray-800">Scan Results</h3>
-                      <div className="text-sm text-gray-600">
-                        {scanResults.length} document{scanResults.length !== 1 ? 's' : ''} processed
-                      </div>
-                    </div>
-
-                    {/* Results Grid */}
-                    <div className="grid gap-4">
-                      {scanResults.map((result, index) => (
-                        <div key={index} className="bg-white border border-gray-200 rounded-lg p-6">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center">
-                              <div className={`w-3 h-3 rounded-full mr-3 ${
-                                result.status === 'success' ? 'bg-green-500' : 
-                                result.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'
-                              }`}></div>
-                              <div>
-                                <h4 className="font-medium text-gray-900">{result.fileName}</h4>
-                                <p className="text-sm text-gray-600">{result.documentType}</p>
-                              </div>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <span className="text-sm text-gray-500">
-                                {result.confidence.toFixed(1)}% confidence
-                              </span>
-                              <button
-                                onClick={() => setSelectedDocument(result)}
-                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                              >
-                                <Eye className="h-4 w-4" />
-                              </button>
-                              <button
-                                onClick={() => downloadData(result)}
-                                className="p-2 text-green-600 hover:bg-green-50 rounded-md transition-colors"
-                              >
-                                <Download className="h-4 w-4" />
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* Quick Preview */}
-                          <div className="grid md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                              <span className="text-sm font-medium text-gray-700">Document #:</span>
-                              <span className="text-sm text-gray-600 ml-2">{result.extractedData.documentNumber}</span>
-                            </div>
-                            <div>
-                              <span className="text-sm font-medium text-gray-700">Date:</span>
-                              <span className="text-sm text-gray-600 ml-2">{result.extractedData.date}</span>
-                            </div>
-                            <div>
-                              <span className="text-sm font-medium text-gray-700">Value:</span>
-                              <span className="text-sm text-gray-600 ml-2">{result.extractedData.totalValue}</span>
-                            </div>
-                            <div>
-                              <span className="text-sm font-medium text-gray-700">Processed:</span>
-                              <span className="text-sm text-gray-600 ml-2">{result.processedAt}</span>
-                            </div>
-                          </div>
-
-                          {/* Issues */}
-                          {result.issues.length > 0 && (
-                            <div className="space-y-2">
-                              {result.issues.map((issue: any, issueIndex: number) => (
-                                <div key={issueIndex} className={`flex items-center p-2 rounded-md text-sm ${
-                                  issue.type === 'error' ? 'bg-red-50 text-red-700' :
-                                  issue.type === 'warning' ? 'bg-yellow-50 text-yellow-700' :
-                                  'bg-blue-50 text-blue-700'
-                                }`}>
-                                  <AlertCircle className="h-4 w-4 mr-2" />
-                                  {issue.message}
-                                </div>
-                              ))}
-                            </div>
-                          )}
+                  {extractedData && (
+                    <div className="space-y-4">
+                      <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-semibold text-blue-900">Extracted Data</h4>
+                          <Badge className="bg-green-100 text-green-800">
+                            {extractedData.confidence}% confidence
+                          </Badge>
                         </div>
-                      ))}
+                        <div className="grid grid-cols-1 gap-2 text-sm">
+                          <div><strong>Type:</strong> {extractedData.documentType}</div>
+                          <div><strong>BOL No:</strong> {extractedData.bolNumber}</div>
+                          <div><strong>Invoice No:</strong> {extractedData.invoiceNumber}</div>
+                          <div><strong>Value:</strong> {extractedData.totalValue}</div>
+                        </div>
+                      </div>
+                      
+                      <Button onClick={exportData} variant="outline" className="w-full">
+                        <Download className="h-4 w-4 mr-2" />
+                        Export Data as JSON
+                      </Button>
                     </div>
-                  </div>
-                )}
+                  )}
+                </CardContent>
+              </Card>
 
-                {scanResults.length === 0 && !isScanning && (
-                  <div className="bg-gray-100 rounded-lg p-12 text-center">
-                    <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-700 mb-2">No documents scanned yet</h3>
-                    <p className="text-gray-600">Upload shipping documents to extract data with AI</p>
-                  </div>
-                )}
-              </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Extracted Text</CardTitle>
+                  <CardDescription>
+                    Raw text extracted from the document
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {scannedText ? (
+                    <Textarea
+                      value={scannedText}
+                      onChange={(e) => setScannedText(e.target.value)}
+                      rows={20}
+                      className="font-mono text-sm"
+                      placeholder="Extracted text will appear here..."
+                    />
+                  ) : (
+                    <div className="text-center py-12 text-gray-500">
+                      <FileText className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                      <p>Upload and scan a document to see extracted text</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
             </div>
 
-            {/* Detailed View Modal */}
-            {selectedDocument && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                  <div className="flex items-center justify-between p-6 border-b">
-                    <h3 className="text-xl font-semibold text-gray-900">
-                      {selectedDocument.fileName} - Extracted Data
-                    </h3>
-                    <button
-                      onClick={() => setSelectedDocument(null)}
-                      className="text-gray-500 hover:text-gray-700"
-                    >
-                      ✕
-                    </button>
+            <Card className="mt-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <AlertCircle className="h-5 w-5" />
+                  Supported Document Types
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4 border rounded-lg">
+                    <h4 className="font-semibold mb-2">Commercial Invoices</h4>
+                    <p className="text-sm text-gray-600">Extract invoice numbers, amounts, and item details</p>
                   </div>
-                  
-                  <div className="p-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {Object.entries(selectedDocument.extractedData).map(([key, value]) => (
-                        <div key={key} className="border-b border-gray-200 pb-2">
-                          <dt className="text-sm font-medium text-gray-700 capitalize">
-                            {key.replace(/([A-Z])/g, ' $1').trim()}
-                          </dt>
-                          <dd className="text-sm text-gray-900 mt-1">
-                            {Array.isArray(value) ? (
-                              <div className="space-y-1">
-                                {value.map((item: any, index: number) => (
-                                  <div key={index} className="text-xs bg-gray-50 p-2 rounded">
-                                    {typeof item === 'object' ? JSON.stringify(item) : item}
-                                  </div>
-                                ))}
-                              </div>
-                            ) : typeof value === 'object' ? (
-                              <pre className="text-xs bg-gray-50 p-2 rounded overflow-x-auto">
-                                {JSON.stringify(value, null, 2)}
-                              </pre>
-                            ) : (
-                              value?.toString()
-                            )}
-                          </dd>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="mt-6 flex justify-end">
-                      <button
-                        onClick={() => downloadData(selectedDocument)}
-                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex items-center"
-                      >
-                        <Download className="h-4 w-4 mr-2" />
-                        Download JSON
-                      </button>
-                    </div>
+                  <div className="p-4 border rounded-lg">
+                    <h4 className="font-semibold mb-2">Bills of Lading</h4>
+                    <p className="text-sm text-gray-600">Capture BOL numbers, ports, and shipment data</p>
+                  </div>
+                  <div className="p-4 border rounded-lg">
+                    <h4 className="font-semibold mb-2">Customs Documents</h4>
+                    <p className="text-sm text-gray-600">Process declaration forms and duty calculations</p>
                   </div>
                 </div>
-              </div>
-            )}
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>

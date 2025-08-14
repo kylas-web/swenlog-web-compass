@@ -1,162 +1,295 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Ship, Globe, Navigation, Anchor, MapPin, Waves, Wind, Eye, Maximize, Minimize } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Ship, Anchor, Search, MapPin, Clock, Users } from "lucide-react";
 
 const MarineTrafficPage = () => {
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [vessels, setVessels] = useState([
+    {
+      id: 1,
+      name: "MAERSK EDINBURGH",
+      type: "Container Ship",
+      imo: "9632179",
+      flag: "Denmark",
+      status: "Under way using engine",
+      speed: "18.2 knots",
+      course: "045°",
+      destination: "Hamburg",
+      eta: "2024-01-25 14:30",
+      lat: 51.5074,
+      lng: 0.1278,
+      cargo: "General Cargo"
+    },
+    {
+      id: 2,
+      name: "COSCO SHIPPING GALAXY",
+      type: "Container Ship", 
+      imo: "9795478",
+      flag: "Hong Kong",
+      status: "At anchor",
+      speed: "0 knots",
+      course: "180°",
+      destination: "Singapore",
+      eta: "2024-01-26 08:15",
+      lat: 1.3521,
+      lng: 103.8198,
+      cargo: "Containers"
+    },
+    {
+      id: 3,
+      name: "ATLANTIC CONVEYOR",
+      type: "Bulk Carrier",
+      imo: "9456123",
+      flag: "Liberia",
+      status: "Under way using engine",
+      speed: "14.5 knots",
+      course: "270°",
+      destination: "Rotterdam",
+      eta: "2024-01-27 12:00",
+      lat: 52.3676,
+      lng: 4.9041,
+      cargo: "Iron Ore"
+    }
+  ]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedVessel, setSelectedVessel] = useState<any>(null);
 
-  useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => setLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+  const filteredVessels = vessels.filter(vessel =>
+    vessel.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    vessel.imo.includes(searchTerm) ||
+    vessel.destination.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'under way using engine':
+        return 'bg-green-100 text-green-800';
+      case 'at anchor':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'moored':
+        return 'bg-blue-100 text-blue-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
   };
 
-  const marineTrafficUrl = "https://www.marinetraffic.com/en/ais/home/centerx:1.9/centery:51.6/zoom:6";
+  const getTypeIcon = (type: string) => {
+    return Ship; // In a real app, you'd have different icons for different vessel types
+  };
 
   return (
     <>
-      {!isFullscreen && <Header />}
-      <main className={isFullscreen ? "min-h-screen" : "pt-16 min-h-screen"}>
-        <div className={`${isFullscreen ? 'h-screen' : 'bg-gradient-to-br from-blue-50 to-cyan-50 py-8'}`}>
-          {!isFullscreen && (
-            <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-8">
-              <div className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                  Marine Traffic Monitor
-                </h1>
-                <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Real-time vessel tracking and global maritime traffic monitoring
-                </p>
-              </div>
-              
-              <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                  <Ship className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-                  <h3 className="font-semibold text-gray-900">Live Vessel Tracking</h3>
-                  <p className="text-sm text-gray-600 mt-2">Track ships worldwide in real-time</p>
-                </div>
-                
-                <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                  <Globe className="h-8 w-8 text-green-600 mx-auto mb-3" />
-                  <h3 className="font-semibold text-gray-900">Global Coverage</h3>
-                  <p className="text-sm text-gray-600 mt-2">Worldwide AIS data coverage</p>
-                </div>
-                
-                <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                  <Navigation className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-                  <h3 className="font-semibold text-gray-900">Route Planning</h3>
-                  <p className="text-sm text-gray-600 mt-2">Plan optimal maritime routes</p>
-                </div>
-                
-                <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                  <Anchor className="h-8 w-8 text-orange-600 mx-auto mb-3" />
-                  <h3 className="font-semibold text-gray-900">Port Information</h3>
-                  <p className="text-sm text-gray-600 mt-2">Detailed port and harbor data</p>
-                </div>
-              </div>
+      <Header />
+      <main className="pt-16">
+        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center mb-12">
+              <Ship className="h-16 w-16 text-blue-600 mx-auto mb-6" />
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-4">
+                Marine Traffic Tracker
+              </h1>
+              <p className="text-lg leading-8 text-gray-600">
+                Real-time vessel tracking and port information
+              </p>
             </div>
-          )}
 
-          <div className={`${isFullscreen ? 'h-full' : 'mx-auto max-w-7xl px-6 lg:px-8'}`}>
-            <div className={`bg-white rounded-lg shadow-xl overflow-hidden ${isFullscreen ? 'h-full' : 'h-[800px]'}`}>
-              <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
-                <div className="flex items-center space-x-3">
-                  <Waves className="h-5 w-5 text-blue-600" />
-                  <h2 className="text-lg font-semibold text-gray-900">Live Marine Traffic</h2>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm text-gray-600">Live Data</span>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2 text-sm text-gray-600">
-                    <Wind className="h-4 w-4" />
-                    <span>Weather Overlay Available</span>
-                  </div>
-                  <button
-                    onClick={toggleFullscreen}
-                    className="flex items-center space-x-2 px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                  >
-                    {isFullscreen ? (
-                      <>
-                        <Minimize className="h-4 w-4" />
-                        <span>Exit Fullscreen</span>
-                      </>
-                    ) : (
-                      <>
-                        <Maximize className="h-4 w-4" />
-                        <span>Fullscreen</span>
-                      </>
-                    )}
-                  </button>
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Search className="h-5 w-5" />
+                      Vessel Search
+                    </CardTitle>
+                    <CardDescription>
+                      Search by vessel name, IMO number, or destination
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex gap-4 mb-6">
+                      <Input
+                        placeholder="Search vessels..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="flex-1"
+                      />
+                      <Button variant="outline">
+                        <Search className="h-4 w-4" />
+                      </Button>
+                    </div>
+
+                    <div className="space-y-4">
+                      {filteredVessels.map((vessel) => {
+                        const TypeIcon = getTypeIcon(vessel.type);
+                        return (
+                          <div
+                            key={vessel.id}
+                            className={`p-4 border rounded-lg cursor-pointer transition-colors ${
+                              selectedVessel?.id === vessel.id
+                                ? 'border-blue-500 bg-blue-50'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                            onClick={() => setSelectedVessel(vessel)}
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="flex items-center gap-3">
+                                <div className="p-2 bg-blue-100 rounded-lg">
+                                  <TypeIcon className="h-5 w-5 text-blue-600" />
+                                </div>
+                                <div>
+                                  <h3 className="font-semibold">{vessel.name}</h3>
+                                  <p className="text-sm text-gray-600">
+                                    {vessel.type} • IMO: {vessel.imo}
+                                  </p>
+                                </div>
+                              </div>
+                              <Badge className={getStatusColor(vessel.status)}>
+                                {vessel.status}
+                              </Badge>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                              <div>
+                                <span className="text-gray-500">Speed:</span>
+                                <p className="font-medium">{vessel.speed}</p>
+                              </div>
+                              <div>
+                                <span className="text-gray-500">Course:</span>
+                                <p className="font-medium">{vessel.course}</p>
+                              </div>
+                              <div>
+                                <span className="text-gray-500">Destination:</span>
+                                <p className="font-medium">{vessel.destination}</p>
+                              </div>
+                              <div>
+                                <span className="text-gray-500">ETA:</span>
+                                <p className="font-medium">{vessel.eta}</p>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
 
-              <div className={`relative ${isFullscreen ? 'h-full' : 'h-full'}`}>
-                {loading && (
-                  <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-10">
-                    <div className="text-center">
-                      <div className="animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-                      <p className="text-gray-600">Loading Marine Traffic Data...</p>
-                    </div>
-                  </div>
-                )}
-                
-                <iframe
-                  src={marineTrafficUrl}
-                  className="w-full h-full border-0"
-                  title="Marine Traffic Monitor"
-                  allow="geolocation; fullscreen"
-                  loading="lazy"
-                  onLoad={() => setLoading(false)}
-                />
-                
-                {/* Overlay Controls */}
-                <div className="absolute top-4 left-4 bg-white bg-opacity-90 rounded-lg p-3 shadow-lg">
-                  <div className="flex items-center space-x-3 text-sm">
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <span>Cargo Ships</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                      <span>Tankers</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span>Passenger</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <span>Other</span>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Vessel Details</CardTitle>
+                    <CardDescription>
+                      Detailed information about selected vessel
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {selectedVessel ? (
+                      <div className="space-y-6">
+                        <div className="text-center">
+                          <div className="p-4 bg-blue-100 rounded-lg mb-4">
+                            <Ship className="h-8 w-8 text-blue-600 mx-auto" />
+                          </div>
+                          <h3 className="text-lg font-semibold">{selectedVessel.name}</h3>
+                          <p className="text-sm text-gray-600">{selectedVessel.type}</p>
+                        </div>
 
-                <div className="absolute bottom-4 right-4 bg-white bg-opacity-90 rounded-lg p-3 shadow-lg">
-                  <div className="text-sm text-gray-600">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <MapPin className="h-4 w-4" />
-                      <span>Focus: European Waters</span>
+                        <div className="space-y-4">
+                          <div className="flex items-center gap-3">
+                            <Anchor className="h-4 w-4 text-gray-400" />
+                            <div>
+                              <p className="text-sm text-gray-500">IMO Number</p>
+                              <p className="font-medium">{selectedVessel.imo}</p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-3">
+                            <Users className="h-4 w-4 text-gray-400" />
+                            <div>
+                              <p className="text-sm text-gray-500">Flag State</p>
+                              <p className="font-medium">{selectedVessel.flag}</p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-3">
+                            <MapPin className="h-4 w-4 text-gray-400" />
+                            <div>
+                              <p className="text-sm text-gray-500">Current Position</p>
+                              <p className="font-medium">
+                                {selectedVessel.lat.toFixed(4)}°, {selectedVessel.lng.toFixed(4)}°
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-3">
+                            <Clock className="h-4 w-4 text-gray-400" />
+                            <div>
+                              <p className="text-sm text-gray-500">Estimated Arrival</p>
+                              <p className="font-medium">{selectedVessel.eta}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="border-t pt-4">
+                          <Badge className={getStatusColor(selectedVessel.status)}>
+                            {selectedVessel.status}
+                          </Badge>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4 text-center">
+                          <div className="p-3 bg-gray-50 rounded-lg">
+                            <p className="text-lg font-bold text-gray-900">{selectedVessel.speed}</p>
+                            <p className="text-xs text-gray-600">Current Speed</p>
+                          </div>
+                          <div className="p-3 bg-gray-50 rounded-lg">
+                            <p className="text-lg font-bold text-gray-900">{selectedVessel.course}</p>
+                            <p className="text-xs text-gray-600">Course</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center py-12 text-gray-500">
+                        <Ship className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                        <p>Select a vessel to view details</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                <Card className="mt-6">
+                  <CardHeader>
+                    <CardTitle>Port Statistics</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Vessels in Port:</span>
+                        <span className="font-semibold">127</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Arriving Today:</span>
+                        <span className="font-semibold">23</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Departing Today:</span>
+                        <span className="font-semibold">19</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">At Anchor:</span>
+                        <span className="font-semibold">45</span>
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-500">
-                      Data provided by MarineTraffic.com
-                    </div>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
         </div>
       </main>
-      {!isFullscreen && <Footer />}
+      <Footer />
     </>
   );
 };

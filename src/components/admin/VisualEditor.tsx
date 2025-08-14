@@ -164,14 +164,36 @@ const VisualEditor = () => {
         </div>
       </div>
 
-      <div className="flex-1 relative">
-        <div className="h-full">
-          <Puck
-            config={puckConfig}
-            data={puckData}
-            onPublish={handleSave}
-            onChange={setPuckData}
-          />
+      <div className="flex-1 relative bg-gradient-to-br from-blue-50 to-purple-50">
+        <div className="h-full relative">
+          {/* Visual Grid Overlay */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none z-10">
+            <div className="grid grid-cols-12 gap-4 h-full p-4">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="border-l border-dashed border-gray-400" />
+              ))}
+            </div>
+          </div>
+          
+          {/* Puck Editor with Enhanced UI */}
+          <div className="relative z-20 h-full">
+            <Puck
+              config={puckConfig}
+              data={puckData}
+              onPublish={handleSave}
+              onChange={setPuckData}
+            />
+          </div>
+          
+          {/* Visual Hints */}
+          <div className="absolute top-4 left-4 z-30 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg border">
+            <h3 className="font-semibold text-sm mb-2">Visual Editor</h3>
+            <div className="space-y-1 text-xs text-muted-foreground">
+              <p>• Drag components from the left panel</p>
+              <p>• Click components to edit properties</p>
+              <p>• Use the grid overlay for alignment</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

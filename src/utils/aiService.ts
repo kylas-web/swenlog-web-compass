@@ -116,9 +116,13 @@ class UnifiedAIService {
 
       console.log('AI Query:', { prompt, options, contextualPrompt });
 
-      const response = await window.puter.ai.chat(contextualPrompt, options.testMode || false, {
-        model: options.model || 'gpt-4.1-nano'
-      });
+      const response = await window.puter.ai.chat(
+        contextualPrompt, 
+        options.testMode || false, 
+        {
+          model: options.model || 'gpt-4.1-nano'
+        }
+      );
 
       console.log('AI Response:', response);
 

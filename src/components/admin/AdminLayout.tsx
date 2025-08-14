@@ -75,7 +75,7 @@ const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) 
                             ${
                               activeView === item.key
                                 ? 'text-sidebar-primary bg-sidebar-accent font-medium border-r-2 border-sidebar-primary'
-                                : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary'
+                                : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary disabled:opacity-50 disabled:cursor-not-allowed'
                             }`}
                         >
                           <item.icon className="mr-3 h-4 w-4" />

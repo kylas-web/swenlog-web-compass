@@ -121,17 +121,21 @@ const FeatureManager = () => {
     try {
       const { error } = await supabase
         .from('feature_toggles')
-        .update({ is_enabled: !currentValue })
+        .update({ is_enabled: !currentValue, updated_at: new Date().toISOString() })
         .eq('id', id);
 
       if (error) throw error;
 
       setFeatures(features.map(feature => 
-        feature.id === id ? { ...feature, is_enabled: !currentValue } : feature
+        feature.id === id ? { ...feature, is_enabled: !currentValue, updated_at: new Date().toISOString() } : feature
       ));
+      
+      // Refresh the page to apply feature changes
+      window.location.reload();
+      
       toast({
         title: "Success",
-        description: "Feature updated successfully",
+        description: `Feature ${!currentValue ? 'enabled' : 'disabled'} successfully`,
       });
     } catch (error) {
       console.error('Error updating feature:', error);

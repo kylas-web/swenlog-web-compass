@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageSquare, Send, Phone, Users, FileText, Plus, Search } from "lucide-react";
+import { MessageSquare, Send, Phone, Users, FileText, Plus, Search, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -145,14 +145,24 @@ const WhatsAppWebManager = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="relative w-full" style={{ height: '80vh' }}>
-              <iframe
-                src="https://web.whatsapp.com"
-                className="w-full h-full border-0"
-                title="WhatsApp Web"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-                allow="camera; microphone; geolocation"
-              />
+            <div className="w-full h-[600px] rounded-lg border bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <MessageSquare className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">WhatsApp Web Integration</h3>
+                <p className="text-gray-600 mb-4">
+                  WhatsApp Web cannot be embedded directly due to security restrictions.
+                </p>
+                <Button 
+                  onClick={() => window.open('https://web.whatsapp.com', '_blank')}
+                  className="mb-2"
+                >
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Open WhatsApp Web
+                </Button>
+                <p className="text-xs text-gray-500">
+                  For full integration, consider using WhatsApp Business API
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
