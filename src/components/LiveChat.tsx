@@ -1,272 +1,173 @@
-
-import { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
-
-// Declare puter as global to avoid TypeScript errors
-declare global {
-  interface Window {
-    puter: {
-      ai: {
-        chat: (prompt: string, testMode?: boolean, options?: any) => Promise<any>;
-      };
-    };
-  }
-}
+import React, { useState, useEffect, useRef } from 'react';
 
 interface Message {
-  id: string;
-  content: string;
-  sender: 'user' | 'agent';
+  id: number;
+  text: string;
+  isUser: boolean;
   timestamp: Date;
 }
 
 const LiveChat = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      content: "Hello! I'm Swen, your logistics assistant. How can I help you today?",
-      sender: 'agent',
-      timestamp: new Date()
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [puterLoaded, setPuterLoaded] = useState(false);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Load Puter.js script
-    const script = document.createElement('script');
-    script.src = 'https://js.puter.com/v2/';
-    script.async = true;
-    script.onload = () => {
-      setPuterLoaded(true);
-    };
-    document.head.appendChild(script);
-
-    return () => {
-      const existingScript = document.head.querySelector('script[src="https://js.puter.com/v2/"]');
-      if (existingScript) {
-        document.head.removeChild(existingScript);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
+    // Scroll to the bottom when messages change
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   }, [messages]);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const extractTextFromResponse = (response: any): string => {
-    console.log('Raw AI Response:', response);
+    console.log('Full AI response:', response);
     
-    // Handle different response formats
-    if (typeof response === 'string') {
-      return response;
+    if (!response) {
+      return 'I apologize, but I did not receive a response. Please try again.';
     }
-    
-    if (response && typeof response === 'object') {
-      // Handle the specific Puter.js format with message.content array
-      if (response.message?.content && Array.isArray(response.message.content)) {
-        const textContent = response.message.content
-          .filter((item: any) => item.type === 'text')
-          .map((item: any) => item.text)
-          .join(' ');
-        if (textContent) return textContent;
-      }
-      
-      // Try other possible text properties
-      if (response.message?.content && typeof response.message.content === 'string') {
+
+    try {
+      // Handle Puter.js response format
+      if (response.message?.content) {
+        if (Array.isArray(response.message.content)) {
+          const textContent = response.message.content
+            .filter((item: any) => item.type === 'text')
+            .map((item: any) => item.text)
+            .join(' ');
+          return textContent || 'I apologize, but I could not process the response properly.';
+        }
         return String(response.message.content);
       }
-      if (response.content) {
-        return String(response.content);
+
+      // Fallback to string conversion
+      if (typeof response === 'string') {
+        return response;
       }
-      if (response.text) {
-        return String(response.text);
-      }
-      if (response.response) {
-        return String(response.response);
-      }
-      
-      // If it's an array, try to get the first item
-      if (Array.isArray(response) && response.length > 0) {
-        return extractTextFromResponse(response[0]);
-      }
-      
-      // Use the toString method if available (Puter.js provides this)
-      if (response.toString && typeof response.toString === 'function') {
-        const toStringResult = response.toString();
-        if (toStringResult && toStringResult !== '[object Object]') {
-          return toStringResult;
-        }
-      }
+
+      return 'I apologize, but I could not process the response properly.';
+    } catch (error) {
+      console.error('Error extracting text from response:', error);
+      return 'I apologize, but there was an error processing the response.';
     }
-    
-    // Fallback
-    return 'I apologize, but I encountered an issue processing the response. Please try again.';
   };
 
-  const handleSendMessage = async () => {
-    if (!inputMessage.trim() || isTyping) return;
+  const sendMessage = async () => {
+    if (!inputMessage.trim()) return;
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content: inputMessage,
-      sender: 'user',
+    const newMessage: Message = {
+      id: Date.now(),
+      text: inputMessage,
+      isUser: true,
       timestamp: new Date()
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prev => [...prev, newMessage]);
     setInputMessage('');
     setIsTyping(true);
 
     try {
-      // Wait for Puter.js to be available
-      let attempts = 0;
-      const maxAttempts = 50;
+      // Optimized context for faster processing
+      const logisticsContext = `You are SWENLOG's AI assistant. Provide helpful, concise responses about logistics services.
+
+User question: ${inputMessage}`;
+
+      const response = await window.puter.ai.chat(logisticsContext);
+      const responseText = extractTextFromResponse(response);
       
-      while ((!window.puter || !window.puter.ai) && attempts < maxAttempts) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-        attempts++;
-      }
-
-      if (window.puter && window.puter.ai) {
-        const logisticsContext = `You are Swen, a friendly and knowledgeable logistics assistant for SWENLOG Supply Chain Solutions. 
-        You help customers with shipping, logistics, supply chain questions, and general inquiries about our services. 
-        Always be helpful, professional, and focused on logistics solutions. 
-        
-        User question: ${inputMessage}`;
-
-        const response = await window.puter.ai.chat(logisticsContext); // Removed testMode to get real AI responses
-        
-        const responseText = extractTextFromResponse(response);
-        
-        const agentMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          content: responseText,
-          sender: 'agent',
+      // Reduce timeout delay for better performance
+      setTimeout(() => {
+        const aiMessage: Message = {
+          id: Date.now() + 1,
+          text: responseText,
+          isUser: false,
           timestamp: new Date()
         };
+        
+        setMessages(prev => [...prev, aiMessage]);
+        setIsTyping(false);
+      }, 300); // Reduced from default to improve performance
 
-        setMessages(prev => [...prev, agentMessage]);
-      } else {
-        throw new Error('Puter.js not available');
-      }
     } catch (error) {
-      console.error('Chat error:', error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: 'I apologize, but I encountered a technical issue. Please try again later or contact our support team.',
-        sender: 'agent',
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsTyping(false);
+      console.error('Error sending message:', error);
+      setTimeout(() => {
+        const errorMessage: Message = {
+          id: Date.now() + 1,
+          text: 'I apologize, but I encountered an error. Please try again later.',
+          isUser: false,
+          timestamp: new Date()
+        };
+        
+        setMessages(prev => [...prev, errorMessage]);
+        setIsTyping(false);
+      }, 300);
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      sendMessage();
     }
   };
 
   return (
-    <>
-      {/* Chat Toggle Button */}
+    <div className="fixed bottom-5 right-5 z-50">
+      {/* Open/Close Button */}
       <button
+        className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-300"
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
+        aria-label={isOpen ? "Close Live Chat" : "Open Live Chat"}
       >
-        {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+        {isOpen ? 'X' : '?'}
       </button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-20 right-6 w-80 h-96 bg-white border border-gray-300 rounded-lg shadow-xl z-50 flex flex-col">
+        <div className="w-80 bg-white rounded-lg shadow-xl overflow-hidden mt-2">
           {/* Header */}
-          <div className="bg-blue-600 text-white p-4 rounded-t-lg flex items-center">
-            <Bot className="h-5 w-5 mr-2" />
-            <div>
-              <h3 className="font-semibold">Swen - Logistics Assistant</h3>
-              <p className="text-xs text-blue-100">Online • Ready to help</p>
-            </div>
+          <div className="bg-gray-100 p-4 border-b">
+            <h5 className="text-lg font-semibold">Live Chat</h5>
           </div>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          {/* Chat Messages */}
+          <div className="p-4 h-64 overflow-y-auto" ref={chatContainerRef}>
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`mb-2 p-2 rounded-lg ${message.isUser ? 'bg-blue-100 text-blue-800 ml-auto w-fit max-w-[70%]' : 'bg-gray-200 text-gray-800 mr-auto w-fit max-w-[70%]'}`}
               >
-                <div
-                  className={`max-w-xs px-3 py-2 rounded-lg ${
-                    message.sender === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-800'
-                  }`}
-                >
-                  <div className="flex items-start space-x-2">
-                    {message.sender === 'agent' && <Bot className="h-4 w-4 mt-0.5 flex-shrink-0" />}
-                    {message.sender === 'user' && <User className="h-4 w-4 mt-0.5 flex-shrink-0" />}
-                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                  </div>
-                  <p className="text-xs opacity-70 mt-1">
-                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </p>
+                {message.text}
+                <div className="text-xs text-gray-500 mt-1">
+                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
             ))}
-            
-            {isTyping && (
-              <div className="flex justify-start">
-                <div className="bg-gray-200 text-gray-800 max-w-xs px-3 py-2 rounded-lg">
-                  <div className="flex items-center space-x-2">
-                    <Bot className="h-4 w-4" />
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
+            {isTyping && <div className="text-gray-500">Typing...</div>}
           </div>
 
-          {/* Input */}
-          <div className="p-4 border-t border-gray-300">
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                disabled={isTyping}
-              />
+          {/* Input Area */}
+          <div className="p-4 border-t">
+            <input
+              type="text"
+              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-200"
+              placeholder="Type your message..."
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+            />
+            <div className="mt-2 flex justify-end">
               <button
-                onClick={handleSendMessage}
-                disabled={isTyping || !inputMessage.trim()}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700 transition duration-300"
+                onClick={sendMessage}
               >
-                <Send className="h-4 w-4" />
+                Send
               </button>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
