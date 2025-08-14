@@ -278,27 +278,36 @@ export type Database = {
       }
       feature_toggles: {
         Row: {
+          category: string | null
           created_at: string
+          dependencies: string[] | null
           description: string | null
           feature_key: string
           id: string
           is_enabled: boolean
+          priority: number | null
           updated_at: string
         }
         Insert: {
+          category?: string | null
           created_at?: string
+          dependencies?: string[] | null
           description?: string | null
           feature_key: string
           id?: string
           is_enabled?: boolean
+          priority?: number | null
           updated_at?: string
         }
         Update: {
+          category?: string | null
           created_at?: string
+          dependencies?: string[] | null
           description?: string | null
           feature_key?: string
           id?: string
           is_enabled?: boolean
+          priority?: number | null
           updated_at?: string
         }
         Relationships: []
