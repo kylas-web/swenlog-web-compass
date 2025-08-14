@@ -1,4 +1,3 @@
-
 import { 
   LayoutDashboard, Building, Wrench, PanelTop, PanelBottom, Globe, FileText, 
   Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot, Settings,
@@ -13,15 +12,15 @@ import CtaManager from "./CtaManager";
 import EnhancedPageManager from "./EnhancedPageManager";
 import AdvancedMediaManager from "./AdvancedMediaManager";
 import QuoteManager from "./QuoteManager";
-import EnhancedCrmManager from "./EnhancedCrmManager";
-import HrmManager from "./HrmManager";
-import WhatsappManager from "./WhatsappManager";
-import PerformanceManager from "./PerformanceManager";
-import SecurityManager from "./SecurityManager";
 import EnhancedChatbotManager from "./EnhancedChatbotManager";
 import SliderManager from "./SliderManager";
 import GeneralSettingsManager from "./GeneralSettingsManager";
 import FormsManager from "./FormsManager";
+import CompleteCrmManager from "./CompleteCrmManager";
+import CompleteHrmManager from "./CompleteHrmManager";
+import WhatsappManager from "./WhatsappManager";
+import PerformanceManager from "./PerformanceManager";
+import SecurityManager from "./SecurityManager";
 
 export const adminModules = [
   {
@@ -80,15 +79,15 @@ export const adminModules = [
   },
   {
     key: 'crm',
-    label: 'Enhanced CRM',
+    label: 'Complete CRM',
     icon: Users,
-    component: EnhancedCrmManager,
+    component: CompleteCrmManager,
   },
   {
     key: 'hrm',
-    label: 'Human Resources',
+    label: 'Complete HRM',
     icon: UserPlus,
-    component: HrmManager,
+    component: CompleteHrmManager,
   },
   {
     key: 'sliders',
@@ -97,28 +96,10 @@ export const adminModules = [
     component: SliderManager,
   },
   {
-    key: 'whatsapp',
-    label: 'WhatsApp Marketing',
-    icon: MessageSquare,
-    component: WhatsappManager,
-  },
-  {
     key: 'chatbot',
     label: 'Enhanced Chatbot',
     icon: Bot,
     component: EnhancedChatbotManager,
-  },
-  {
-    key: 'performance',
-    label: 'Performance Tools',
-    icon: Gauge,
-    component: PerformanceManager,
-  },
-  {
-    key: 'security',
-    label: 'Security Tools',
-    icon: Shield,
-    component: SecurityManager,
   },
   {
     key: 'forms',
@@ -134,7 +115,6 @@ export const adminModules = [
   },
 ];
 
-// Optionally export a lookup object by key for convenience
 export const adminModulesByKey = adminModules.reduce((acc, mod) => {
   acc[mod.key] = mod;
   return acc;
