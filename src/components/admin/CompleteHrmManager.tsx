@@ -17,6 +17,10 @@ import {
   Calendar, DollarSign, Clock, Eye, Download, Upload, Briefcase,
   UserCheck, UserX, Award, TrendingUp, Building, GraduationCap
 } from 'lucide-react';
+import DepartmentManager from './DepartmentManager';
+import LeaveManager from './LeaveManager';
+import PerformanceManager from './PerformanceManager';
+import HRReportsManager from './HRReportsManager';
 
 type EmployeeStatus = 'active' | 'inactive' | 'on_leave' | 'terminated' | 'probation';
 type EmployeeType = 'full_time' | 'part_time' | 'contract' | 'intern' | 'consultant';
@@ -642,6 +646,12 @@ const CompleteHrmManager = () => {
     </form>
   );
 
+  // Component wrappers for tabs
+  const DepartmentManagerContent = () => <DepartmentManager />;
+  const LeaveManagerContent = () => <LeaveManager />;
+  const PerformanceManagerContent = () => <PerformanceManager />;
+  const HRReportsManagerContent = () => <HRReportsManager />;
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -670,27 +680,19 @@ const CompleteHrmManager = () => {
         </TabsContent>
 
         <TabsContent value="departments">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Departments management interface will be here</p>
-          </div>
+          <DepartmentManagerContent />
         </TabsContent>
 
         <TabsContent value="leave">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Leave management interface will be here</p>
-          </div>
+          <LeaveManagerContent />
         </TabsContent>
 
         <TabsContent value="performance">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Performance management interface will be here</p>
-          </div>
+          <PerformanceManagerContent />
         </TabsContent>
 
         <TabsContent value="reports">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">HR reports and analytics will be here</p>
-          </div>
+          <HRReportsManagerContent />
         </TabsContent>
       </Tabs>
 

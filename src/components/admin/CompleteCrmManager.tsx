@@ -17,6 +17,8 @@ import {
   Calendar, DollarSign, Tag, Clock, Eye, Download, Upload, Briefcase,
   TrendingUp, TrendingDown, BarChart3, PieChart
 } from 'lucide-react';
+import CRMActivitiesManager from './CRMActivitiesManager';
+import CRMReportsManager from './CRMReportsManager';
 
 type ContactStatus = 'active' | 'inactive' | 'prospect' | 'customer' | 'lead';
 type LeadSource = 'website' | 'referral' | 'cold_call' | 'advertisement' | 'social_media' | 'trade_show' | 'email_campaign' | 'other';
@@ -446,6 +448,10 @@ const CompleteCrmManager = () => {
     </div>
   );
 
+  // Component wrappers for tabs
+  const CRMActivitiesManagerContent = () => <CRMActivitiesManager />;
+  const CRMReportsManagerContent = () => <CRMReportsManager />;
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -486,15 +492,11 @@ const CompleteCrmManager = () => {
         </TabsContent>
 
         <TabsContent value="activities">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Activities management interface will be here</p>
-          </div>
+          <CRMActivitiesManagerContent />
         </TabsContent>
 
         <TabsContent value="reports">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Reports and analytics will be here</p>
-          </div>
+          <CRMReportsManagerContent />
         </TabsContent>
       </Tabs>
 

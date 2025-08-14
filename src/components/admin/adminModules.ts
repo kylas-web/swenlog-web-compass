@@ -33,170 +33,199 @@ import HRReportsManager from "./HRReportsManager";
 import CRMActivitiesManager from "./CRMActivitiesManager";
 import CRMReportsManager from "./CRMReportsManager";
 
-export const adminModules = [
+export const adminModuleCategories = [
   {
-    key: 'visual-editor',
-    label: 'Visual Page Editor',
-    icon: Paintbrush,
-    component: VisualEditor,
-  },
-  {
-    key: 'hero',
-    label: 'Hero Section',
+    key: 'dashboard',
+    label: 'Dashboard',
     icon: LayoutDashboard,
-    component: HeroManager,
+    items: [
+      {
+        key: 'visual-editor',
+        label: 'Visual Page Editor',
+        icon: Paintbrush,
+        component: VisualEditor,
+      },
+    ]
   },
   {
-    key: 'about',
-    label: 'About Section',
-    icon: Building,
-    component: AboutManager,
-  },
-  {
-    key: 'services',
-    label: 'Services Section',
-    icon: Wrench,
-    component: ServicesManager,
-  },
-  {
-    key: 'header',
-    label: 'Header',
-    icon: PanelTop,
-    component: HeaderManager,
-  },
-  {
-    key: 'footer',
-    label: 'Footer',
-    icon: PanelBottom,
-    component: FooterManager,
-  },
-  {
-    key: 'cta',
-    label: 'Global CTA',
-    icon: Globe,
-    component: CtaManager,
-  },
-  {
-    key: 'pages',
-    label: 'Enhanced Pages',
+    key: 'content',
+    label: 'Content Management',
     icon: FileText,
-    component: EnhancedPageManager,
+    items: [
+      {
+        key: 'hero',
+        label: 'Hero Section',
+        icon: LayoutDashboard,
+        component: HeroManager,
+      },
+      {
+        key: 'about',
+        label: 'About Section',
+        icon: Building,
+        component: AboutManager,
+      },
+      {
+        key: 'services',
+        label: 'Services Section',
+        icon: Wrench,
+        component: ServicesManager,
+      },
+      {
+        key: 'pages',
+        label: 'Enhanced Pages',
+        icon: FileText,
+        component: EnhancedPageManager,
+      },
+      {
+        key: 'resources',
+        label: 'Resources Manager',
+        icon: Database,
+        component: ResourcesManager,
+      },
+      {
+        key: 'sliders',
+        label: 'Slider Management',
+        icon: Sliders,
+        component: SliderManager,
+      },
+    ]
   },
   {
-    key: 'media',
-    label: 'Advanced Media Library',
-    icon: ImageIcon,
-    component: AdvancedMediaManager,
-  },
-  {
-    key: 'quote',
-    label: 'Quote Configurator',
-    icon: Quote,
-    component: QuoteManager,
+    key: 'appearance',
+    label: 'Appearance',
+    icon: Paintbrush,
+    items: [
+      {
+        key: 'header',
+        label: 'Header',
+        icon: PanelTop,
+        component: HeaderManager,
+      },
+      {
+        key: 'footer',
+        label: 'Footer',
+        icon: PanelBottom,
+        component: FooterManager,
+      },
+      {
+        key: 'media',
+        label: 'Advanced Media Library',
+        icon: ImageIcon,
+        component: AdvancedMediaManager,
+      },
+    ]
   },
   {
     key: 'crm',
-    label: 'Complete CRM',
+    label: 'Customer Management',
     icon: Users,
-    component: CompleteCrmManager,
+    items: [
+      {
+        key: 'crm',
+        label: 'Complete CRM',
+        icon: Users,
+        component: CompleteCrmManager,
+      },
+    ]
   },
   {
     key: 'hrm',
-    label: 'Complete HRM',
+    label: 'Human Resources',
     icon: UserPlus,
-    component: CompleteHrmManager,
+    items: [
+      {
+        key: 'hrm',
+        label: 'Complete HRM',
+        icon: UserPlus,
+        component: CompleteHrmManager,
+      },
+      {
+        key: 'staff-dashboard',
+        label: 'Staff Dashboard',
+        icon: Gauge,
+        component: StaffDashboard,
+      },
+    ]
   },
   {
-    key: 'sliders',
-    label: 'Slider Management',
-    icon: Sliders,
-    component: SliderManager,
+    key: 'communications',
+    label: 'Communications',
+    icon: MessageSquare,
+    items: [
+      {
+        key: 'chatbot',
+        label: 'Enhanced Chatbot',
+        icon: Bot,
+        component: EnhancedChatbotManager,
+      },
+      {
+        key: 'whatsapp-web',
+        label: 'WhatsApp Web',
+        icon: MessageSquare,
+        component: WhatsAppWebManager,
+      },
+      {
+        key: 'team-chat',
+        label: 'Team Chat',
+        icon: Users,
+        component: TeamChatManager,
+      },
+    ]
   },
   {
-    key: 'chatbot',
-    label: 'Enhanced Chatbot',
-    icon: Bot,
-    component: EnhancedChatbotManager,
-  },
-  {
-    key: 'forms',
-    label: 'Forms Management',
-    icon: FormInput,
-    component: FormsManager,
+    key: 'tools',
+    label: 'Tools & Forms',
+    icon: Wrench,
+    items: [
+      {
+        key: 'quote',
+        label: 'Quote Configurator',
+        icon: Quote,
+        component: QuoteManager,
+      },
+      {
+        key: 'forms',
+        label: 'Forms Management',
+        icon: FormInput,
+        component: FormsManager,
+      },
+      {
+        key: 'cta',
+        label: 'Global CTA',
+        icon: Globe,
+        component: CtaManager,
+      },
+    ]
   },
   {
     key: 'settings',
-    label: 'General Settings',
+    label: 'Settings',
     icon: Settings,
-    component: GeneralSettingsManager,
-  },
-  {
-    key: 'features',
-    label: 'Feature Manager',
-    icon: Settings,
-    component: FeatureManager,
-  },
-  {
-    key: 'resources',
-    label: 'Resources Manager',
-    icon: Database,
-    component: ResourcesManager,
-  },
-  {
-    key: 'whatsapp-web',
-    label: 'WhatsApp Web',
-    icon: MessageSquare,
-    component: WhatsAppWebManager,
-  },
-  {
-    key: 'team-chat',
-    label: 'Team Chat',
-    icon: Users,
-    component: TeamChatManager,
-  },
-  {
-    key: 'staff-dashboard',
-    label: 'Staff Dashboard',
-    icon: UserPlus,
-    component: StaffDashboard,
-  },
-  {
-    key: 'departments',
-    label: 'Department Management',
-    icon: Building,
-    component: DepartmentManager,
-  },
-  {
-    key: 'leave-management',
-    label: 'Leave Management',
-    icon: Calendar,
-    component: LeaveManager,
-  },
-  {
-    key: 'performance-management',
-    label: 'Performance Management',
-    icon: TrendingUp,
-    component: PerformanceManager,
-  },
-  {
-    key: 'hr-reports',
-    label: 'HR Reports & Analytics',
-    icon: BarChart3,
-    component: HRReportsManager,
-  },
-  {
-    key: 'crm-activities',
-    label: 'CRM Activities',
-    icon: Activity,
-    component: CRMActivitiesManager,
-  },
-  {
-    key: 'crm-reports',
-    label: 'CRM Reports & Analytics',
-    icon: BarChart3,
-    component: CRMReportsManager,
+    items: [
+      {
+        key: 'settings',
+        label: 'General Settings',
+        icon: Settings,
+        component: GeneralSettingsManager,
+      },
+      {
+        key: 'features',
+        label: 'Feature Manager',
+        icon: Settings,
+        component: FeatureManager,
+      },
+      {
+        key: 'security',
+        label: 'Security',
+        icon: Shield,
+        component: SecurityManager,
+      },
+    ]
   },
 ];
+
+// Flatten for backward compatibility
+export const adminModules = adminModuleCategories.flatMap(category => category.items);
 
 export const adminModulesByKey = adminModules.reduce((acc, mod) => {
   acc[mod.key] = mod;

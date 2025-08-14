@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, Globe, FileText, Image as ImageIcon, Quote, Building, Wrench, PanelTop, PanelBottom, Users, MessageSquare, Shield, Gauge } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 
 type AdminLayoutProps = {
   children: React.ReactNode;
@@ -8,50 +8,106 @@ type AdminLayoutProps = {
   setActiveView: (view: string) => void;
 };
 
-import { adminModules } from "./adminModules";
+import { adminModuleCategories } from "./adminModules";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const AdminLayout = ({ children, activeView, setActiveView }: AdminLayoutProps) => {
-  // Use config instead of hardcoded navItems
-  const navItems = adminModules.map(({ key, label, icon: Icon }) => ({
-    key,
-    label,
-    Icon,
-  }));
+  const [openCategories, setOpenCategories] = useState<string[]>(() => {
+    // Find which category contains the active view and open it by default
+    const activeCategory = adminModuleCategories.find(category =>
+      category.items.some(item => item.key === activeView)
+    );
+    return activeCategory ? [activeCategory.key] : ['dashboard'];
+  });
+
+  const toggleCategory = (categoryKey: string) => {
+    setOpenCategories(prev =>
+      prev.includes(categoryKey)
+        ? prev.filter(key => key !== categoryKey)
+        : [...prev, categoryKey]
+    );
+  };
 
   return (
-    <div className="flex min-h-screen bg-gray-200 font-sans">
-      <aside className="w-64 bg-gray-200 flex flex-col transition-all duration-300">
-        <div className="p-4 border-b border-gray-300/80">
-          <h1 className="text-2xl font-bold text-gray-800">SWENLOG Admin</h1>
+    <div className="flex min-h-screen bg-background">
+      <aside className="w-64 bg-sidebar-background border-r border-sidebar-border flex flex-col">
+        {/* Header */}
+        <div className="p-4 border-b border-sidebar-border">
+          <h1 className="text-xl font-semibold text-sidebar-primary">SWENLOG Admin</h1>
         </div>
-        <nav className="flex-1 p-4">
-          <ul className="space-y-4">
-            {navItems.map((item) => (
-              <li key={item.key}>
-                <button
-                  onClick={() => setActiveView(item.key)}
-                  className={`flex w-full items-center p-3 rounded-xl text-left transition-all duration-200 transform
-                    ${
-                      activeView === item.key
-                        ? 'text-primary shadow-neumorphic-inset'
-                        : 'text-gray-600 hover:text-primary shadow-neumorphic active:shadow-neumorphic-inset active:scale-95'
-                    }`}
+
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto py-2">
+          <div className="space-y-1">
+            {adminModuleCategories.map((category) => {
+              const isOpen = openCategories.includes(category.key);
+              const hasActiveItem = category.items.some(item => item.key === activeView);
+              
+              return (
+                <Collapsible
+                  key={category.key}
+                  open={isOpen}
+                  onOpenChange={() => toggleCategory(category.key)}
                 >
-                  <item.Icon className="mr-3 h-5 w-5 shrink-0" />
-                  {item.label}
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <CollapsibleTrigger className="w-full">
+                    <div className={`flex items-center justify-between w-full px-4 py-2 text-left text-sm font-medium transition-colors
+                      ${hasActiveItem ? 'text-sidebar-primary bg-sidebar-accent' : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary'}
+                    `}>
+                      <div className="flex items-center">
+                        <category.icon className="mr-3 h-4 w-4" />
+                        {category.label}
+                      </div>
+                      {isOpen ? (
+                        <ChevronDown className="h-4 w-4" />
+                      ) : (
+                        <ChevronRight className="h-4 w-4" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+
+                  <CollapsibleContent className="pb-1">
+                    <div className="ml-4 space-y-1">
+                      {category.items.map((item) => (
+                        <button
+                          key={item.key}
+                          onClick={() => setActiveView(item.key)}
+                          className={`flex w-full items-center px-4 py-2 text-sm rounded-none text-left transition-colors
+                            ${
+                              activeView === item.key
+                                ? 'text-sidebar-primary bg-sidebar-accent font-medium border-r-2 border-sidebar-primary'
+                                : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary'
+                            }`}
+                        >
+                          <item.icon className="mr-3 h-4 w-4" />
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              );
+            })}
+          </div>
         </nav>
-        <div className="p-4 border-t border-gray-300/80">
-          <Link to="/" className="text-sm text-gray-500 hover:text-primary">
+
+        {/* Footer */}
+        <div className="p-4 border-t border-sidebar-border">
+          <Link
+            to="/"
+            className="flex items-center text-sm text-sidebar-foreground hover:text-sidebar-primary transition-colors"
+          >
             ← Back to Site
           </Link>
         </div>
       </aside>
-      <main className="flex-1 p-6 md:p-10">
-        <div className="max-w-4xl mx-auto">{children}</div>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-auto">
+        <div className="p-6 md:p-8">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
+        </div>
       </main>
     </div>
   );
