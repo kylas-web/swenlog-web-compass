@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Edit, Trash2, Eye, Plus, Briefcase, Users, CheckCircle, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import ApplicationProcessBuilder from './ApplicationProcessBuilder';
 
 interface Job {
   id: string;
@@ -406,9 +407,10 @@ const CareerManager = () => {
       </div>
 
       <Tabs defaultValue="jobs" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="jobs">Job Listings</TabsTrigger>
           <TabsTrigger value="applications">Applications</TabsTrigger>
+          <TabsTrigger value="processes">Application Processes</TabsTrigger>
         </TabsList>
         
         <TabsContent value="jobs" className="space-y-4">
@@ -570,6 +572,10 @@ const CareerManager = () => {
               </Card>
             ))
           )}
+        </TabsContent>
+
+        <TabsContent value="processes" className="space-y-4">
+          <ApplicationProcessBuilder />
         </TabsContent>
       </Tabs>
     </div>

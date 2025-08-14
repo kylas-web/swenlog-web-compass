@@ -150,7 +150,19 @@ const QuoteManager = () => {
             </div>
             <div>
               <Label htmlFor="service">Service</Label>
-              <Input id="service" name="service" value={formData.service} onChange={handleChange} required />
+              <Select onValueChange={(value) => setFormData(prev => ({ ...prev, service: value }))} value={formData.service}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a service" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Ocean Freight">Ocean Freight</SelectItem>
+                  <SelectItem value="Air Freight">Air Freight</SelectItem>
+                  <SelectItem value="Ground Transportation">Ground Transportation</SelectItem>
+                  <SelectItem value="Customs Brokerage">Customs Brokerage</SelectItem>
+                  <SelectItem value="Warehousing & Distribution">Warehousing & Distribution</SelectItem>
+                  <SelectItem value="Supply Chain Solutions">Supply Chain Solutions</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
                 <Label htmlFor="message">Message</Label>

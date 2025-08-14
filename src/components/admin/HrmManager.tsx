@@ -16,6 +16,7 @@ import {
   Award, TrendingUp, FileText, Edit, Trash2, Eye, Plus,
   Download, Upload, Filter, Search, Mail, Phone, MapPin
 } from 'lucide-react';
+import RoleManager from './RoleManager';
 
 interface Employee {
   id: string;
