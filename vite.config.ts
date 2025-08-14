@@ -24,8 +24,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   esbuild: {
-    loader: 'tsx',
-    include: /src\/.*\.[tj]sx?$/,
+    target: 'es2020'
   },
   build: {
     rollupOptions: {
