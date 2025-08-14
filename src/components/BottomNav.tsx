@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Home, Map, User } from 'lucide-react';
+import { Home, FileText, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthProvider';
 
@@ -18,7 +18,7 @@ export default function BottomNav() {
     {
       title: "Resources",
       path: "/resources",
-      icon: Map
+      icon: FileText
     },
     {
       title: "Portal",
