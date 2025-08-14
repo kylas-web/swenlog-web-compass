@@ -9,13 +9,6 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    fs: {
-      strict: false
-    },
-    middlewareMode: false,
-    hmr: {
-      port: 8080
-    }
   },
   plugins: [
     react(),
@@ -33,16 +26,8 @@ export default defineConfig(({ mode }) => ({
         manualChunks: undefined,
       },
     },
-    assetsDir: 'assets',
-    sourcemap: false
   },
   optimizeDeps: {
     include: ['react', 'react-dom']
-  },
-  assetsInclude: ['**/*.tsx', '**/*.ts'],
-  esbuild: {
-    loader: 'tsx',
-    include: /src\/.*\.[tj]sx?$/,
-    exclude: []
   }
 }));
