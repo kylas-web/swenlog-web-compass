@@ -50,20 +50,6 @@ const ClientShowcase = () => {
     }
   ];
 
-  const partnershipTypes = [
-    {
-      title: "Strategic Partners",
-      items: ["Global shipping lines", "International freight forwarders", "Customs clearing agents"]
-    },
-    {
-      title: "Technology Partners",
-      items: ["ERP system integrators", "Track & trace solution providers", "Digital logistics platforms"]
-    },
-    {
-      title: "Service Partners",
-      items: ["Warehouse operators", "Last-mile delivery partners", "Specialized transport providers"]
-    }
-  ];
 
   return (
     <div className="py-20 bg-white">
@@ -100,32 +86,6 @@ const ClientShowcase = () => {
           </div>
         </div>
 
-        {/* Partnership Network */}
-        <div>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Partnership Network</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Strong partnerships enable us to deliver comprehensive logistics solutions across the globe.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {partnershipTypes.map((partner, index) => (
-              <Card key={index} className="text-center">
-                <CardContent className="p-8">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6">{partner.title}</h3>
-                  <div className="space-y-3">
-                    {partner.items.map((item, idx) => (
-                      <div key={idx} className="bg-blue-50 text-blue-800 px-4 py-2 rounded-lg text-sm font-medium">
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
 
         {/* Stats Section */}
         <div className="mt-20 bg-blue-50 rounded-2xl p-12">

@@ -59,6 +59,7 @@ export const defaultHeaderData = {
   logoText: "SWENLOG",
   logoSubtext: "Global Logistics Solutions",
   ctaButtonText: "Get Quote",
+  ctaButtonLink: "/quote",
   navigationItems: [
     {
       name: 'Services',
@@ -85,6 +86,8 @@ export const defaultHeaderData = {
       ]
     },
     { name: 'About Us', url: '/about-us' },
+    { name: 'Locations', url: '/locations' },
+    { name: 'Networks', url: '/networks' },
     { name: 'Resources', url: '/resources' },
     { name: 'Careers', url: '/careers' },
     { name: 'Contact', url: '/contact' }

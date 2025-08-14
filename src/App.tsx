@@ -21,6 +21,9 @@ import TermsOfServicePage from "./pages/TermsOfServicePage";
 import CookiePolicyPage from "./pages/CookiePolicyPage";
 import CareersPage from "./pages/CareersPage";
 import ContactPage from "./pages/ContactPage";
+import LocationsPage from "./pages/LocationsPage";
+import QuotePage from "./pages/QuotePage";
+import NetworksPage from "./pages/NetworksPage";
 import ResourcesPage from "./pages/ResourcesPage";
 
 // Service Pages
@@ -78,6 +81,9 @@ const App = () => {
             <Route path="/about-us" element={<AboutPage />} />
             <Route path="/careers" element={<CareersPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/locations" element={<LocationsPage />} />
+            <Route path="/quote" element={<QuotePage />} />
+            <Route path="/networks" element={<NetworksPage />} />
             <Route path="/resources" element={<ResourcesPage />} />
             
             {/* Tool Routes */}

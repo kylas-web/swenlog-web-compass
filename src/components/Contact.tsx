@@ -1,6 +1,7 @@
 
-import { Phone, Mail, MapPin, Clock, Building2 } from 'lucide-react';
-import InteractiveMap from './InteractiveMap';
+import { Phone, Mail, MapPin, Clock, Building2, Users, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from './ui/button';
 
 const Contact = () => {
   return (
@@ -9,14 +10,8 @@ const Contact = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Get in Touch with SWENLOG</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            With offices across India, we're always close to your business. Contact our logistics experts today to discuss your supply chain solutions.
+            Ready to optimize your supply chain? Our logistics experts are here to help you find the perfect solution for your business needs.
           </p>
-        </div>
-
-        {/* Interactive Map Section */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Our Strategic Locations</h3>
-          <InteractiveMap />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16">
@@ -86,159 +81,94 @@ const Contact = () => {
                 <div className="text-sm text-gray-600">
                   1st Floor, No. 45, 1st Main Road<br />
                   West Shenoy Nagar<br />
-                  Chennai, Tamil Nadu - 600030
+                  Chennai, Tamil Nadu - 600030<br />
+                  Phone: +91-44-2854-XXXX<br />
+                  Email: chennai@swenlog.co
                 </div>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div className="mt-8 pt-6 border-t border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-4">Quick Access</h4>
+              <div className="space-y-3">
+                <Link to="/locations" className="flex items-center text-blue-600 hover:text-blue-700 transition-colors">
+                  <MapPin className="h-4 w-4 mr-2" />
+                  View All Office Locations
+                </Link>
+                <Link to="/networks" className="flex items-center text-blue-600 hover:text-blue-700 transition-colors">
+                  <Users className="h-4 w-4 mr-2" />
+                  Our Global Network
+                </Link>
               </div>
             </div>
           </div>
 
-          <div>
-            <form className="bg-white border rounded-xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Request a Detailed Quote</h3>
+          {/* Contact Options */}
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">How Can We Help You?</h3>
               
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <input
-                  type="text"
-                  placeholder="First Name*"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Last Name*"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                  required
-                />
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <input
-                  type="email"
-                  placeholder="Email Address*"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                  required
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number*"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                  required
-                />
-              </div>
-              
-              <input
-                type="text"
-                placeholder="Company Name*"
-                className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none mb-4"
-                required
-              />
-              
-              <select className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none mb-4" required>
-                <option value="">Select Service*</option>
-                <option>Ocean Freight</option>
-                <option>Air Freight</option>
-                <option>Ground Transportation</option>
-                <option>Customs Brokerage</option>
-                <option>Warehousing & Distribution</option>
-                <option>Supply Chain Solutions</option>
-              </select>
-              
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <input
-                  type="text"
-                  placeholder="Origin Location*"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Destination Location*"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                  required
-                />
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <input
-                  type="text"
-                  placeholder="Cargo Weight (kg)"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  placeholder="Cargo Dimensions (LxWxH)"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                />
-              </div>
-              
-              <select className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none mb-4">
-                <option value="">Cargo Type</option>
-                <option>General Cargo</option>
-                <option>Hazardous Materials</option>
-                <option>Temperature Controlled</option>
-                <option>Oversized/Heavy Lift</option>
-                <option>Perishable Goods</option>
-                <option>Electronics</option>
-                <option>Automotive Parts</option>
-                <option>Textiles</option>
-                <option>Other</option>
-              </select>
-              
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <input
-                  type="date"
-                  placeholder="Preferred Ship Date"
-                  className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
-                />
-                <select className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none">
-                  <option value="">Urgency Level</option>
-                  <option>Standard</option>
-                  <option>Express</option>
-                  <option>Urgent (24-48 hours)</option>
-                  <option>Emergency</option>
-                </select>
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm mb-2">Additional Services Needed:</label>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <label className="flex items-center text-gray-700">
-                    <input type="checkbox" className="mr-2 text-blue-500" />
-                    Insurance
-                  </label>
-                  <label className="flex items-center text-gray-700">
-                    <input type="checkbox" className="mr-2 text-blue-500" />
-                    Customs Clearance
-                  </label>
-                  <label className="flex items-center text-gray-700">
-                    <input type="checkbox" className="mr-2 text-blue-500" />
-                    Door-to-Door Delivery
-                  </label>
-                  <label className="flex items-center text-gray-700">
-                    <input type="checkbox" className="mr-2 text-blue-500" />
-                    Packaging Services
-                  </label>
-                  <label className="flex items-center text-gray-700">
-                    <input type="checkbox" className="mr-2 text-blue-500" />
-                    Warehousing
-                  </label>
-                  <label className="flex items-center text-gray-700">
-                    <input type="checkbox" className="mr-2 text-blue-500" />
-                    Real-time Tracking
-                  </label>
+              <div className="space-y-4">
+                <Link to="/quote">
+                  <Button className="w-full py-4 text-lg justify-start">
+                    <MessageCircle className="h-5 w-5 mr-3" />
+                    Request a Detailed Quote
+                  </Button>
+                </Link>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <Button variant="outline" className="py-3">
+                    <Phone className="h-4 w-4 mr-2" />
+                    Call Us
+                  </Button>
+                  <Button variant="outline" className="py-3">
+                    <Mail className="h-4 w-4 mr-2" />
+                    Email Us
+                  </Button>
                 </div>
               </div>
+            </div>
+
+            {/* Quick Contact Form */}
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <h3 className="text-xl font-bold text-gray-900 mb-6">Send us a Quick Message</h3>
               
-              <textarea
-                placeholder="Detailed Description of Your Shipping Requirements..."
-                rows={4}
-                className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none mb-6"
-              ></textarea>
-              
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
-                Get Detailed Quote
-              </button>
-            </form>
+              <form className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    placeholder="Your Name*"
+                    className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
+                    required
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email Address*"
+                    className="bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
+                    required
+                  />
+                </div>
+                
+                <input
+                  type="text"
+                  placeholder="Subject*"
+                  className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
+                  required
+                />
+                
+                <textarea
+                  placeholder="Your Message*"
+                  rows={4}
+                  className="w-full bg-gray-50 text-gray-900 px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
+                  required
+                ></textarea>
+                
+                <Button type="submit" className="w-full py-3">
+                  Send Message
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
