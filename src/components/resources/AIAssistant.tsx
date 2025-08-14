@@ -59,7 +59,21 @@ const AIAssistant = () => {
         
         console.log('AI Response received:', response);
         
-        const responseText = response?.message?.content || response?.toString?.() || 'No response received';
+        // Extract text from content array if it exists
+        let responseText = 'No response received';
+        if (response?.message?.content) {
+          if (Array.isArray(response.message.content)) {
+            // Handle array of content objects with {type, text} structure
+            responseText = response.message.content
+              .filter(item => item.type === 'text')
+              .map(item => item.text)
+              .join('');
+          } else if (typeof response.message.content === 'string') {
+            responseText = response.message.content;
+          }
+        } else if (response?.toString?.()) {
+          responseText = response.toString();
+        }
         setAiResponse(responseText);
       } else {
         console.error('Puter.js failed to load after maximum attempts');
