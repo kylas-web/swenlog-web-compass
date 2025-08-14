@@ -43,6 +43,8 @@ import EnergyPage from "./pages/EnergyPage";
 import FreightCalculatorPage from "./pages/tools/FreightCalculatorPage";
 import RouteOptimizerPage from "./pages/tools/RouteOptimizerPage";
 import DocumentScannerPage from "./pages/tools/DocumentScannerPage";
+import MarineTrafficPage from "./pages/tools/MarineTrafficPage";
+import ContainerLoadOptimizerPage from "./pages/tools/ContainerLoadOptimizerPage";
 
 import BottomNav from "@/components/BottomNav";
 
@@ -82,6 +84,8 @@ const App = () => {
             <Route path="/tools/freight-calculator" element={<FreightCalculatorPage />} />
             <Route path="/tools/route-optimizer" element={<RouteOptimizerPage />} />
             <Route path="/tools/document-scanner" element={<DocumentScannerPage />} />
+            <Route path="/tools/marine-traffic" element={<MarineTrafficPage />} />
+            <Route path="/tools/container-optimizer" element={<ContainerLoadOptimizerPage />} />
             
             {/* Service Routes */}
             <Route path="/services/ocean-freight" element={<OceanFreightPage />} />

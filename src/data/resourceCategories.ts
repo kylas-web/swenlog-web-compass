@@ -26,7 +26,8 @@ export const resourceCategories = [
     icon: Calculator,
     color: "bg-green-600",
     resources: [
-      { title: 'Freight Rate Calculator', description: 'Real-time shipping cost estimates for different transport modes.' },
+      { title: 'Freight Rate Calculator', description: 'Real-time shipping cost estimates for different transport modes.', url: '/tools/freight-calculator' },
+      { title: 'Container Load Optimizer', description: 'Maximize container space utilization efficiently.', url: '/tools/container-optimizer' },
       { title: 'Container Load Optimizer', description: 'Maximize container space utilization efficiently.' },
       { title: 'Transit Time Calculator', description: 'Estimated delivery times between global ports and cities.' },
       { title: 'Currency Converter', description: 'Real-time exchange rates for international transactions.' },
@@ -38,10 +39,10 @@ export const resourceCategories = [
     icon: Bot,
     color: "bg-purple-600",
     resources: [
-      { title: 'Smart Route Optimizer', description: 'AI suggests most efficient shipping routes based on cost and time.' },
+      { title: 'Smart Route Optimizer', description: 'AI suggests most efficient shipping routes based on cost and time.', url: '/tools/route-optimizer' },
       { title: 'Demand Forecasting Assistant', description: 'Predictive analytics for inventory planning and demand.' },
       { title: 'Risk Assessment AI', description: 'Automated analysis of shipping risks and weather patterns.' },
-      { title: 'Document Scanner & Processor', description: 'AI-powered tool to extract data from shipping documents.' },
+      { title: 'Document Scanner & Processor', description: 'AI-powered tool to extract data from shipping documents.', url: '/tools/document-scanner' },
       { title: 'Price Prediction Engine', description: 'ML-based forecasting of freight rates and market trends.' }
     ]
   },
@@ -61,6 +62,7 @@ export const resourceCategories = [
     icon: Map,
     color: "bg-teal-600",
     resources: [
+      { title: 'Marine Traffic Monitor', description: 'Real-time vessel tracking and global maritime traffic monitoring.', url: '/tools/marine-traffic' },
       { title: 'Port Locator Map', description: 'Interactive global map showing ports and real-time status.' },
       { title: 'Packaging Advisor', description: 'Recommend optimal packaging based on product and destination.' },
       { title: 'Insurance Calculator', description: 'Cargo insurance cost estimator with coverage recommendations.' },

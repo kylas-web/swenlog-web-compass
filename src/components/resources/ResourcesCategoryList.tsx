@@ -1,5 +1,6 @@
 
 import { resourceCategories } from '../../data/resourceCategories';
+import { Link } from 'react-router-dom';
 import ResourceCategory from './ResourceCategory';
 
 const ResourcesCategoryList = () => (
