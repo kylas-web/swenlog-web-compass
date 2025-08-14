@@ -20,6 +20,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import CookiePolicyPage from "./pages/CookiePolicyPage";
 import CareersPage from "./pages/CareersPage";
+import JobApplicationPage from "./pages/JobApplicationPage";
 import ContactPage from "./pages/ContactPage";
 import LocationsPage from "./pages/LocationsPage";
 import QuotePage from "./pages/QuotePage";
@@ -79,7 +80,8 @@ const App = () => {
               </AdminRoute>
             } />
             <Route path="/about-us" element={<AboutPage />} />
-            <Route path="/careers" element={<CareersPage />} />
+          <Route path="/careers" element={<CareersPage />} />
+          <Route path="/careers/apply/:jobId" element={<JobApplicationPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/locations" element={<LocationsPage />} />
             <Route path="/quote" element={<QuotePage />} />

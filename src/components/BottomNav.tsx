@@ -16,12 +16,12 @@ export default function BottomNav() {
       icon: Home
     },
     {
-      title: "Optimizer",
-      path: "/tools/route-optimizer",
+      title: "Resources",
+      path: "/resources",
       icon: Map
     },
     {
-      title: "Account",
+      title: "Portal",
       path: user ? "/admin" : "/auth",
       icon: User
     },

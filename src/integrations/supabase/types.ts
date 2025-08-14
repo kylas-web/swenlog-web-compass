@@ -366,6 +366,146 @@ export type Database = {
         }
         Relationships: []
       }
+      job_applications: {
+        Row: {
+          additional_info: string | null
+          applicant_email: string
+          applicant_name: string
+          applicant_phone: string | null
+          availability_date: string | null
+          cover_letter: string | null
+          created_at: string
+          current_company: string | null
+          current_position: string | null
+          experience_years: number | null
+          id: string
+          job_id: string
+          linkedin_url: string | null
+          notes: string | null
+          portfolio_url: string | null
+          resume_url: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          salary_expectation: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          additional_info?: string | null
+          applicant_email: string
+          applicant_name: string
+          applicant_phone?: string | null
+          availability_date?: string | null
+          cover_letter?: string | null
+          created_at?: string
+          current_company?: string | null
+          current_position?: string | null
+          experience_years?: number | null
+          id?: string
+          job_id: string
+          linkedin_url?: string | null
+          notes?: string | null
+          portfolio_url?: string | null
+          resume_url?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          salary_expectation?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          additional_info?: string | null
+          applicant_email?: string
+          applicant_name?: string
+          applicant_phone?: string | null
+          availability_date?: string | null
+          cover_letter?: string | null
+          created_at?: string
+          current_company?: string | null
+          current_position?: string | null
+          experience_years?: number | null
+          id?: string
+          job_id?: string
+          linkedin_url?: string | null
+          notes?: string | null
+          portfolio_url?: string | null
+          resume_url?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          salary_expectation?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          application_deadline: string | null
+          benefits: string[] | null
+          category: string
+          created_at: string
+          department: string
+          description: string
+          employment_type: string
+          experience_level: string
+          id: string
+          is_active: boolean
+          location: string
+          posted_by: string | null
+          requirements: string[]
+          responsibilities: string[]
+          salary_range: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          application_deadline?: string | null
+          benefits?: string[] | null
+          category?: string
+          created_at?: string
+          department: string
+          description: string
+          employment_type?: string
+          experience_level?: string
+          id?: string
+          is_active?: boolean
+          location: string
+          posted_by?: string | null
+          requirements?: string[]
+          responsibilities?: string[]
+          salary_range?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          application_deadline?: string | null
+          benefits?: string[] | null
+          category?: string
+          created_at?: string
+          department?: string
+          description?: string
+          employment_type?: string
+          experience_level?: string
+          id?: string
+          is_active?: boolean
+          location?: string
+          posted_by?: string | null
+          requirements?: string[]
+          responsibilities?: string[]
+          salary_range?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       leave_requests: {
         Row: {
           approved_at: string | null

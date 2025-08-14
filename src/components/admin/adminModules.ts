@@ -32,6 +32,7 @@ import PerformanceManager from "./PerformanceManager";
 import HRReportsManager from "./HRReportsManager";
 import CRMActivitiesManager from "./CRMActivitiesManager";
 import CRMReportsManager from "./CRMReportsManager";
+import CareerManager from "./CareerManager";
 
 export const adminModuleCategories = [
   {
@@ -144,6 +145,12 @@ export const adminModuleCategories = [
         label: 'Staff Dashboard',
         icon: Gauge,
         component: StaffDashboard,
+      },
+      {
+        key: 'careers',
+        label: 'Career Management',
+        icon: UserPlus,
+        component: CareerManager,
       },
     ]
   },
