@@ -1,7 +1,7 @@
 export const defaultHeroData = {
-  mainHeading: "Global Logistics",
-  subHeading: "Made Simple", 
-  description: "SWENLOG delivers comprehensive supply chain solutions that connect your business to the world. From freight forwarding to customs brokerage, we handle the complexity so you can focus on growth.",
+  mainHeading: "SWENLOG Supply Chain",
+  subHeading: "Solutions", 
+  description: "Your trusted partner for comprehensive logistics and supply chain solutions across India. From strategic planning to last-mile delivery, we ensure your cargo reaches its destination safely and on time.",
   imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
 };
 
@@ -40,19 +40,18 @@ export const defaultSubmissions = [
 ];
 
 export const defaultAboutData = {
-    title: "Your Trusted Logistics Partner Since 2020",
-    paragraph1: "SWENLOG has been at the forefront of global logistics, helping businesses of all sizes navigate the complexities of international trade. Our comprehensive suite of services and deep industry expertise make us the preferred choice for companies seeking reliable, efficient logistics solutions.",
-    paragraph2: "With offices across major trade routes and a network of trusted partners worldwide, we provide seamless connectivity between markets, ensuring your cargo reaches its destination safely, on time, and cost-effectively.",
-    stat1_value: "50K+",
-    stat1_label: "Shipments Handled",
-    stat2_value: "1000+",
-    stat2_label: "Global Clients",
+    title: "About SWENLOG",
+    paragraph1: "SWENLOG Supply Chain Solutions Private Limited has established itself as a leading logistics and supply chain management company in India. With our registered office in Chennai and corporate headquarters in Bengaluru, we serve clients across multiple industries with comprehensive logistics solutions.",
+    paragraph2: "Our strategic presence across key Indian cities - including Chennai, Bengaluru, Coimbatore, Tuticorin, Cochin, Mumbai, and Delhi - enables us to provide seamless supply chain solutions from port to doorstep. We specialize in serving automotive, pharmaceutical, engineering, FMCG, and other critical industries.",
+    stat1_value: "7",
+    stat1_label: "Strategic Locations",
+    stat2_value: "500+",
+    stat2_label: "Happy Clients",
     values_title: "Our Core Values",
     values: [
-        { id: 'v1', icon: 'Target', title: 'Precision', description: 'Every shipment is handled with meticulous attention to detail and accuracy.' },
-        { id: 'v2', icon: 'Users', title: 'Partnership', description: 'We build long-term relationships based on trust, transparency, and mutual success.' },
-        { id: 'v3', icon: 'Award', title: 'Excellence', description: 'Committed to delivering superior service that exceeds customer expectations.' },
-        { id: 'v4', icon: 'Zap', title: 'Innovation', description: 'Leveraging cutting-edge technology to optimize logistics operations.' }
+        { id: 'v1', icon: 'Shield', title: 'Reliability & Trust', description: 'Building long-term relationships through consistent, dependable service delivery.' },
+        { id: 'v2', icon: 'Lightbulb', title: 'Innovation', description: 'Leveraging technology and best practices to optimize supply chain efficiency.' },
+        { id: 'v3', icon: 'Users', title: 'Customer Focus', description: 'Tailoring solutions to meet unique industry requirements and business needs.' }
     ]
 };
 
