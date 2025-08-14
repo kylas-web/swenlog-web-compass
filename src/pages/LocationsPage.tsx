@@ -1,6 +1,5 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import InteractiveMap from '../components/InteractiveMap';
 import { MapPin, Phone, Mail, Clock, Building2 } from 'lucide-react';
 
 const LocationsPage = () => {
@@ -17,9 +16,33 @@ const LocationsPage = () => {
             </p>
           </div>
 
-          {/* Interactive Map Section */}
-          <div className="mb-16">
-            <InteractiveMap />
+          {/* Location Overview */}
+          <div className="mb-16 bg-white rounded-xl shadow-lg p-8 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Pan-India Presence</h2>
+            <p className="text-gray-600 mb-6">We operate across major cities in India with our headquarters in Chennai and corporate office in Bengaluru, supported by regional branches.</p>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="bg-red-100 p-4 rounded-lg inline-block mb-3">
+                  <Building2 className="h-8 w-8 text-red-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900">South India</h3>
+                <p className="text-sm text-gray-600">Chennai, Bengaluru, Coimbatore, Tuticorin, Cochin</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-blue-100 p-4 rounded-lg inline-block mb-3">
+                  <Building2 className="h-8 w-8 text-blue-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900">West India</h3>
+                <p className="text-sm text-gray-600">Mumbai</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-green-100 p-4 rounded-lg inline-block mb-3">
+                  <Building2 className="h-8 w-8 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900">North India</h3>
+                <p className="text-sm text-gray-600">Delhi</p>
+              </div>
+            </div>
           </div>
 
           {/* Office Details */}
