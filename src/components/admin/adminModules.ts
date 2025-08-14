@@ -21,6 +21,11 @@ import CompleteHrmManager from "./CompleteHrmManager";
 import WhatsappManager from "./WhatsappManager";
 import PerformanceManager from "./PerformanceManager";
 import SecurityManager from "./SecurityManager";
+import FeatureManager from "./FeatureManager";
+import ResourcesManager from "./ResourcesManager";
+import WhatsAppWebManager from "./WhatsAppWebManager";
+import TeamChatManager from "./TeamChatManager";
+import StaffDashboard from "./StaffDashboard";
 
 export const adminModules = [
   {
@@ -112,6 +117,36 @@ export const adminModules = [
     label: 'General Settings',
     icon: Settings,
     component: GeneralSettingsManager,
+  },
+  {
+    key: 'features',
+    label: 'Feature Manager',
+    icon: Settings,
+    component: FeatureManager,
+  },
+  {
+    key: 'resources',
+    label: 'Resources Manager',
+    icon: Database,
+    component: ResourcesManager,
+  },
+  {
+    key: 'whatsapp-web',
+    label: 'WhatsApp Web',
+    icon: MessageSquare,
+    component: WhatsAppWebManager,
+  },
+  {
+    key: 'team-chat',
+    label: 'Team Chat',
+    icon: Users,
+    component: TeamChatManager,
+  },
+  {
+    key: 'staff-dashboard',
+    label: 'Staff Dashboard',
+    icon: UserPlus,
+    component: StaffDashboard,
   },
 ];
 
