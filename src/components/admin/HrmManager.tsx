@@ -132,7 +132,7 @@ const HrmManager = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<any>({});
   const [searchTerm, setSearchTerm] = useState('');
   const [filterDepartment, setFilterDepartment] = useState('all');
   const [filterStatus, setFilterStatus] = useState('all');
@@ -144,25 +144,33 @@ const HrmManager = () => {
 
   const openDialog = (item: any = null, type: string = 'employee') => {
     setEditingItem(item);
-    setFormData(item || { type, id: Date.now().toString() });
+    setFormData(item || { 
+      id: Date.now().toString(),
+      firstName: '',
+      lastName: '',
+      email: '',
+      position: '',
+      department: '',
+      hireDate: '',
+      salary: 0,
+      status: 'active'
+    });
     setIsDialogOpen(true);
   };
 
   const handleSubmit = () => {
-    if (formData.type === 'employee' || !formData.type) {
-      if (editingItem) {
-        setEmployees(prev => prev.map(emp => emp.id === editingItem.id ? { ...formData } : emp));
-        toast({ title: "Success", description: "Employee updated successfully." });
-      } else {
-        const newEmployee = {
-          ...formData,
-          id: Date.now().toString(),
-          employeeId: `EMP${String(employees.length + 1).padStart(3, '0')}`,
-          created_at: new Date().toISOString()
-        };
-        setEmployees(prev => [...prev, newEmployee]);
-        toast({ title: "Success", description: "Employee added successfully." });
-      }
+    if (editingItem) {
+      setEmployees(prev => prev.map(emp => emp.id === editingItem.id ? { ...formData } as Employee : emp));
+      toast({ title: "Success", description: "Employee updated successfully." });
+    } else {
+      const newEmployee: Employee = {
+        ...formData,
+        id: Date.now().toString(),
+        employeeId: `EMP${String(employees.length + 1).padStart(3, '0')}`,
+        created_at: new Date().toISOString()
+      };
+      setEmployees(prev => [...prev, newEmployee]);
+      toast({ title: "Success", description: "Employee added successfully." });
     }
     setIsDialogOpen(false);
     setEditingItem(null);

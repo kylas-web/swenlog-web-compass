@@ -143,7 +143,7 @@ const GeneralSettingsManager = () => {
   const [activeSection, setActiveSection] = useState('site');
   const { toast } = useToast();
 
-  const handleInputChange = (field: keyof GeneralSettings, value: string | boolean) => {
+  const handleInputChange = (field: keyof GeneralSettings, value: string | boolean | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -535,7 +535,7 @@ const GeneralSettingsManager = () => {
                   <Input
                     id="webhookEvents"
                     value={formData.webhookEvents.join(', ')}
-                    onChange={(e) => handleInputChange('webhookEvents', e.target.value.split(', '))}
+                    onChange={(e) => handleInputChange('webhookEvents', e.target.value.split(', ').filter(item => item.trim()))}
                     placeholder="shipment.created, shipment.updated"
                   />
                 </div>

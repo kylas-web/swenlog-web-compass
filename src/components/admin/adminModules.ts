@@ -1,7 +1,8 @@
 
 import { 
   LayoutDashboard, Building, Wrench, PanelTop, PanelBottom, Globe, FileText, 
-  Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot, Settings 
+  Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot, Settings,
+  UserPlus, Sliders, Database
 } from "lucide-react";
 import HeroManager from "./HeroManager";
 import AboutManager from "./AboutManager";
@@ -9,14 +10,16 @@ import ServicesManager from "./ServicesManager";
 import HeaderManager from "./HeaderManager";
 import FooterManager from "./FooterManager";
 import CtaManager from "./CtaManager";
-import PageManager from "./PageManager";
+import EnhancedPageManager from "./EnhancedPageManager";
 import AdvancedMediaManager from "./AdvancedMediaManager";
 import QuoteManager from "./QuoteManager";
-import CrmManager from "./CrmManager";
+import EnhancedCrmManager from "./EnhancedCrmManager";
+import HrmManager from "./HrmManager";
 import WhatsappManager from "./WhatsappManager";
 import PerformanceManager from "./PerformanceManager";
 import SecurityManager from "./SecurityManager";
-import ChatbotManager from "./ChatbotManager";
+import EnhancedChatbotManager from "./EnhancedChatbotManager";
+import SliderManager from "./SliderManager";
 import GeneralSettingsManager from "./GeneralSettingsManager";
 
 export const adminModules = [
@@ -58,9 +61,9 @@ export const adminModules = [
   },
   {
     key: 'pages',
-    label: 'Page Management',
+    label: 'Enhanced Pages',
     icon: FileText,
-    component: PageManager,
+    component: EnhancedPageManager,
   },
   {
     key: 'media',
@@ -76,9 +79,21 @@ export const adminModules = [
   },
   {
     key: 'crm',
-    label: 'CRM',
+    label: 'Enhanced CRM',
     icon: Users,
-    component: CrmManager,
+    component: EnhancedCrmManager,
+  },
+  {
+    key: 'hrm',
+    label: 'Human Resources',
+    icon: UserPlus,
+    component: HrmManager,
+  },
+  {
+    key: 'sliders',
+    label: 'Slider Management',
+    icon: Sliders,
+    component: SliderManager,
   },
   {
     key: 'whatsapp',
@@ -88,9 +103,9 @@ export const adminModules = [
   },
   {
     key: 'chatbot',
-    label: 'Chatbot Training',
+    label: 'Enhanced Chatbot',
     icon: Bot,
-    component: ChatbotManager,
+    component: EnhancedChatbotManager,
   },
   {
     key: 'performance',

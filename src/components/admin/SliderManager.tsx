@@ -20,6 +20,7 @@ import {
 
 interface Slide {
   id: string;
+  sliderId?: string; // Added missing property
   title: string;
   subtitle?: string;
   description?: string;
@@ -179,7 +180,7 @@ const SliderManager = () => {
   const [activeTab, setActiveTab] = useState('sliders');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<any>({});
   const [selectedSliderId, setSelectedSliderId] = useState(sliders[0]?.id || '');
   const { toast } = useToast();
 
@@ -194,6 +195,9 @@ const SliderManager = () => {
       id: Date.now().toString(),
       sliderId: selectedSliderId,
       ...(type === 'slider' ? {
+        name: '',
+        page: '',
+        section: '',
         autoplay: true,
         autoplaySpeed: 5000,
         showDots: true,
@@ -206,6 +210,9 @@ const SliderManager = () => {
         borderRadius: 8,
         shadow: true
       } : {
+        title: '',
+        image: '',
+        imageAlt: '',
         textPosition: 'center',
         textColor: '#ffffff',
         backgroundColor: '#1e40af',
@@ -213,7 +220,7 @@ const SliderManager = () => {
         animationType: 'fade',
         buttonStyle: 'primary',
         isActive: true,
-        order: slides.filter(s => s.sliderId === selectedSliderId).length + 1
+        order: slides.filter((s: any) => s.sliderId === selectedSliderId).length + 1
       })
     });
     setIsDialogOpen(true);
@@ -222,7 +229,7 @@ const SliderManager = () => {
   const handleSubmit = () => {
     if (formData.type === 'slider' || !formData.type) {
       if (editingItem) {
-        setSliders(prev => prev.map(slider => 
+        setSliders(prev => prev.map((slider: any) => 
           slider.id === editingItem.id ? { ...formData, id: editingItem.id } : slider
         ));
         toast({ title: "Success", description: "Slider updated successfully." });
@@ -237,7 +244,7 @@ const SliderManager = () => {
       }
     } else if (formData.type === 'slide') {
       if (editingItem) {
-        setSlides(prev => prev.map(slide => 
+        setSlides(prev => prev.map((slide: any) => 
           slide.id === editingItem.id ? { ...formData, id: editingItem.id } : slide
         ));
         toast({ title: "Success", description: "Slide updated successfully." });
@@ -261,27 +268,27 @@ const SliderManager = () => {
   const handleDelete = (id: string, type: 'slider' | 'slide') => {
     if (confirm(`Are you sure you want to delete this ${type}?`)) {
       if (type === 'slider') {
-        setSliders(prev => prev.filter(slider => slider.id !== id));
+        setSliders(prev => prev.filter((slider: any) => slider.id !== id));
         // Also delete associated slides
-        setSlides(prev => prev.filter(slide => slide.sliderId !== id));
+        setSlides(prev => prev.filter((slide: any) => slide.sliderId !== id));
       } else {
-        setSlides(prev => prev.filter(slide => slide.id !== id));
+        setSlides(prev => prev.filter((slide: any) => slide.id !== id));
       }
       toast({ title: "Success", description: `${type} deleted successfully.` });
     }
   };
 
   const moveSlide = (slideId: string, direction: 'up' | 'down') => {
-    const slidesList = slides.filter(s => s.sliderId === selectedSliderId).sort((a, b) => a.order - b.order);
-    const slideIndex = slidesList.findIndex(s => s.id === slideId);
+    const slidesList = slides.filter((s: any) => s.sliderId === selectedSliderId).sort((a: any, b: any) => a.order - b.order);
+    const slideIndex = slidesList.findIndex((s: any) => s.id === slideId);
     
     if ((direction === 'up' && slideIndex > 0) || (direction === 'down' && slideIndex < slidesList.length - 1)) {
       const newSlides = [...slides];
       const targetIndex = direction === 'up' ? slideIndex - 1 : slideIndex + 1;
       
       // Swap orders
-      const currentSlide = newSlides.find(s => s.id === slidesList[slideIndex].id);
-      const targetSlide = newSlides.find(s => s.id === slidesList[targetIndex].id);
+      const currentSlide = newSlides.find((s: any) => s.id === slidesList[slideIndex].id);
+      const targetSlide = newSlides.find((s: any) => s.id === slidesList[targetIndex].id);
       
       if (currentSlide && targetSlide) {
         const tempOrder = currentSlide.order;
@@ -294,12 +301,12 @@ const SliderManager = () => {
     }
   };
 
-  const duplicateSlide = (slide: Slide) => {
+  const duplicateSlide = (slide: any) => {
     const newSlide = {
       ...slide,
       id: Date.now().toString(),
       title: `${slide.title} (Copy)`,
-      order: slides.filter(s => s.sliderId === slide.sliderId).length + 1,
+      order: slides.filter((s: any) => s.sliderId === slide.sliderId).length + 1,
       created_at: new Date().toISOString()
     };
     setSlides(prev => [...prev, newSlide]);
@@ -307,7 +314,7 @@ const SliderManager = () => {
   };
 
   const toggleSlideStatus = (slideId: string) => {
-    setSlides(prev => prev.map(slide => 
+    setSlides(prev => prev.map((slide: any) => 
       slide.id === slideId ? { ...slide, isActive: !slide.isActive } : slide
     ));
   };
@@ -323,8 +330,8 @@ const SliderManager = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {sliders.map((slider) => {
-          const sliderSlides = slides.filter(s => s.sliderId === slider.id);
+        {sliders.map((slider: any) => {
+          const sliderSlides = slides.filter((s: any) => s.sliderId === slider.id);
           return (
             <Card key={slider.id} className={selectedSliderId === slider.id ? 'ring-2 ring-primary' : ''}>
               <CardHeader>
@@ -388,8 +395,8 @@ const SliderManager = () => {
   );
 
   const renderSlides = () => {
-    const selectedSlider = sliders.find(s => s.id === selectedSliderId);
-    const sliderSlides = slides.filter(s => s.sliderId === selectedSliderId).sort((a, b) => a.order - b.order);
+    const selectedSlider = sliders.find((s: any) => s.id === selectedSliderId);
+    const sliderSlides = slides.filter((s: any) => s.sliderId === selectedSliderId).sort((a: any, b: any) => a.order - b.order);
 
     return (
       <div className="space-y-4">
@@ -408,7 +415,7 @@ const SliderManager = () => {
                 <SelectValue placeholder="Select slider" />
               </SelectTrigger>
               <SelectContent>
-                {sliders.map(slider => (
+                {sliders.map((slider: any) => (
                   <SelectItem key={slider.id} value={slider.id}>
                     {slider.name}
                   </SelectItem>
@@ -435,7 +442,7 @@ const SliderManager = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sliderSlides.map((slide) => (
+              {sliderSlides.map((slide: any) => (
                 <TableRow key={slide.id}>
                   <TableCell>
                     <div className="flex items-center space-x-2">

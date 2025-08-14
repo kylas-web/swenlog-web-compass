@@ -27,7 +27,7 @@ interface Contact {
   position?: string;
   address?: string;
   tags?: string[];
-  status: 'active' | 'inactive' | 'prospect';
+  status: string; // Made flexible instead of strict union
   lead_source?: string;
   last_contacted?: string;
   notes?: string;
@@ -40,8 +40,8 @@ interface Lead {
   email?: string;
   phone?: string;
   company?: string;
-  source: 'website' | 'referral' | 'cold_call' | 'advertisement' | 'social_media' | 'other';
-  status: 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
+  source: string; // Made flexible instead of strict union
+  status: string; // Made flexible instead of strict union
   score?: number;
   assigned_to?: string;
   estimated_value?: number;
@@ -55,7 +55,7 @@ interface Opportunity {
   name: string;
   description?: string;
   value: number;
-  stage: 'prospecting' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
+  stage: string; // Made flexible instead of strict union
   probability?: number;
   close_date: string;
   contact_id?: string;
@@ -111,7 +111,7 @@ const EnhancedCrmManager = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<any>({});
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const { toast } = useToast();
