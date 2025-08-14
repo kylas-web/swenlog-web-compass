@@ -46,7 +46,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">Phone</div>
-                  <div className="text-gray-600">+91-80-4152-XXXX</div>
+                  <div className="text-gray-600">+91 95674 10060</div>
                 </div>
               </div>
               
@@ -56,7 +56,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">Email</div>
-                  <div className="text-gray-600">info@swenlog.co</div>
+                  <div className="text-gray-600">info@swenlog.com</div>
                 </div>
               </div>
               
@@ -79,11 +79,11 @@ const Contact = () => {
                   <MapPin className="h-4 w-4 text-red-600" />
                 </div>
                 <div className="text-sm text-gray-600">
-                  1st Floor, No. 45, 1st Main Road<br />
-                  West Shenoy Nagar<br />
-                  Chennai, Tamil Nadu - 600030<br />
-                  Phone: +91-44-2854-XXXX<br />
-                  Email: chennai@swenlog.co
+                  No.2, 2nd Floor, Kodambakkam High Road<br />
+                  Nungambakkam<br />
+                  Chennai, Tamil Nadu - 600034<br />
+                  Phone: +91 80476 97802 / +91 80476 97628<br />
+                  Email: info@swenlog.com
                 </div>
               </div>
             </div>
@@ -118,14 +118,18 @@ const Contact = () => {
                 </Link>
                 
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" className="py-3">
-                    <Phone className="h-4 w-4 mr-2" />
-                    Call Us
-                  </Button>
-                  <Button variant="outline" className="py-3">
-                    <Mail className="h-4 w-4 mr-2" />
-                    Email Us
-                  </Button>
+                  <a href="tel:+918047697802">
+                    <Button variant="outline" className="py-3 w-full">
+                      <Phone className="h-4 w-4 mr-2" />
+                      Call Us
+                    </Button>
+                  </a>
+                  <a href="mailto:info@swenlog.com">
+                    <Button variant="outline" className="py-3 w-full">
+                      <Mail className="h-4 w-4 mr-2" />
+                      Email Us
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>

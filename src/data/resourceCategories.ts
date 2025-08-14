@@ -28,7 +28,6 @@ export const resourceCategories = [
     resources: [
       { title: 'Freight Rate Calculator', description: 'Real-time shipping cost estimates for different transport modes.', url: '/tools/freight-calculator' },
       { title: 'Container Load Optimizer', description: 'Maximize container space utilization efficiently.', url: '/tools/container-optimizer' },
-      { title: 'Container Load Optimizer', description: 'Maximize container space utilization efficiently.' },
       { title: 'Transit Time Calculator', description: 'Estimated delivery times between global ports and cities.' },
       { title: 'Currency Converter', description: 'Real-time exchange rates for international transactions.' },
       { title: 'Customs Duty Calculator', description: 'Estimate import/export duties and taxes by country.' }

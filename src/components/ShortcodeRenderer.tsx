@@ -76,9 +76,9 @@ const ShortcodeRenderer: React.FC<ShortcodeRendererProps> = ({ content, classNam
             <CardTitle>Contact Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-            <p><strong>Email:</strong> contact@example.com</p>
-            <p><strong>Address:</strong> 123 Business St, City, State 12345</p>
+            <p><strong>Phone:</strong> +91 80476 97802 / +91 80476 97628</p>
+            <p><strong>Email:</strong> info@swenlog.com</p>
+            <p><strong>Address:</strong> No.2, 2nd Floor, Kodambakkam High Road, Nungambakkam, Chennai - 600034</p>
           </CardContent>
         </Card>
       );

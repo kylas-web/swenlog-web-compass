@@ -114,10 +114,10 @@ const defaultGlobalData: GlobalData = {
     language: 'en'
   },
   contactInfo: {
-    phone: '+1 (555) 123-4567',
-    email: 'contact@swenlog.com',
-    address: '123 Logistics Avenue, Business District, City 12345',
-    businessHours: 'Mon-Fri: 8AM-6PM, Sat: 9AM-3PM',
+    phone: '+91 80476 97802',
+    email: 'info@swenlog.com',
+    address: 'No.2, 2nd Floor, Kodambakkam High Road, Nungambakkam, Chennai - 600034, Tamil Nadu, India',
+    businessHours: 'Mon-Fri: 9AM-6PM, Sat: 9AM-1PM',
     socialMedia: {
       facebook: 'https://facebook.com/swenlog',
       twitter: 'https://twitter.com/swenlog',

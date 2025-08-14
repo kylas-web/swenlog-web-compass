@@ -1,7 +1,8 @@
 
-import { ArrowRight, Globe, Clock, Shield } from 'lucide-react';
+import { ArrowRight, Globe, Clock, Shield, Phone, Mail } from 'lucide-react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { defaultHeroData } from '@/data/defaults';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [heroData] = useLocalStorage('heroData', defaultHeroData);
@@ -21,13 +22,43 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-white text-blue-800 px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors font-semibold flex items-center justify-center">
+              <Link 
+                to="/quote" 
+                className="bg-white text-blue-800 px-8 py-4 rounded-lg hover:bg-blue-50 transition-colors font-semibold flex items-center justify-center"
+              >
                 Get Started Today
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-blue-800 transition-colors font-semibold">
+              </Link>
+              <Link 
+                to="/services/ocean-freight" 
+                className="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-blue-800 transition-colors font-semibold text-center"
+              >
                 View Our Services
-              </button>
+              </Link>
+            </div>
+
+            {/* Contact Actions */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <a 
+                href="tel:+918047697802" 
+                className="flex items-center gap-3 text-blue-100 hover:text-white transition-colors"
+              >
+                <Phone className="h-5 w-5" />
+                <div>
+                  <div className="text-sm font-medium">Call Us</div>
+                  <div className="text-xs">Chennai: +91 80476 97802</div>
+                </div>
+              </a>
+              <a 
+                href="mailto:info@swenlog.com" 
+                className="flex items-center gap-3 text-blue-100 hover:text-white transition-colors"
+              >
+                <Mail className="h-5 w-5" />
+                <div>
+                  <div className="text-sm font-medium">Email Us</div>
+                  <div className="text-xs">info@swenlog.com</div>
+                </div>
+              </a>
             </div>
 
             <div className="grid grid-cols-3 gap-8 pt-8">

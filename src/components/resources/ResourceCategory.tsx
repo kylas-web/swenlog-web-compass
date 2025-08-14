@@ -20,10 +20,14 @@ const ResourceCategory = ({ title, icon: Icon, color, resources }: ResourceCateg
     switch (resourceTitle) {
       case 'Freight Rate Calculator':
         return '/tools/freight-calculator';
+      case 'Container Load Optimizer':
+        return '/tools/container-optimizer';
       case 'Smart Route Optimizer':
         return '/tools/route-optimizer';
       case 'Document Scanner & Processor':
         return '/tools/document-scanner';
+      case 'Marine Traffic Monitor':
+        return '/tools/marine-traffic';
       default:
         return '#';
     }
