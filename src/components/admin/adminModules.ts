@@ -1,7 +1,7 @@
 import { 
   LayoutDashboard, Building, Wrench, PanelTop, PanelBottom, Globe, FileText, 
   Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot, Settings,
-  UserPlus, Sliders, Database, FormInput
+  UserPlus, Sliders, Database, FormInput, Paintbrush
 } from "lucide-react";
 import HeroManager from "./HeroManager";
 import AboutManager from "./AboutManager";
@@ -26,8 +26,15 @@ import ResourcesManager from "./ResourcesManager";
 import WhatsAppWebManager from "./WhatsAppWebManager";
 import TeamChatManager from "./TeamChatManager";
 import StaffDashboard from "./StaffDashboard";
+import VisualEditor from "./VisualEditor";
 
 export const adminModules = [
+  {
+    key: 'visual-editor',
+    label: 'Visual Page Editor',
+    icon: Paintbrush,
+    component: VisualEditor,
+  },
   {
     key: 'hero',
     label: 'Hero Section',
