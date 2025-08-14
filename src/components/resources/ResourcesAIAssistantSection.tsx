@@ -1,8 +1,8 @@
 
-import AIAssistant from './AIAssistant';
+import FloatingAIChat from './FloatingAIChat';
 
 const ResourcesAIAssistantSection = () => (
-  <AIAssistant />
+  <FloatingAIChat />
 );
 
 export default ResourcesAIAssistantSection;
