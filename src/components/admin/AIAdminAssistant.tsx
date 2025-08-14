@@ -2,17 +2,6 @@
 import { useState, useEffect } from 'react';
 import { Bot, Sparkles } from 'lucide-react';
 
-// Declare puter as global to avoid TypeScript errors
-declare global {
-  interface Window {
-    puter: {
-      ai: {
-        chat: (prompt: string, testMode?: boolean, options?: any) => Promise<any>;
-      };
-    };
-  }
-}
-
 interface AIAdminAssistantProps {
   context: string;
 }

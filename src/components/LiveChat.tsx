@@ -1,17 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
-// Declare puter as global to avoid TypeScript errors
-declare global {
-  interface Window {
-    puter: {
-      ai: {
-        chat: (prompt: string, testMode?: boolean) => Promise<any>;
-      };
-    };
-  }
-}
-
 interface Message {
   id: number;
   text: string;

@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { GlobalDataProvider } from './contexts/GlobalDataProvider';
 
 // Auth
 import { AuthProvider } from "./contexts/AuthProvider";
@@ -57,8 +58,9 @@ const App = () => {
   });
 
   return (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
+    <GlobalDataProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -107,9 +109,10 @@ const App = () => {
           {/* Show BottomNav only on mobile */}
           <BottomNav />
         </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </GlobalDataProvider>
   );
 };
 

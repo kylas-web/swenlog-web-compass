@@ -2,17 +2,6 @@
 import { useState, useEffect } from 'react';
 import { Bot, Plus, Edit, Trash2, Save, X } from 'lucide-react';
 
-// Declare puter as global
-declare global {
-  interface Window {
-    puter: {
-      ai: {
-        chat: (prompt: string, testMode?: boolean, options?: any) => Promise<any>;
-      };
-    };
-  }
-}
-
 interface TrainingData {
   id: string;
   question: string;
