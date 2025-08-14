@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { aiService } from '@/utils/aiService';
 
 interface TrainingData {
   id: string;
@@ -34,18 +35,9 @@ const FloatingAIChat = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [trainingData, setTrainingData] = useState<TrainingData[]>([]);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    // Load training data from localStorage
-    const savedData = localStorage.getItem('chatbot-training-data');
-    if (savedData) {
-      setTrainingData(JSON.parse(savedData));
-    }
-  }, []);
 
   useEffect(() => {
     // Auto-scroll to bottom when new messages arrive
@@ -74,63 +66,20 @@ const FloatingAIChat = () => {
     setIsLoading(true);
 
     try {
-      // Wait for Puter.js to be fully loaded
-      let attempts = 0;
-      const maxAttempts = 100;
-      
-      while ((!window.puter || !window.puter.ai) && attempts < maxAttempts) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-        attempts++;
-      }
+      const response = await aiService.query(userMessage.text, {
+        context: 'customer_support',
+        systemPrompt: 'You are SwenAI, a logistics and supply chain expert for SWENLOG Supply Chain Solutions.',
+        model: 'gpt-4.1-nano'
+      });
 
-      if (window.puter && window.puter.ai) {
-        // Create context from training data
-        const trainingContext = trainingData.length > 0 
-          ? trainingData.map(entry => 
-              `Q: ${entry.question}\nA: ${entry.answer}\nCategory: ${entry.category}\nKeywords: ${entry.keywords.join(', ')}`
-            ).join('\n\n')
-          : '';
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: response.text,
+        sender: 'ai',
+        timestamp: new Date()
+      };
 
-        const contextualPrompt = `You are SwenAI, a logistics and supply chain expert for SWENLOG Supply Chain Solutions. ${
-          trainingContext ? `Use the following training data to provide accurate answers when relevant:\n\n${trainingContext}\n\n` : ''
-        }Please provide helpful advice about: ${userMessage.text}`;
-
-        const response = await window.puter.ai.chat(contextualPrompt, false, {
-          model: 'gpt-4.1-nano'
-        });
-
-        // Extract text from content array if it exists
-        let responseText = 'I apologize, but I couldn\'t process your request right now. Please try again.';
-        if (response?.message?.content) {
-          if (Array.isArray(response.message.content)) {
-            responseText = response.message.content
-              .filter(item => item.type === 'text')
-              .map(item => item.text)
-              .join('');
-          } else if (typeof response.message.content === 'string') {
-            responseText = response.message.content;
-          }
-        } else if (response?.toString?.()) {
-          responseText = response.toString();
-        }
-
-        const aiMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          text: responseText,
-          sender: 'ai',
-          timestamp: new Date()
-        };
-
-        setMessages(prev => [...prev, aiMessage]);
-      } else {
-        const errorMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          text: 'AI service is not available. Please refresh the page and try again.',
-          sender: 'ai',
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, errorMessage]);
-      }
+      setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       console.error('AI Error:', error);
       const errorMessage: Message = {

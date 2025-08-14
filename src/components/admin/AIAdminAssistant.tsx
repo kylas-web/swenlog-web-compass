@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Bot, Sparkles } from 'lucide-react';
+import { aiService } from '@/utils/aiService';
 
 interface AIAdminAssistantProps {
   context: string;
@@ -20,14 +21,10 @@ const AIAdminAssistant = ({ context }: AIAdminAssistantProps) => {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiQuestion, setAiQuestion] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [trainingData, setTrainingData] = useState<TrainingData[]>([]);
 
   useEffect(() => {
-    // Load training data from localStorage
-    const savedData = localStorage.getItem('chatbot-training-data');
-    if (savedData) {
-      setTrainingData(JSON.parse(savedData));
-    }
+    // Refresh training data in AI service
+    aiService.refreshTrainingData();
 
     // Load context-specific suggestions
     switch (context) {
@@ -76,38 +73,13 @@ const AIAdminAssistant = ({ context }: AIAdminAssistantProps) => {
     setAiResponse('');
     
     try {
-      // Wait for Puter.js to be available
-      let attempts = 0;
-      const maxAttempts = 50;
-      
-      while ((!window.puter || !window.puter.ai) && attempts < maxAttempts) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-        attempts++;
-      }
-      
-      if (window.puter && window.puter.ai) {
-        console.log('Admin AI request:', queryText);
-        
-        // Create context from training data
-        const trainingContext = trainingData.length > 0 
-          ? trainingData.map(entry => 
-              `Q: ${entry.question}\nA: ${entry.answer}\nCategory: ${entry.category}\nKeywords: ${entry.keywords.join(', ')}`
-            ).join('\n\n')
-          : '';
+      const response = await aiService.query(queryText, {
+        context,
+        systemPrompt: 'You are an AI assistant for a logistics company admin dashboard.',
+        testMode: true
+      });
 
-        const contextualPrompt = `You are an AI assistant for a logistics company admin dashboard. Context: ${context}. ${
-          trainingContext ? `Here is our current training data for reference:\n\n${trainingContext}\n\n` : ''
-        }Please provide expert advice about: ${queryText}`;
-        
-        const response = await window.puter.ai.chat(contextualPrompt, true); // testMode = true
-        
-        console.log('Admin AI Response:', response);
-        
-        const responseText = response?.message?.content || response?.toString?.() || 'No response received';
-        setAiResponse(responseText);
-      } else {
-        setAiResponse('AI service is not available. Please ensure Puter.js is loaded.');
-      }
+      setAiResponse(response.text);
     } catch (error) {
       console.error('Admin AI Error:', error);
       setAiResponse('Sorry, there was an error with the AI service. Please try again.');
@@ -127,8 +99,8 @@ const AIAdminAssistant = ({ context }: AIAdminAssistantProps) => {
       
       <p className="text-sm text-gray-600 mb-4">
         Get AI-powered insights and suggestions for your {context} management. 
-        {trainingData.length > 0 && (
-          <span className="text-green-600"> Using {trainingData.length} trained responses.</span>
+        {aiService.getTrainingDataCount() > 0 && (
+          <span className="text-green-600"> Using {aiService.getTrainingDataCount()} trained responses.</span>
         )}
       </p>
 
