@@ -1,7 +1,7 @@
 import { 
   LayoutDashboard, Building, Wrench, PanelTop, PanelBottom, Globe, FileText, 
   Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot, Settings,
-  UserPlus, Sliders, Database, FormInput, Paintbrush, Calendar, BarChart3, Activity
+  UserPlus, Sliders, Database, FormInput, Paintbrush, Calendar, BarChart3, Activity, TrendingUp
 } from "lucide-react";
 import HeroManager from "./HeroManager";
 import AboutManager from "./AboutManager";
@@ -19,7 +19,6 @@ import FormsManager from "./FormsManager";
 import CompleteCrmManager from "./CompleteCrmManager";
 import CompleteHrmManager from "./CompleteHrmManager";
 import WhatsappManager from "./WhatsappManager";
-import PerformanceManager from "./PerformanceManager";
 import SecurityManager from "./SecurityManager";
 import FeatureManager from "./FeatureManager";
 import ResourcesManager from "./ResourcesManager";
@@ -29,6 +28,7 @@ import StaffDashboard from "./StaffDashboard";
 import VisualEditor from "./VisualEditor";
 import DepartmentManager from "./DepartmentManager";
 import LeaveManager from "./LeaveManager";
+import PerformanceManager from "./PerformanceManager";
 import HRReportsManager from "./HRReportsManager";
 import CRMActivitiesManager from "./CRMActivitiesManager";
 import CRMReportsManager from "./CRMReportsManager";
@@ -171,6 +171,12 @@ export const adminModules = [
     label: 'Leave Management',
     icon: Calendar,
     component: LeaveManager,
+  },
+  {
+    key: 'performance-management',
+    label: 'Performance Management',
+    icon: TrendingUp,
+    component: PerformanceManager,
   },
   {
     key: 'hr-reports',

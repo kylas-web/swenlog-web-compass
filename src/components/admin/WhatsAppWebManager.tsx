@@ -121,142 +121,44 @@ const WhatsAppWebManager = () => {
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">WhatsApp Web Manager</h1>
-          <p className="text-muted-foreground">Manage WhatsApp conversations and contacts</p>
+          <h1 className="text-3xl font-bold">WhatsApp Web</h1>
+          <p className="text-muted-foreground">Access WhatsApp Web directly in the admin panel</p>
         </div>
         <div className="flex space-x-2">
-          <Button variant="outline">
-            <Phone className="h-4 w-4 mr-2" />
-            Call
-          </Button>
-          <Button>
-            <FileText className="h-4 w-4 mr-2" />
-            Send Document
+          <Button variant="outline" onClick={() => window.open('https://web.whatsapp.com', '_blank')}>
+            <MessageSquare className="h-4 w-4 mr-2" />
+            Open in New Tab
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-200px)]">
-        {/* Contacts List */}
-        <Card className="lg:col-span-1">
+      {/* WhatsApp Web Iframe */}
+      <div className="w-full">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center">
-              <Users className="h-5 w-5 mr-2" />
-              Contacts ({contacts.length})
+              <MessageSquare className="h-5 w-5 mr-2 text-green-600" />
+              WhatsApp Web Interface
             </CardTitle>
-            <div className="relative">
-              <Search className="h-4 w-4 absolute left-2 top-2.5 text-muted-foreground" />
-              <Input
-                placeholder="Search contacts..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-8"
-              />
-            </div>
+            <CardDescription>
+              Scan the QR code with your phone to connect WhatsApp Web
+            </CardDescription>
           </CardHeader>
           <CardContent className="p-0">
-            <ScrollArea className="h-[500px]">
-              {filteredContacts.map((contact) => (
-                <div
-                  key={contact.id}
-                  className={`p-4 border-b cursor-pointer hover:bg-muted/50 ${
-                    selectedContact?.id === contact.id ? 'bg-muted' : ''
-                  }`}
-                  onClick={() => setSelectedContact(contact)}
-                >
-                  <div className="flex items-center space-x-3">
-                    <Avatar>
-                      <AvatarImage src={contact.profile_picture_url} />
-                      <AvatarFallback>{contact.name[0]}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium truncate">{contact.name}</p>
-                      <p className="text-sm text-muted-foreground">{contact.phone_number}</p>
-                      {contact.tags && contact.tags.length > 0 && (
-                        <div className="flex space-x-1 mt-1">
-                          {contact.tags.slice(0, 2).map((tag, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </ScrollArea>
+            <div className="relative w-full" style={{ height: '80vh' }}>
+              <iframe
+                src="https://web.whatsapp.com"
+                className="w-full h-full border-0"
+                title="WhatsApp Web"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+                allow="camera; microphone; geolocation"
+              />
+            </div>
           </CardContent>
-        </Card>
-
-        {/* Chat Area */}
-        <Card className="lg:col-span-2">
-          {selectedContact ? (
-            <>
-              <CardHeader className="border-b">
-                <div className="flex items-center space-x-3">
-                  <Avatar>
-                    <AvatarImage src={selectedContact.profile_picture_url} />
-                    <AvatarFallback>{selectedContact.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <CardTitle className="text-lg">{selectedContact.name}</CardTitle>
-                    <CardDescription>{selectedContact.phone_number}</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="p-0">
-                <ScrollArea className="h-[400px] p-4">
-                  {selectedContactMessages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`mb-4 flex ${message.is_outgoing ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div
-                        className={`max-w-[70%] p-3 rounded-lg ${
-                          message.is_outgoing
-                            ? 'bg-primary text-primary-foreground'
-                            : 'bg-muted'
-                        }`}
-                      >
-                        <p>{message.message_text}</p>
-                        <p className={`text-xs mt-1 ${
-                          message.is_outgoing ? 'text-primary-foreground/70' : 'text-muted-foreground'
-                        }`}>
-                          {new Date(message.timestamp).toLocaleTimeString()}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </ScrollArea>
-                <div className="border-t p-4">
-                  <div className="flex space-x-2">
-                    <Input
-                      placeholder="Type a message..."
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                      className="flex-1"
-                    />
-                    <Button onClick={sendMessage} disabled={!newMessage.trim()}>
-                      <Send className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </>
-          ) : (
-            <CardContent className="flex items-center justify-center h-full">
-              <div className="text-center">
-                <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">Select a contact to start chatting</p>
-              </div>
-            </CardContent>
-          )}
         </Card>
       </div>
 
-      {/* Quick Actions */}
+      {/* Quick Stats (from stored data) */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-4">
@@ -321,6 +223,22 @@ const WhatsAppWebManager = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Instructions */}
+      <Card>
+        <CardHeader>
+          <CardTitle>How to Use WhatsApp Web</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2 text-sm">
+            <p>1. Open WhatsApp on your phone</p>
+            <p>2. Go to Settings → Linked Devices</p>
+            <p>3. Tap "Link a Device"</p>
+            <p>4. Scan the QR code displayed in the frame above</p>
+            <p>5. Your WhatsApp will be connected and ready to use</p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

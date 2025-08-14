@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Copy, Plus, Edit, Trash2, Eye, Code, Mail, Phone, User, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 type FormField = {
   id: string;
@@ -90,12 +91,31 @@ const defaultForm: Omit<Form, 'id' | 'created_at' | 'updated_at'> = {
 const FormsManager = () => {
   const [forms, setForms] = useLocalStorage<Form[]>('formsData', []);
   const [submissions, setSubmissions] = useLocalStorage<FormSubmission[]>('formSubmissions', []);
+  const [ctaForms, setCtaForms] = useState<any[]>([]);
   const [selectedForm, setSelectedForm] = useState<Form | null>(null);
   const [formData, setFormData] = useState(defaultForm);
   const [activeTab, setActiveTab] = useState('forms');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    fetchCtaForms();
+  }, []);
+
+  const fetchCtaForms = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('cta_forms')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setCtaForms(data || []);
+    } catch (error) {
+      console.error('Error fetching CTA forms:', error);
+    }
+  };
 
   const generateShortcode = (formId: string) => `[form id="${formId}"]`;
 
