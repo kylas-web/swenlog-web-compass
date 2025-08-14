@@ -1,7 +1,7 @@
 import { 
   LayoutDashboard, Building, Wrench, PanelTop, PanelBottom, Globe, FileText, 
   Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot, Settings,
-  UserPlus, Sliders, Database, FormInput, Paintbrush
+  UserPlus, Sliders, Database, FormInput, Paintbrush, Calendar, BarChart3, Activity
 } from "lucide-react";
 import HeroManager from "./HeroManager";
 import AboutManager from "./AboutManager";
@@ -27,6 +27,11 @@ import WhatsAppWebManager from "./WhatsAppWebManager";
 import TeamChatManager from "./TeamChatManager";
 import StaffDashboard from "./StaffDashboard";
 import VisualEditor from "./VisualEditor";
+import DepartmentManager from "./DepartmentManager";
+import LeaveManager from "./LeaveManager";
+import HRReportsManager from "./HRReportsManager";
+import CRMActivitiesManager from "./CRMActivitiesManager";
+import CRMReportsManager from "./CRMReportsManager";
 
 export const adminModules = [
   {
@@ -154,6 +159,36 @@ export const adminModules = [
     label: 'Staff Dashboard',
     icon: UserPlus,
     component: StaffDashboard,
+  },
+  {
+    key: 'departments',
+    label: 'Department Management',
+    icon: Building,
+    component: DepartmentManager,
+  },
+  {
+    key: 'leave-management',
+    label: 'Leave Management',
+    icon: Calendar,
+    component: LeaveManager,
+  },
+  {
+    key: 'hr-reports',
+    label: 'HR Reports & Analytics',
+    icon: BarChart3,
+    component: HRReportsManager,
+  },
+  {
+    key: 'crm-activities',
+    label: 'CRM Activities',
+    icon: Activity,
+    component: CRMActivitiesManager,
+  },
+  {
+    key: 'crm-reports',
+    label: 'CRM Reports & Analytics',
+    icon: BarChart3,
+    component: CRMReportsManager,
   },
 ];
 

@@ -50,6 +50,57 @@ export type Database = {
         }
         Relationships: []
       }
+      crm_activities: {
+        Row: {
+          activity_type: string
+          assigned_to: string | null
+          completed_at: string | null
+          contact_id: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          lead_id: string | null
+          opportunity_id: string | null
+          priority: string | null
+          status: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          activity_type: string
+          assigned_to?: string | null
+          completed_at?: string | null
+          contact_id?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          lead_id?: string | null
+          opportunity_id?: string | null
+          priority?: string | null
+          status?: string
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          activity_type?: string
+          assigned_to?: string | null
+          completed_at?: string | null
+          contact_id?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          lead_id?: string | null
+          opportunity_id?: string | null
+          priority?: string | null
+          status?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       crm_contacts: {
         Row: {
           created_at: string | null
@@ -148,6 +199,45 @@ export type Database = {
           },
         ]
       }
+      cta_forms: {
+        Row: {
+          button_text: string
+          created_at: string
+          description: string | null
+          form_fields: Json
+          id: string
+          is_active: boolean
+          redirect_url: string | null
+          success_message: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          button_text?: string
+          created_at?: string
+          description?: string | null
+          form_fields?: Json
+          id?: string
+          is_active?: boolean
+          redirect_url?: string | null
+          success_message?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          button_text?: string
+          created_at?: string
+          description?: string | null
+          form_fields?: Json
+          id?: string
+          is_active?: boolean
+          redirect_url?: string | null
+          success_message?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       departments: {
         Row: {
           budget: number | null
@@ -213,6 +303,105 @@ export type Database = {
         }
         Relationships: []
       }
+      form_submissions: {
+        Row: {
+          created_at: string
+          data: Json
+          form_id: string
+          form_type: string
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          form_id: string
+          form_type?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          form_id?: string
+          form_type?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      header_settings: {
+        Row: {
+          created_at: string
+          favicon_url: string | null
+          id: string
+          logo_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          favicon_url?: string | null
+          id?: string
+          logo_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          favicon_url?: string | null
+          id?: string
+          logo_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      leave_requests: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          days_requested: number
+          employee_id: string
+          end_date: string
+          id: string
+          leave_type: string
+          reason: string | null
+          start_date: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          days_requested: number
+          employee_id: string
+          end_date: string
+          id?: string
+          leave_type: string
+          reason?: string | null
+          start_date: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          days_requested?: number
+          employee_id?: string
+          end_date?: string
+          id?: string
+          leave_type?: string
+          reason?: string | null
+          start_date?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       media_items: {
         Row: {
           alt: string | null
@@ -252,6 +441,54 @@ export type Database = {
           content?: Json | null
           key?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      performance_reviews: {
+        Row: {
+          areas_for_improvement: string | null
+          comments: string | null
+          created_at: string
+          employee_id: string
+          goals_achievement: string | null
+          id: string
+          overall_rating: number | null
+          review_period_end: string
+          review_period_start: string
+          reviewer_id: string
+          status: string
+          strengths: string | null
+          updated_at: string
+        }
+        Insert: {
+          areas_for_improvement?: string | null
+          comments?: string | null
+          created_at?: string
+          employee_id: string
+          goals_achievement?: string | null
+          id?: string
+          overall_rating?: number | null
+          review_period_end: string
+          review_period_start: string
+          reviewer_id: string
+          status?: string
+          strengths?: string | null
+          updated_at?: string
+        }
+        Update: {
+          areas_for_improvement?: string | null
+          comments?: string | null
+          created_at?: string
+          employee_id?: string
+          goals_achievement?: string | null
+          id?: string
+          overall_rating?: number | null
+          review_period_end?: string
+          review_period_start?: string
+          reviewer_id?: string
+          status?: string
+          strengths?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
