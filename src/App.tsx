@@ -43,11 +43,20 @@ import FreightCalculatorPage from "./pages/tools/FreightCalculatorPage";
 import RouteOptimizerPage from "./pages/tools/RouteOptimizerPage";
 import DocumentScannerPage from "./pages/tools/DocumentScannerPage";
 
-const queryClient = new QueryClient();
-
 import BottomNav from "@/components/BottomNav";
 
-const App = () => (
+const App = () => {
+  // Initialize QueryClient inside the component to ensure React is ready
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 5, // 5 minutes
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+
+  return (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <TooltipProvider>
@@ -101,6 +110,7 @@ const App = () => (
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;
