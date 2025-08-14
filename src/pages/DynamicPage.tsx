@@ -2,8 +2,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-// A simple markdown to html converter could be added here later
-// For now, we'll render text with line breaks.
+import ShortcodeRenderer from '@/components/ShortcodeRenderer';
 
 type Page = {
   id: string;
@@ -36,8 +35,7 @@ const DynamicPage = () => {
     <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <article className="prose lg:prose-xl">
         <h1>{page.title}</h1>
-        {/* For now, rendering content with preserved whitespace */}
-        <div className="whitespace-pre-wrap">{page.content}</div>
+        <ShortcodeRenderer content={page.content} className="whitespace-pre-wrap" />
       </article>
     </div>
   );

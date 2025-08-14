@@ -2,7 +2,7 @@
 import { 
   LayoutDashboard, Building, Wrench, PanelTop, PanelBottom, Globe, FileText, 
   Image as ImageIcon, Quote, Users, MessageSquare, Shield, Gauge, Bot, Settings,
-  UserPlus, Sliders, Database
+  UserPlus, Sliders, Database, FormInput
 } from "lucide-react";
 import HeroManager from "./HeroManager";
 import AboutManager from "./AboutManager";
@@ -21,6 +21,7 @@ import SecurityManager from "./SecurityManager";
 import EnhancedChatbotManager from "./EnhancedChatbotManager";
 import SliderManager from "./SliderManager";
 import GeneralSettingsManager from "./GeneralSettingsManager";
+import FormsManager from "./FormsManager";
 
 export const adminModules = [
   {
@@ -118,6 +119,12 @@ export const adminModules = [
     label: 'Security Tools',
     icon: Shield,
     component: SecurityManager,
+  },
+  {
+    key: 'forms',
+    label: 'Forms Management',
+    icon: FormInput,
+    component: FormsManager,
   },
   {
     key: 'settings',
