@@ -1,4 +1,5 @@
 
+
 // Unified AI Service using Puter.js
 interface TrainingData {
   id: string;
@@ -127,17 +128,11 @@ class UnifiedAIService {
 
       console.log('AI Query:', { prompt, options, contextualPrompt });
 
-      // Use proper Puter.js AI configuration
-      const aiOptions = {
-        model: options.model || 'gpt-4o-mini', // Use a more standard model
-        temperature: 0.7,
-        max_tokens: 1000
-      };
-
-      // Call Puter AI service with proper parameters
+      // Call Puter AI service using the correct API format
+      // According to Puter docs: puter.ai.chat(message, testMode, options)
       const response = await window.puter.ai.chat(
         contextualPrompt,
-        aiOptions
+        options.testMode || false
       );
 
       console.log('AI Response:', response);
@@ -193,3 +188,4 @@ class UnifiedAIService {
 
 export const aiService = UnifiedAIService.getInstance();
 export type { AIResponse, TrainingData };
+
