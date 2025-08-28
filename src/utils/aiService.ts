@@ -1,3 +1,4 @@
+
 // Unified AI Service using Puter.js
 interface TrainingData {
   id: string;
@@ -83,11 +84,21 @@ class UnifiedAIService {
         ).join('\n\n')
       : '';
 
-    const baseSystemPrompt = systemPrompt || 'You are SwenAI, a logistics and supply chain expert for SWENLOG Supply Chain Solutions.';
-    const contextInfo = context ? `Context: ${context}. ` : '';
-    const trainingInfo = trainingContext ? `Use the following training data to provide accurate answers when relevant:\n\n${trainingContext}\n\n` : '';
+    const baseSystemPrompt = systemPrompt || 'You are SwenAI, a logistics and supply chain expert for SWENLOG Supply Chain Solutions. You provide professional, helpful advice about logistics, shipping, supply chain management, and related business operations.';
     
-    return `${baseSystemPrompt} ${contextInfo}${trainingInfo}Please provide helpful advice about: ${userPrompt}`;
+    let finalPrompt = baseSystemPrompt;
+    
+    if (context) {
+      finalPrompt += ` You are currently helping with ${context} management.`;
+    }
+    
+    if (trainingContext) {
+      finalPrompt += `\n\nUse the following knowledge base to provide accurate answers when relevant:\n\n${trainingContext}`;
+    }
+    
+    finalPrompt += `\n\nUser Question: ${userPrompt}\n\nPlease provide a helpful, professional response:`;
+    
+    return finalPrompt;
   }
 
   async query(
@@ -116,37 +127,56 @@ class UnifiedAIService {
 
       console.log('AI Query:', { prompt, options, contextualPrompt });
 
+      // Use proper Puter.js AI configuration
+      const aiOptions = {
+        model: options.model || 'gpt-4o-mini', // Use a more standard model
+        temperature: 0.7,
+        max_tokens: 1000
+      };
+
+      // Call Puter AI service with proper parameters
       const response = await window.puter.ai.chat(
-        contextualPrompt, 
-        options.testMode || false, 
-        {
-          model: options.model || 'gpt-4.1-nano'
-        }
+        contextualPrompt,
+        aiOptions
       );
 
       console.log('AI Response:', response);
 
-      // Extract text from response
+      // Extract text from response - handle different response formats
       let responseText = 'I apologize, but I couldn\'t process your request right now. Please try again.';
       
-      if (response?.message?.content) {
-        if (Array.isArray(response.message.content)) {
-          responseText = response.message.content
-            .filter(item => item.type === 'text')
-            .map(item => item.text)
-            .join('');
-        } else if (typeof response.message.content === 'string') {
-          responseText = response.message.content;
+      if (response) {
+        // Try different response formats
+        if (response.message?.content) {
+          if (Array.isArray(response.message.content)) {
+            responseText = response.message.content
+              .filter(item => item.type === 'text')
+              .map(item => item.text)
+              .join('');
+          } else if (typeof response.message.content === 'string') {
+            responseText = response.message.content;
+          }
+        } else if (response.choices && response.choices[0]?.message?.content) {
+          responseText = response.choices[0].message.content;
+        } else if (response.content) {
+          responseText = response.content;
+        } else if (typeof response === 'string') {
+          responseText = response;
+        } else if (response.text) {
+          responseText = response.text;
+        } else if (response.toString && typeof response.toString === 'function') {
+          const stringified = response.toString();
+          if (stringified && stringified !== '[object Object]') {
+            responseText = stringified;
+          }
         }
-      } else if (response?.toString?.()) {
-        responseText = response.toString();
       }
 
       return { text: responseText };
     } catch (error) {
       console.error('AI Service Error:', error);
       return {
-        text: 'Sorry, there was an error processing your request. Please try again.',
+        text: 'Sorry, there was an error processing your request. Please try again later.',
         error: error instanceof Error ? error.message : 'Unknown error'
       };
     }
