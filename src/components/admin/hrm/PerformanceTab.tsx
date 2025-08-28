@@ -86,8 +86,8 @@ const PerformanceTab = () => {
   const getStatusColor = (status: ReviewStatus) => {
     switch (status) {
       case 'completed': return 'default';
-      case 'approved': return 'success';
-      case 'in_progress': return 'warning';
+      case 'approved': return 'outline';
+      case 'in_progress': return 'secondary';
       default: return 'secondary';
     }
   };

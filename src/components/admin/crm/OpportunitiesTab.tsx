@@ -80,7 +80,7 @@ const OpportunitiesTab = () => {
     switch (stage) {
       case 'closed_won': return 'default';
       case 'closed_lost': return 'destructive';
-      case 'negotiation': return 'warning';
+      case 'negotiation': return 'outline';
       default: return 'secondary';
     }
   };
