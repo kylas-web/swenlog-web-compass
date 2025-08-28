@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import CRMActivitiesManager from './CRMActivitiesManager';
 import CRMReportsManager from './CRMReportsManager';
+import LeadsTab from './crm/LeadsTab';
+import OpportunitiesTab from './crm/OpportunitiesTab';
 
 type ContactStatus = 'active' | 'inactive' | 'prospect' | 'customer' | 'lead';
 type LeadSource = 'website' | 'referral' | 'cold_call' | 'advertisement' | 'social_media' | 'trade_show' | 'email_campaign' | 'other';
@@ -480,15 +482,11 @@ const CompleteCrmManager = () => {
         </TabsContent>
 
         <TabsContent value="leads">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Leads management interface will be here</p>
-          </div>
+          <LeadsTab />
         </TabsContent>
 
         <TabsContent value="opportunities">
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">Opportunities management interface will be here</p>
-          </div>
+          <OpportunitiesTab />
         </TabsContent>
 
         <TabsContent value="activities">

@@ -21,6 +21,10 @@ import DepartmentManager from './DepartmentManager';
 import LeaveManager from './LeaveManager';
 import PerformanceManager from './PerformanceManager';
 import HRReportsManager from './HRReportsManager';
+import RoleManager from './RoleManager';
+import DepartmentsTab from './hrm/DepartmentsTab';
+import LeaveManagementTab from './hrm/LeaveManagementTab';
+import PerformanceTab from './hrm/PerformanceTab';
 
 type EmployeeStatus = 'active' | 'inactive' | 'on_leave' | 'terminated' | 'probation';
 type EmployeeType = 'full_time' | 'part_time' | 'contract' | 'intern' | 'consultant';
@@ -668,6 +672,7 @@ const CompleteHrmManager = () => {
           <TabsTrigger value="departments">Departments</TabsTrigger>
           <TabsTrigger value="leave">Leave Management</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
+          <TabsTrigger value="roles">User Roles</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
         </TabsList>
 
@@ -680,15 +685,19 @@ const CompleteHrmManager = () => {
         </TabsContent>
 
         <TabsContent value="departments">
-          <DepartmentManagerContent />
+          <DepartmentsTab />
         </TabsContent>
 
         <TabsContent value="leave">
-          <LeaveManagerContent />
+          <LeaveManagementTab />
         </TabsContent>
 
         <TabsContent value="performance">
-          <PerformanceManagerContent />
+          <PerformanceTab />
+        </TabsContent>
+
+        <TabsContent value="roles">
+          <RoleManager />
         </TabsContent>
 
         <TabsContent value="reports">
